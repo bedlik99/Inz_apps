@@ -16,7 +16,7 @@
 namespace fs = std::filesystem;
 
 const std::string path = "/home/jan/Documents/inz_dyp/Projekty_C++/HttpRestClient/outputFiles";
-const char *path_to_be_watched = "/home/jan/Documents/inz_dyp/Projekty_C++/HttpRestClient/outputFiles";
+const char *watchedPath = "/home/jan/Documents/inz_dyp/Projekty_C++/HttpRestClient/outputFiles";
 static std::set<std::string> filePaths;
 
 void addFileNamesToSet();
@@ -35,12 +35,12 @@ int main(void) {
         exit(2);
 
     /* Step 2. Add Watch */
-    wd = inotify_add_watch(fd, path_to_be_watched, IN_MODIFY | IN_CREATE);
+    wd = inotify_add_watch(fd, watchedPath, IN_MODIFY | IN_CREATE);
 
     if (wd == -1){
-        printf("Could not watch : %s\n", path_to_be_watched);
+        printf("Could not watch : %s\n", watchedPath);
     } else {
-        printf("Watching : %s\n", path_to_be_watched);
+        printf("Watching : %s\n", watchedPath);
     }
 
     // Do below instructions if content of directory has changed.

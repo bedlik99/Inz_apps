@@ -35,20 +35,17 @@ static int returnedHttpCode;
 static bool wasSecretFileInitProperly=false;
 
 int main(void){
-
       if (ptrace(PTRACE_TRACEME, 0, 0, 0) < 0) {
         printf("A debugger is attached, but not for long!\n");
         kill(getpid(), SIGTERM);
         exit(0);
     }
-
     std::cout << "\n-----------------------------------------------------------\n"
               << "[Opcje]:\nWcisnij 1 dla zainicjalizowania maszyny.\n"
               << "Wcisnij 2 dla wyslania wynikow i zakonczenia laboratorium.\n"
               << "Wybieram [opcje]: ";
     std::cin >> option;
     std::cout << "-----------------------------------------------------------\n\n";
-
     if (option == 1 && (!ioConfig.doesFileExist(secretFilePath) || ioConfig.isSecretFileEmpty(secretFilePath,wasSecretFileInitProperly))){
         doTask(returnInitStudentDetailsAsJson(), secretFilePath, initialEndpoint);
     }
@@ -61,7 +58,6 @@ int main(void){
     }else{
         std::cout<<"Machine was not identified properly. Student should identify machine again.\n";
     }
-
     return 1;
 }
 
