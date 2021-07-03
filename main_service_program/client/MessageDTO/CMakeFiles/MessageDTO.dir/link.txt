@@ -1,0 +1,2 @@
+/usr/bin/ar qc libMessageDTO.a  CMakeFiles/MessageDTO.dir/FinalStudentDetails.cpp.o CMakeFiles/MessageDTO.dir/InitStudentDetails.cpp.o
+/usr/bin/ranlib libMessageDTO.a

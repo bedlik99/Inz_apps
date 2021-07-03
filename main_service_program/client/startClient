@@ -1,0 +1,4 @@
+#!/bin/bash
+#echo "" > results.txt
+cmake --build .
+./HttpRestClient

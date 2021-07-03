@@ -1,0 +1,36 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/jan/Documents/inz_dyp/Projekty_C++/HttpRestClient/client/client_main.cpp
+cpprest/http_client.h
+-
+cpprest/filestream.h
+-
+sys/ptrace.h
+-
+string
+-
+FinalStudentDetails.h
+/home/jan/Documents/inz_dyp/Projekty_C++/HttpRestClient/client/FinalStudentDetails.h
+InitStudentDetails.h
+/home/jan/Documents/inz_dyp/Projekty_C++/HttpRestClient/client/InitStudentDetails.h
+IOConfig.h
+/home/jan/Documents/inz_dyp/Projekty_C++/HttpRestClient/client/IOConfig.h
+
+IOConfig/IOConfig.h
+string
+-
+
+MessageDTO/FinalStudentDetails.h
+string
+-
+
+MessageDTO/InitStudentDetails.h
+string
+-
+

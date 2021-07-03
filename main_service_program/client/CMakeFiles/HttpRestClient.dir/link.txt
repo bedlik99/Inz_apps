@@ -1,0 +1,1 @@
+/usr/bin/c++     CMakeFiles/HttpRestClient.dir/client_main.cpp.o  -o HttpRestClient  /usr/lib/x86_64-linux-gnu/libcpprest.so.2.10 MessageDTO/libMessageDTO.a IOConfig/libIOConfig.a -lpthread /usr/lib/x86_64-linux-gnu/libssl.so /usr/lib/x86_64-linux-gnu/libcrypto.so 
