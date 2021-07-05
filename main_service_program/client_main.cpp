@@ -19,37 +19,31 @@ json::value returnFinalStudentDetailsAsJson();
 const std::string student_index_num = "300500";
 const std::string student_unique_code = "gK4L0";
 const std::string initialEndpoint = "/sendInit";
-const std::string secretFilePath = "/home/jan/Documents/inz_dyp/Projekty_C++/HttpRestClient/outputFiles/secretFile.txt";
+const std::string secretFilePath = "/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/outputFiles/secretFile.txt";
 const std::string finalizeEndpoint = "/sendFinal";
-const std::string resultInfoFilePath = "/home/jan/Documents/inz_dyp/Projekty_C++/HttpRestClient/outputFiles/results.txt";
+const std::string resultInfoFilePath = "/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/outputFiles/results.txt";
 
 // DO ZROBIENIA:
 // ZMIANA NAZW PLIKOW OUTPUTOWYCH NA dataFile0,dataFile1,dataFile2... (nazwa tworzona dynamicznie)
-// Zmienic zawartosc pliku client_main.cpp na klase RestServerConnector.cpp i dodac odpowiedni plik RestServerConnector.h 
+// Zmienic zawartosc pliku client_main.cpp na klase RestServerConnector.cpp i dodac odpowiedni plik RestServerConnector.h
 // w nowym folderze. Zatem, zmodyfikować też CMakeLists.txt
 
 static IOConfig ioConfig;
 static InitStudentDetails initStudentDetails;
-static int option = 0;
 static int returnedHttpCode;
 static bool wasSecretFileInitProperly=false;
 
-int main(void){
-      if (ptrace(PTRACE_TRACEME, 0, 0, 0) < 0) {
+int main(void) {
+    if (ptrace(PTRACE_TRACEME, 0, 0, 0) < 0) {
         printf("A debugger is attached, but not for long!\n");
         kill(getpid(), SIGTERM);
         exit(0);
     }
-    std::cout << "\n-----------------------------------------------------------\n"
-              << "[Opcje]:\nWcisnij 1 dla zainicjalizowania maszyny.\n"
-              << "Wcisnij 2 dla wyslania wynikow i zakonczenia laboratorium.\n"
-              << "Wybieram [opcje]: ";
-    std::cin >> option;
-    std::cout << "-----------------------------------------------------------\n\n";
-    if (option == 1 && (!ioConfig.doesFileExist(secretFilePath) || ioConfig.isSecretFileEmpty(secretFilePath,wasSecretFileInitProperly))){
-        doTask(returnInitStudentDetailsAsJson(), secretFilePath, initialEndpoint);
-    }
-    else if(option == 2 && ioConfig.doesFileExist(secretFilePath) && !ioConfig.isSecretFileEmpty(secretFilePath,wasSecretFileInitProperly)){
+
+    // if (option == 1 && (!ioConfig.doesFileExist(secretFilePath) || ioConfig.isSecretFileEmpty(secretFilePath,wasSecretFileInitProperly))){
+    //     doTask(returnInitStudentDetailsAsJson(), secretFilePath, initialEndpoint);
+    // }
+    if(ioConfig.doesFileExist(secretFilePath) && !ioConfig.isSecretFileEmpty(secretFilePath,wasSecretFileInitProperly)){
         doTask(returnFinalStudentDetailsAsJson(), resultInfoFilePath, finalizeEndpoint);
 
     }else if(wasSecretFileInitProperly){

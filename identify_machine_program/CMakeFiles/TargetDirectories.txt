@@ -1,0 +1,3 @@
+/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/CMakeFiles/rebuild_cache.dir
+/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/CMakeFiles/edit_cache.dir
+/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/CMakeFiles/IdentifyOnStartup.dir

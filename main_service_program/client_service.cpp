@@ -15,8 +15,8 @@
 
 namespace fs = std::filesystem;
 
-const std::string path = "/home/jan/Documents/inz_dyp/Projekty_C++/HttpRestClient/outputFiles";
-const char *watchedPath = "/home/jan/Documents/inz_dyp/Projekty_C++/HttpRestClient/outputFiles";
+const std::string path = "/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/outputFiles";
+const char *watchedPath = "/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/outputFiles";
 static std::set<std::string> filePaths;
 
 void addFileNamesToSet();
