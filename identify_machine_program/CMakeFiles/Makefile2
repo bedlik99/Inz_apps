@@ -54,32 +54,117 @@ CMAKE_BINARY_DIR = /home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/i
 
 # The main recursive "all" target.
 all: CMakeFiles/IdentifyOnStartup.dir/all
+all: GraphicManagement/all
+all: RESTConnector/all
 
 .PHONY : all
 
 # The main recursive "preinstall" target.
-preinstall:
+preinstall: GraphicManagement/preinstall
+preinstall: RESTConnector/preinstall
 
 .PHONY : preinstall
 
 # The main recursive "clean" target.
 clean: CMakeFiles/IdentifyOnStartup.dir/clean
+clean: GraphicManagement/clean
+clean: RESTConnector/clean
 
 .PHONY : clean
+
+#=============================================================================
+# Directory level rules for directory GraphicManagement
+
+# Recursive "all" directory target.
+GraphicManagement/all: GraphicManagement/CMakeFiles/GraphicManager.dir/all
+
+.PHONY : GraphicManagement/all
+
+# Recursive "preinstall" directory target.
+GraphicManagement/preinstall:
+
+.PHONY : GraphicManagement/preinstall
+
+# Recursive "clean" directory target.
+GraphicManagement/clean: GraphicManagement/CMakeFiles/GraphicManager.dir/clean
+
+.PHONY : GraphicManagement/clean
+
+#=============================================================================
+# Directory level rules for directory RESTConnector
+
+# Recursive "all" directory target.
+RESTConnector/all: RESTConnector/CMakeFiles/RESTConnector.dir/all
+RESTConnector/all: RESTConnector/IOConfig/all
+RESTConnector/all: RESTConnector/UserDetailsDTO/all
+
+.PHONY : RESTConnector/all
+
+# Recursive "preinstall" directory target.
+RESTConnector/preinstall: RESTConnector/IOConfig/preinstall
+RESTConnector/preinstall: RESTConnector/UserDetailsDTO/preinstall
+
+.PHONY : RESTConnector/preinstall
+
+# Recursive "clean" directory target.
+RESTConnector/clean: RESTConnector/CMakeFiles/RESTConnector.dir/clean
+RESTConnector/clean: RESTConnector/IOConfig/clean
+RESTConnector/clean: RESTConnector/UserDetailsDTO/clean
+
+.PHONY : RESTConnector/clean
+
+#=============================================================================
+# Directory level rules for directory RESTConnector/IOConfig
+
+# Recursive "all" directory target.
+RESTConnector/IOConfig/all: RESTConnector/IOConfig/CMakeFiles/IOConfig.dir/all
+
+.PHONY : RESTConnector/IOConfig/all
+
+# Recursive "preinstall" directory target.
+RESTConnector/IOConfig/preinstall:
+
+.PHONY : RESTConnector/IOConfig/preinstall
+
+# Recursive "clean" directory target.
+RESTConnector/IOConfig/clean: RESTConnector/IOConfig/CMakeFiles/IOConfig.dir/clean
+
+.PHONY : RESTConnector/IOConfig/clean
+
+#=============================================================================
+# Directory level rules for directory RESTConnector/UserDetailsDTO
+
+# Recursive "all" directory target.
+RESTConnector/UserDetailsDTO/all: RESTConnector/UserDetailsDTO/CMakeFiles/UserDetailsDTO.dir/all
+
+.PHONY : RESTConnector/UserDetailsDTO/all
+
+# Recursive "preinstall" directory target.
+RESTConnector/UserDetailsDTO/preinstall:
+
+.PHONY : RESTConnector/UserDetailsDTO/preinstall
+
+# Recursive "clean" directory target.
+RESTConnector/UserDetailsDTO/clean: RESTConnector/UserDetailsDTO/CMakeFiles/UserDetailsDTO.dir/clean
+
+.PHONY : RESTConnector/UserDetailsDTO/clean
 
 #=============================================================================
 # Target rules for target CMakeFiles/IdentifyOnStartup.dir
 
 # All Build rule for target.
-CMakeFiles/IdentifyOnStartup.dir/all:
+CMakeFiles/IdentifyOnStartup.dir/all: GraphicManagement/CMakeFiles/GraphicManager.dir/all
+CMakeFiles/IdentifyOnStartup.dir/all: RESTConnector/CMakeFiles/RESTConnector.dir/all
+CMakeFiles/IdentifyOnStartup.dir/all: RESTConnector/IOConfig/CMakeFiles/IOConfig.dir/all
+CMakeFiles/IdentifyOnStartup.dir/all: RESTConnector/UserDetailsDTO/CMakeFiles/UserDetailsDTO.dir/all
 	$(MAKE) -f CMakeFiles/IdentifyOnStartup.dir/build.make CMakeFiles/IdentifyOnStartup.dir/depend
 	$(MAKE) -f CMakeFiles/IdentifyOnStartup.dir/build.make CMakeFiles/IdentifyOnStartup.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/CMakeFiles --progress-num=1,2 "Built target IdentifyOnStartup"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/CMakeFiles --progress-num=5,6 "Built target IdentifyOnStartup"
 .PHONY : CMakeFiles/IdentifyOnStartup.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/IdentifyOnStartup.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/CMakeFiles 10
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/IdentifyOnStartup.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/CMakeFiles 0
 .PHONY : CMakeFiles/IdentifyOnStartup.dir/rule
@@ -93,6 +178,115 @@ IdentifyOnStartup: CMakeFiles/IdentifyOnStartup.dir/rule
 CMakeFiles/IdentifyOnStartup.dir/clean:
 	$(MAKE) -f CMakeFiles/IdentifyOnStartup.dir/build.make CMakeFiles/IdentifyOnStartup.dir/clean
 .PHONY : CMakeFiles/IdentifyOnStartup.dir/clean
+
+#=============================================================================
+# Target rules for target GraphicManagement/CMakeFiles/GraphicManager.dir
+
+# All Build rule for target.
+GraphicManagement/CMakeFiles/GraphicManager.dir/all:
+	$(MAKE) -f GraphicManagement/CMakeFiles/GraphicManager.dir/build.make GraphicManagement/CMakeFiles/GraphicManager.dir/depend
+	$(MAKE) -f GraphicManagement/CMakeFiles/GraphicManager.dir/build.make GraphicManagement/CMakeFiles/GraphicManager.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/CMakeFiles --progress-num=1,2 "Built target GraphicManager"
+.PHONY : GraphicManagement/CMakeFiles/GraphicManager.dir/all
+
+# Build rule for subdir invocation for target.
+GraphicManagement/CMakeFiles/GraphicManager.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/CMakeFiles 2
+	$(MAKE) -f CMakeFiles/Makefile2 GraphicManagement/CMakeFiles/GraphicManager.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/CMakeFiles 0
+.PHONY : GraphicManagement/CMakeFiles/GraphicManager.dir/rule
+
+# Convenience name for target.
+GraphicManager: GraphicManagement/CMakeFiles/GraphicManager.dir/rule
+
+.PHONY : GraphicManager
+
+# clean rule for target.
+GraphicManagement/CMakeFiles/GraphicManager.dir/clean:
+	$(MAKE) -f GraphicManagement/CMakeFiles/GraphicManager.dir/build.make GraphicManagement/CMakeFiles/GraphicManager.dir/clean
+.PHONY : GraphicManagement/CMakeFiles/GraphicManager.dir/clean
+
+#=============================================================================
+# Target rules for target RESTConnector/CMakeFiles/RESTConnector.dir
+
+# All Build rule for target.
+RESTConnector/CMakeFiles/RESTConnector.dir/all: RESTConnector/IOConfig/CMakeFiles/IOConfig.dir/all
+RESTConnector/CMakeFiles/RESTConnector.dir/all: RESTConnector/UserDetailsDTO/CMakeFiles/UserDetailsDTO.dir/all
+	$(MAKE) -f RESTConnector/CMakeFiles/RESTConnector.dir/build.make RESTConnector/CMakeFiles/RESTConnector.dir/depend
+	$(MAKE) -f RESTConnector/CMakeFiles/RESTConnector.dir/build.make RESTConnector/CMakeFiles/RESTConnector.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/CMakeFiles --progress-num=7,8 "Built target RESTConnector"
+.PHONY : RESTConnector/CMakeFiles/RESTConnector.dir/all
+
+# Build rule for subdir invocation for target.
+RESTConnector/CMakeFiles/RESTConnector.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/CMakeFiles 6
+	$(MAKE) -f CMakeFiles/Makefile2 RESTConnector/CMakeFiles/RESTConnector.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/CMakeFiles 0
+.PHONY : RESTConnector/CMakeFiles/RESTConnector.dir/rule
+
+# Convenience name for target.
+RESTConnector: RESTConnector/CMakeFiles/RESTConnector.dir/rule
+
+.PHONY : RESTConnector
+
+# clean rule for target.
+RESTConnector/CMakeFiles/RESTConnector.dir/clean:
+	$(MAKE) -f RESTConnector/CMakeFiles/RESTConnector.dir/build.make RESTConnector/CMakeFiles/RESTConnector.dir/clean
+.PHONY : RESTConnector/CMakeFiles/RESTConnector.dir/clean
+
+#=============================================================================
+# Target rules for target RESTConnector/IOConfig/CMakeFiles/IOConfig.dir
+
+# All Build rule for target.
+RESTConnector/IOConfig/CMakeFiles/IOConfig.dir/all:
+	$(MAKE) -f RESTConnector/IOConfig/CMakeFiles/IOConfig.dir/build.make RESTConnector/IOConfig/CMakeFiles/IOConfig.dir/depend
+	$(MAKE) -f RESTConnector/IOConfig/CMakeFiles/IOConfig.dir/build.make RESTConnector/IOConfig/CMakeFiles/IOConfig.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/CMakeFiles --progress-num=3,4 "Built target IOConfig"
+.PHONY : RESTConnector/IOConfig/CMakeFiles/IOConfig.dir/all
+
+# Build rule for subdir invocation for target.
+RESTConnector/IOConfig/CMakeFiles/IOConfig.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/CMakeFiles 2
+	$(MAKE) -f CMakeFiles/Makefile2 RESTConnector/IOConfig/CMakeFiles/IOConfig.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/CMakeFiles 0
+.PHONY : RESTConnector/IOConfig/CMakeFiles/IOConfig.dir/rule
+
+# Convenience name for target.
+IOConfig: RESTConnector/IOConfig/CMakeFiles/IOConfig.dir/rule
+
+.PHONY : IOConfig
+
+# clean rule for target.
+RESTConnector/IOConfig/CMakeFiles/IOConfig.dir/clean:
+	$(MAKE) -f RESTConnector/IOConfig/CMakeFiles/IOConfig.dir/build.make RESTConnector/IOConfig/CMakeFiles/IOConfig.dir/clean
+.PHONY : RESTConnector/IOConfig/CMakeFiles/IOConfig.dir/clean
+
+#=============================================================================
+# Target rules for target RESTConnector/UserDetailsDTO/CMakeFiles/UserDetailsDTO.dir
+
+# All Build rule for target.
+RESTConnector/UserDetailsDTO/CMakeFiles/UserDetailsDTO.dir/all:
+	$(MAKE) -f RESTConnector/UserDetailsDTO/CMakeFiles/UserDetailsDTO.dir/build.make RESTConnector/UserDetailsDTO/CMakeFiles/UserDetailsDTO.dir/depend
+	$(MAKE) -f RESTConnector/UserDetailsDTO/CMakeFiles/UserDetailsDTO.dir/build.make RESTConnector/UserDetailsDTO/CMakeFiles/UserDetailsDTO.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/CMakeFiles --progress-num=9,10 "Built target UserDetailsDTO"
+.PHONY : RESTConnector/UserDetailsDTO/CMakeFiles/UserDetailsDTO.dir/all
+
+# Build rule for subdir invocation for target.
+RESTConnector/UserDetailsDTO/CMakeFiles/UserDetailsDTO.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/CMakeFiles 2
+	$(MAKE) -f CMakeFiles/Makefile2 RESTConnector/UserDetailsDTO/CMakeFiles/UserDetailsDTO.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/CMakeFiles 0
+.PHONY : RESTConnector/UserDetailsDTO/CMakeFiles/UserDetailsDTO.dir/rule
+
+# Convenience name for target.
+UserDetailsDTO: RESTConnector/UserDetailsDTO/CMakeFiles/UserDetailsDTO.dir/rule
+
+.PHONY : UserDetailsDTO
+
+# clean rule for target.
+RESTConnector/UserDetailsDTO/CMakeFiles/UserDetailsDTO.dir/clean:
+	$(MAKE) -f RESTConnector/UserDetailsDTO/CMakeFiles/UserDetailsDTO.dir/build.make RESTConnector/UserDetailsDTO/CMakeFiles/UserDetailsDTO.dir/clean
+.PHONY : RESTConnector/UserDetailsDTO/CMakeFiles/UserDetailsDTO.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

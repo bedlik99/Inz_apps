@@ -6,6 +6,18 @@
 
 #IncludeRegexTransform: 
 
+/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/RESTConnector/IOConfig/IOConfig.h
+string
+-
+
+/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/RESTConnector/RestServerConnector.h
+string
+-
+cpprest/http_client.h
+-
+UserDetailsDTO.h
+/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/RESTConnector/UserDetailsDTO.h
+
 /home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/identify_main.cpp
 SFML/Graphics.hpp
 -
@@ -13,10 +25,28 @@ SFML/Window.hpp
 -
 SFML/System.hpp
 -
+sys/ptrace.h
+-
 iostream
 -
 string
 -
 cmath
+-
+GraphicManager.h
+/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/GraphicManager.h
+RESTConnector/RestServerConnector.h
+/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/RESTConnector/RestServerConnector.h
+RESTConnector/IOConfig/IOConfig.h
+/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/RESTConnector/IOConfig/IOConfig.h
+
+GraphicManagement/GraphicManager.h
+SFML/Graphics.hpp
+-
+string
+-
+
+RESTConnector/UserDetailsDTO/UserDetailsDTO.h
+string
 -
 

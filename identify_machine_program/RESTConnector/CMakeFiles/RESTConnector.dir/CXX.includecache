@@ -1,0 +1,36 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/RESTConnector/IOConfig/IOConfig.h
+string
+-
+
+/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/RESTConnector/RestServerConnector.cpp
+cpprest/http_client.h
+-
+cpprest/filestream.h
+-
+string
+-
+IOConfig/IOConfig.h
+/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/RESTConnector/IOConfig/IOConfig.h
+RestServerConnector.h
+/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/RESTConnector/RestServerConnector.h
+
+/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/RESTConnector/RestServerConnector.h
+string
+-
+cpprest/http_client.h
+-
+UserDetailsDTO.h
+/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/RESTConnector/UserDetailsDTO.h
+
+RESTConnector/UserDetailsDTO/UserDetailsDTO.h
+string
+-
+

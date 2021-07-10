@@ -8,7 +8,7 @@ using namespace std;
     FinalStudentDetails::FinalStudentDetails(string secretIndex,string indxNum,string uniqueCode,int grade,string date) :
     secretIndexNum(secretIndex),indexNum(indxNum),uniqueCode(uniqueCode),grade(grade),dateTime(date) {}
 
-    string FinalStudentDetails::getSecretIndexNum(){
+    string& FinalStudentDetails::getSecretIndexNum(){
         return secretIndexNum;
     }
 
@@ -16,7 +16,7 @@ using namespace std;
         secretIndexNum = secretIndex;
     }
 
-    string FinalStudentDetails::getIndexNum(){
+    string& FinalStudentDetails::getIndexNum(){
        return indexNum;
     }
 
@@ -24,7 +24,7 @@ using namespace std;
         indexNum = indexNumb;
     }
 
-    string FinalStudentDetails::getUniqueCode(){
+    string& FinalStudentDetails::getUniqueCode(){
         return uniqueCode;
     }
 
@@ -32,7 +32,7 @@ using namespace std;
         uniqueCode = code;
     }
 
-    int FinalStudentDetails::getGrade(){
+    int& FinalStudentDetails::getGrade(){
        return grade;
     }
 
@@ -40,7 +40,7 @@ using namespace std;
         grade = gr;
     }
 
-    string FinalStudentDetails::getDateTime(){
+    string& FinalStudentDetails::getDateTime(){
         return dateTime;
     }
 

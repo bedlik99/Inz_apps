@@ -123,6 +123,58 @@ IdentifyOnStartup/fast:
 	$(MAKE) -f CMakeFiles/IdentifyOnStartup.dir/build.make CMakeFiles/IdentifyOnStartup.dir/build
 .PHONY : IdentifyOnStartup/fast
 
+#=============================================================================
+# Target rules for targets named GraphicManager
+
+# Build rule for target.
+GraphicManager: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 GraphicManager
+.PHONY : GraphicManager
+
+# fast build rule for target.
+GraphicManager/fast:
+	$(MAKE) -f GraphicManagement/CMakeFiles/GraphicManager.dir/build.make GraphicManagement/CMakeFiles/GraphicManager.dir/build
+.PHONY : GraphicManager/fast
+
+#=============================================================================
+# Target rules for targets named RESTConnector
+
+# Build rule for target.
+RESTConnector: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 RESTConnector
+.PHONY : RESTConnector
+
+# fast build rule for target.
+RESTConnector/fast:
+	$(MAKE) -f RESTConnector/CMakeFiles/RESTConnector.dir/build.make RESTConnector/CMakeFiles/RESTConnector.dir/build
+.PHONY : RESTConnector/fast
+
+#=============================================================================
+# Target rules for targets named IOConfig
+
+# Build rule for target.
+IOConfig: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 IOConfig
+.PHONY : IOConfig
+
+# fast build rule for target.
+IOConfig/fast:
+	$(MAKE) -f RESTConnector/IOConfig/CMakeFiles/IOConfig.dir/build.make RESTConnector/IOConfig/CMakeFiles/IOConfig.dir/build
+.PHONY : IOConfig/fast
+
+#=============================================================================
+# Target rules for targets named UserDetailsDTO
+
+# Build rule for target.
+UserDetailsDTO: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 UserDetailsDTO
+.PHONY : UserDetailsDTO
+
+# fast build rule for target.
+UserDetailsDTO/fast:
+	$(MAKE) -f RESTConnector/UserDetailsDTO/CMakeFiles/UserDetailsDTO.dir/build.make RESTConnector/UserDetailsDTO/CMakeFiles/UserDetailsDTO.dir/build
+.PHONY : UserDetailsDTO/fast
+
 identify_main.o: identify_main.cpp.o
 
 .PHONY : identify_main.o
@@ -159,6 +211,10 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... IdentifyOnStartup"
+	@echo "... GraphicManager"
+	@echo "... RESTConnector"
+	@echo "... IOConfig"
+	@echo "... UserDetailsDTO"
 	@echo "... identify_main.o"
 	@echo "... identify_main.i"
 	@echo "... identify_main.s"

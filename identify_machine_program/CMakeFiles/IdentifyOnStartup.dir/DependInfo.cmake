@@ -18,10 +18,18 @@ set(CMAKE_TARGET_DEFINITIONS_CXX
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "."
+  "GraphicManagement"
+  "RESTConnector"
+  "RESTConnector/IOConfig"
+  "RESTConnector/UserDetailsDTO"
   )
 
 # Targets to which this target links.
 set(CMAKE_TARGET_LINKED_INFO_FILES
+  "/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/GraphicManagement/CMakeFiles/GraphicManager.dir/DependInfo.cmake"
+  "/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/RESTConnector/CMakeFiles/RESTConnector.dir/DependInfo.cmake"
+  "/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/RESTConnector/IOConfig/CMakeFiles/IOConfig.dir/DependInfo.cmake"
+  "/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/RESTConnector/UserDetailsDTO/CMakeFiles/UserDetailsDTO.dir/DependInfo.cmake"
   )
 
 # Fortran module output directory.
