@@ -6,5 +6,5 @@ CXX_FLAGS =   -std=gnu++17
 
 CXX_DEFINES = -DCPPREST_FORCE_HTTP_CLIENT_ASIO -DCPPREST_FORCE_HTTP_LISTENER_ASIO -DCPPREST_NO_SSL_LEAK_SUPPRESS
 
-CXX_INCLUDES = -I/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program -I/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/GraphicManagement -I/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/RESTConnector -I/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/RESTConnector/IOConfig -I/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/RESTConnector/UserDetailsDTO 
+CXX_INCLUDES = -I/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program -I/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/GraphicManagement -I/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/RESTConnector -I/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/RESTConnector/IOConfig -I/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/RESTConnector/UserDetailsDTO -I/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/RESTConnector/OPENSSL_AES_256 
 

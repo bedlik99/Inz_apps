@@ -3,6 +3,7 @@
 
 RESTConnector/CMakeFiles/RESTConnector.dir/RestServerConnector.cpp.o
  /home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/RESTConnector/IOConfig/IOConfig.h
+ /home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/RESTConnector/OPENSSL_AES_256/OpenSSLAesEncryptor.h
  /home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/RESTConnector/RestServerConnector.cpp
  /home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/RESTConnector/RestServerConnector.h
  RESTConnector/UserDetailsDTO/UserDetailsDTO.h

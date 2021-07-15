@@ -10,12 +10,18 @@
 string
 -
 
+/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/RESTConnector/OPENSSL_AES_256/OpenSSLAesEncryptor.h
+string
+-
+
 /home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/RESTConnector/RestServerConnector.cpp
 cpprest/http_client.h
 -
 cpprest/filestream.h
 -
 string
+-
+vector
 -
 IOConfig/IOConfig.h
 /home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/RESTConnector/IOConfig/IOConfig.h
@@ -29,6 +35,8 @@ cpprest/http_client.h
 -
 UserDetailsDTO.h
 /home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/RESTConnector/UserDetailsDTO.h
+OPENSSL_AES_256/OpenSSLAesEncryptor.h
+/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/RESTConnector/OPENSSL_AES_256/OpenSSLAesEncryptor.h
 
 RESTConnector/UserDetailsDTO/UserDetailsDTO.h
 string

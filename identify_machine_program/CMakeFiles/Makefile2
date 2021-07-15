@@ -97,12 +97,14 @@ GraphicManagement/clean: GraphicManagement/CMakeFiles/GraphicManager.dir/clean
 RESTConnector/all: RESTConnector/CMakeFiles/RESTConnector.dir/all
 RESTConnector/all: RESTConnector/IOConfig/all
 RESTConnector/all: RESTConnector/UserDetailsDTO/all
+RESTConnector/all: RESTConnector/OPENSSL_AES_256/all
 
 .PHONY : RESTConnector/all
 
 # Recursive "preinstall" directory target.
 RESTConnector/preinstall: RESTConnector/IOConfig/preinstall
 RESTConnector/preinstall: RESTConnector/UserDetailsDTO/preinstall
+RESTConnector/preinstall: RESTConnector/OPENSSL_AES_256/preinstall
 
 .PHONY : RESTConnector/preinstall
 
@@ -110,6 +112,7 @@ RESTConnector/preinstall: RESTConnector/UserDetailsDTO/preinstall
 RESTConnector/clean: RESTConnector/CMakeFiles/RESTConnector.dir/clean
 RESTConnector/clean: RESTConnector/IOConfig/clean
 RESTConnector/clean: RESTConnector/UserDetailsDTO/clean
+RESTConnector/clean: RESTConnector/OPENSSL_AES_256/clean
 
 .PHONY : RESTConnector/clean
 
@@ -130,6 +133,24 @@ RESTConnector/IOConfig/preinstall:
 RESTConnector/IOConfig/clean: RESTConnector/IOConfig/CMakeFiles/IOConfig.dir/clean
 
 .PHONY : RESTConnector/IOConfig/clean
+
+#=============================================================================
+# Directory level rules for directory RESTConnector/OPENSSL_AES_256
+
+# Recursive "all" directory target.
+RESTConnector/OPENSSL_AES_256/all: RESTConnector/OPENSSL_AES_256/CMakeFiles/OpenSSLAesEncryptor.dir/all
+
+.PHONY : RESTConnector/OPENSSL_AES_256/all
+
+# Recursive "preinstall" directory target.
+RESTConnector/OPENSSL_AES_256/preinstall:
+
+.PHONY : RESTConnector/OPENSSL_AES_256/preinstall
+
+# Recursive "clean" directory target.
+RESTConnector/OPENSSL_AES_256/clean: RESTConnector/OPENSSL_AES_256/CMakeFiles/OpenSSLAesEncryptor.dir/clean
+
+.PHONY : RESTConnector/OPENSSL_AES_256/clean
 
 #=============================================================================
 # Directory level rules for directory RESTConnector/UserDetailsDTO
@@ -157,6 +178,7 @@ CMakeFiles/IdentifyOnStartup.dir/all: GraphicManagement/CMakeFiles/GraphicManage
 CMakeFiles/IdentifyOnStartup.dir/all: RESTConnector/CMakeFiles/RESTConnector.dir/all
 CMakeFiles/IdentifyOnStartup.dir/all: RESTConnector/IOConfig/CMakeFiles/IOConfig.dir/all
 CMakeFiles/IdentifyOnStartup.dir/all: RESTConnector/UserDetailsDTO/CMakeFiles/UserDetailsDTO.dir/all
+CMakeFiles/IdentifyOnStartup.dir/all: RESTConnector/OPENSSL_AES_256/CMakeFiles/OpenSSLAesEncryptor.dir/all
 	$(MAKE) -f CMakeFiles/IdentifyOnStartup.dir/build.make CMakeFiles/IdentifyOnStartup.dir/depend
 	$(MAKE) -f CMakeFiles/IdentifyOnStartup.dir/build.make CMakeFiles/IdentifyOnStartup.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/CMakeFiles --progress-num=5,6 "Built target IdentifyOnStartup"
@@ -164,7 +186,7 @@ CMakeFiles/IdentifyOnStartup.dir/all: RESTConnector/UserDetailsDTO/CMakeFiles/Us
 
 # Build rule for subdir invocation for target.
 CMakeFiles/IdentifyOnStartup.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/CMakeFiles 10
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/CMakeFiles 12
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/IdentifyOnStartup.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/CMakeFiles 0
 .PHONY : CMakeFiles/IdentifyOnStartup.dir/rule
@@ -212,14 +234,15 @@ GraphicManagement/CMakeFiles/GraphicManager.dir/clean:
 # All Build rule for target.
 RESTConnector/CMakeFiles/RESTConnector.dir/all: RESTConnector/IOConfig/CMakeFiles/IOConfig.dir/all
 RESTConnector/CMakeFiles/RESTConnector.dir/all: RESTConnector/UserDetailsDTO/CMakeFiles/UserDetailsDTO.dir/all
+RESTConnector/CMakeFiles/RESTConnector.dir/all: RESTConnector/OPENSSL_AES_256/CMakeFiles/OpenSSLAesEncryptor.dir/all
 	$(MAKE) -f RESTConnector/CMakeFiles/RESTConnector.dir/build.make RESTConnector/CMakeFiles/RESTConnector.dir/depend
 	$(MAKE) -f RESTConnector/CMakeFiles/RESTConnector.dir/build.make RESTConnector/CMakeFiles/RESTConnector.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/CMakeFiles --progress-num=7,8 "Built target RESTConnector"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/CMakeFiles --progress-num=9,10 "Built target RESTConnector"
 .PHONY : RESTConnector/CMakeFiles/RESTConnector.dir/all
 
 # Build rule for subdir invocation for target.
 RESTConnector/CMakeFiles/RESTConnector.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/CMakeFiles 6
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/CMakeFiles 8
 	$(MAKE) -f CMakeFiles/Makefile2 RESTConnector/CMakeFiles/RESTConnector.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/CMakeFiles 0
 .PHONY : RESTConnector/CMakeFiles/RESTConnector.dir/rule
@@ -268,7 +291,7 @@ RESTConnector/IOConfig/CMakeFiles/IOConfig.dir/clean:
 RESTConnector/UserDetailsDTO/CMakeFiles/UserDetailsDTO.dir/all:
 	$(MAKE) -f RESTConnector/UserDetailsDTO/CMakeFiles/UserDetailsDTO.dir/build.make RESTConnector/UserDetailsDTO/CMakeFiles/UserDetailsDTO.dir/depend
 	$(MAKE) -f RESTConnector/UserDetailsDTO/CMakeFiles/UserDetailsDTO.dir/build.make RESTConnector/UserDetailsDTO/CMakeFiles/UserDetailsDTO.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/CMakeFiles --progress-num=9,10 "Built target UserDetailsDTO"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/CMakeFiles --progress-num=11,12 "Built target UserDetailsDTO"
 .PHONY : RESTConnector/UserDetailsDTO/CMakeFiles/UserDetailsDTO.dir/all
 
 # Build rule for subdir invocation for target.
@@ -287,6 +310,33 @@ UserDetailsDTO: RESTConnector/UserDetailsDTO/CMakeFiles/UserDetailsDTO.dir/rule
 RESTConnector/UserDetailsDTO/CMakeFiles/UserDetailsDTO.dir/clean:
 	$(MAKE) -f RESTConnector/UserDetailsDTO/CMakeFiles/UserDetailsDTO.dir/build.make RESTConnector/UserDetailsDTO/CMakeFiles/UserDetailsDTO.dir/clean
 .PHONY : RESTConnector/UserDetailsDTO/CMakeFiles/UserDetailsDTO.dir/clean
+
+#=============================================================================
+# Target rules for target RESTConnector/OPENSSL_AES_256/CMakeFiles/OpenSSLAesEncryptor.dir
+
+# All Build rule for target.
+RESTConnector/OPENSSL_AES_256/CMakeFiles/OpenSSLAesEncryptor.dir/all:
+	$(MAKE) -f RESTConnector/OPENSSL_AES_256/CMakeFiles/OpenSSLAesEncryptor.dir/build.make RESTConnector/OPENSSL_AES_256/CMakeFiles/OpenSSLAesEncryptor.dir/depend
+	$(MAKE) -f RESTConnector/OPENSSL_AES_256/CMakeFiles/OpenSSLAesEncryptor.dir/build.make RESTConnector/OPENSSL_AES_256/CMakeFiles/OpenSSLAesEncryptor.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/CMakeFiles --progress-num=7,8 "Built target OpenSSLAesEncryptor"
+.PHONY : RESTConnector/OPENSSL_AES_256/CMakeFiles/OpenSSLAesEncryptor.dir/all
+
+# Build rule for subdir invocation for target.
+RESTConnector/OPENSSL_AES_256/CMakeFiles/OpenSSLAesEncryptor.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/CMakeFiles 2
+	$(MAKE) -f CMakeFiles/Makefile2 RESTConnector/OPENSSL_AES_256/CMakeFiles/OpenSSLAesEncryptor.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/CMakeFiles 0
+.PHONY : RESTConnector/OPENSSL_AES_256/CMakeFiles/OpenSSLAesEncryptor.dir/rule
+
+# Convenience name for target.
+OpenSSLAesEncryptor: RESTConnector/OPENSSL_AES_256/CMakeFiles/OpenSSLAesEncryptor.dir/rule
+
+.PHONY : OpenSSLAesEncryptor
+
+# clean rule for target.
+RESTConnector/OPENSSL_AES_256/CMakeFiles/OpenSSLAesEncryptor.dir/clean:
+	$(MAKE) -f RESTConnector/OPENSSL_AES_256/CMakeFiles/OpenSSLAesEncryptor.dir/build.make RESTConnector/OPENSSL_AES_256/CMakeFiles/OpenSSLAesEncryptor.dir/clean
+.PHONY : RESTConnector/OPENSSL_AES_256/CMakeFiles/OpenSSLAesEncryptor.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

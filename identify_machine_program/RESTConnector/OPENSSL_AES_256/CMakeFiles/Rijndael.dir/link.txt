@@ -1,0 +1,2 @@
+/usr/bin/ar qc libRijndael.a  CMakeFiles/Rijndael.dir/rijndael.c.o
+/usr/bin/ranlib libRijndael.a
