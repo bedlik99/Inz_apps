@@ -88,7 +88,6 @@ IdentifyOnStartup: /usr/lib/x86_64-linux-gnu/libssl.so
 IdentifyOnStartup: /usr/lib/x86_64-linux-gnu/libcrypto.so
 IdentifyOnStartup: /usr/lib/x86_64-linux-gnu/libsfml-system.so.2.5.1
 IdentifyOnStartup: RESTConnector/IOConfig/libIOConfig.a
-IdentifyOnStartup: RESTConnector/UserDetailsDTO/libUserDetailsDTO.a
 IdentifyOnStartup: RESTConnector/OPENSSL_AES_256/libOpenSSLAesEncryptor.a
 IdentifyOnStartup: CMakeFiles/IdentifyOnStartup.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable IdentifyOnStartup"

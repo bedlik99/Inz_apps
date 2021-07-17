@@ -25,6 +25,8 @@ string.h
 -
 iostream
 -
+fstream
+-
 
 /home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/RESTConnector/OPENSSL_AES_256/OpenSSLAesEncryptor.h
 string

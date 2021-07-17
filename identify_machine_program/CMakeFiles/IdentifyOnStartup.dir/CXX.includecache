@@ -19,8 +19,6 @@ string
 -
 cpprest/http_client.h
 -
-UserDetailsDTO.h
-/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/RESTConnector/UserDetailsDTO.h
 OPENSSL_AES_256/OpenSSLAesEncryptor.h
 /home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/RESTConnector/OPENSSL_AES_256/OpenSSLAesEncryptor.h
 
@@ -49,10 +47,6 @@ RESTConnector/IOConfig/IOConfig.h
 GraphicManagement/GraphicManager.h
 SFML/Graphics.hpp
 -
-string
--
-
-RESTConnector/UserDetailsDTO/UserDetailsDTO.h
 string
 -
 

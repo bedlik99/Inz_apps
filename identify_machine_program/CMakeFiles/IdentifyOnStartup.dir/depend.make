@@ -6,5 +6,4 @@ CMakeFiles/IdentifyOnStartup.dir/identify_main.cpp.o: RESTConnector/OPENSSL_AES_
 CMakeFiles/IdentifyOnStartup.dir/identify_main.cpp.o: RESTConnector/RestServerConnector.h
 CMakeFiles/IdentifyOnStartup.dir/identify_main.cpp.o: identify_main.cpp
 CMakeFiles/IdentifyOnStartup.dir/identify_main.cpp.o: GraphicManagement/GraphicManager.h
-CMakeFiles/IdentifyOnStartup.dir/identify_main.cpp.o: RESTConnector/UserDetailsDTO/UserDetailsDTO.h
 

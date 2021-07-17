@@ -163,19 +163,6 @@ IOConfig/fast:
 .PHONY : IOConfig/fast
 
 #=============================================================================
-# Target rules for targets named UserDetailsDTO
-
-# Build rule for target.
-UserDetailsDTO: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 UserDetailsDTO
-.PHONY : UserDetailsDTO
-
-# fast build rule for target.
-UserDetailsDTO/fast:
-	$(MAKE) -f RESTConnector/UserDetailsDTO/CMakeFiles/UserDetailsDTO.dir/build.make RESTConnector/UserDetailsDTO/CMakeFiles/UserDetailsDTO.dir/build
-.PHONY : UserDetailsDTO/fast
-
-#=============================================================================
 # Target rules for targets named OpenSSLAesEncryptor
 
 # Build rule for target.
@@ -227,7 +214,6 @@ help:
 	@echo "... GraphicManager"
 	@echo "... RESTConnector"
 	@echo "... IOConfig"
-	@echo "... UserDetailsDTO"
 	@echo "... OpenSSLAesEncryptor"
 	@echo "... identify_main.o"
 	@echo "... identify_main.i"

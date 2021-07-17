@@ -1,2 +1,0 @@
-/usr/bin/ar qc libUserDetailsDTO.a  CMakeFiles/UserDetailsDTO.dir/UserDetailsDTO.cpp.o
-/usr/bin/ranlib libUserDetailsDTO.a

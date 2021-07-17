@@ -68,16 +68,33 @@ int main() {
  
                         if(ASCII_DEC_CODE == 13){
                             if(indexInput.getSize()!=6 || codeInput.getSize()!=6){
-                                handleInfoWindow(graphicManager->getFormatErrorInfo());
-                                indexInput="";
-                                codeInput="";
-                                graphicManager->getIndexInputText().setString(indexInput);
-                                graphicManager->getCodeInputText().setString(codeInput);
-                                tmpIndexCursor="_";
-                                tmpCodeCursor="_";
-                                graphicManager->getCursorCodePointer().setString(tmpCodeCursor);
-                                graphicManager->getCursorIndexPointer().setString(tmpIndexCursor);
-                                refreshDrawedObjects();
+                                if(indexInput.getSize()!=6 && codeInput.getSize()!=6){
+                                    handleInfoWindow(graphicManager->getFormatErrorInfo());
+                                    indexInput="";
+                                    codeInput="";
+                                    graphicManager->getIndexInputText().setString(indexInput);
+                                    graphicManager->getCodeInputText().setString(codeInput);
+                                    tmpCodeCursor="_";
+                                    tmpIndexCursor="_";
+                                    graphicManager->getCursorCodePointer().setString(tmpCodeCursor);
+                                    graphicManager->getCursorIndexPointer().setString(tmpIndexCursor);
+                                    refreshDrawedObjects();
+                                }else if(indexInput.getSize()!=6){
+                                    handleInfoWindow(graphicManager->getFormatErrorInfo());
+                                    indexInput="";
+                                    graphicManager->getIndexInputText().setString(indexInput);
+                                    tmpIndexCursor="_";
+                                    graphicManager->getCursorIndexPointer().setString(tmpIndexCursor);
+                                    refreshDrawedObjects();
+                                }else{
+                                    handleInfoWindow(graphicManager->getFormatErrorInfo());
+                                    codeInput="";
+                                    graphicManager->getCodeInputText().setString(codeInput);
+                                    tmpCodeCursor="_";
+                                    graphicManager->getCursorCodePointer().setString(tmpCodeCursor);
+                                    refreshDrawedObjects();
+                                }
+
                             }else{
                                 if(handleApprovalWindow()==1){
                                     restCommunicationReturnCode = restServerConnector->sendData(static_cast<std::string>(indexInput),static_cast<std::string>(codeInput));

@@ -21,7 +21,6 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "GraphicManagement"
   "RESTConnector"
   "RESTConnector/IOConfig"
-  "RESTConnector/UserDetailsDTO"
   "RESTConnector/OPENSSL_AES_256"
   )
 
@@ -30,7 +29,6 @@ set(CMAKE_TARGET_LINKED_INFO_FILES
   "/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/GraphicManagement/CMakeFiles/GraphicManager.dir/DependInfo.cmake"
   "/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/RESTConnector/CMakeFiles/RESTConnector.dir/DependInfo.cmake"
   "/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/RESTConnector/IOConfig/CMakeFiles/IOConfig.dir/DependInfo.cmake"
-  "/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/RESTConnector/UserDetailsDTO/CMakeFiles/UserDetailsDTO.dir/DependInfo.cmake"
   "/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/RESTConnector/OPENSSL_AES_256/CMakeFiles/OpenSSLAesEncryptor.dir/DependInfo.cmake"
   )
 

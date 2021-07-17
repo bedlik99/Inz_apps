@@ -15,7 +15,6 @@ set(CMAKE_MAKEFILE_DEPENDS
   "RESTConnector/CMakeLists.txt"
   "RESTConnector/IOConfig/CMakeLists.txt"
   "RESTConnector/OPENSSL_AES_256/CMakeLists.txt"
-  "RESTConnector/UserDetailsDTO/CMakeLists.txt"
   "/usr/lib/x86_64-linux-gnu/cmake/SFML/SFMLConfig.cmake"
   "/usr/lib/x86_64-linux-gnu/cmake/SFML/SFMLConfigDependencies.cmake"
   "/usr/lib/x86_64-linux-gnu/cmake/SFML/SFMLConfigVersion.cmake"
@@ -64,7 +63,6 @@ set(CMAKE_MAKEFILE_PRODUCTS
   "GraphicManagement/CMakeFiles/CMakeDirectoryInformation.cmake"
   "RESTConnector/CMakeFiles/CMakeDirectoryInformation.cmake"
   "RESTConnector/IOConfig/CMakeFiles/CMakeDirectoryInformation.cmake"
-  "RESTConnector/UserDetailsDTO/CMakeFiles/CMakeDirectoryInformation.cmake"
   "RESTConnector/OPENSSL_AES_256/CMakeFiles/CMakeDirectoryInformation.cmake"
   )
 
@@ -74,6 +72,5 @@ set(CMAKE_DEPEND_INFO_FILES
   "GraphicManagement/CMakeFiles/GraphicManager.dir/DependInfo.cmake"
   "RESTConnector/CMakeFiles/RESTConnector.dir/DependInfo.cmake"
   "RESTConnector/IOConfig/CMakeFiles/IOConfig.dir/DependInfo.cmake"
-  "RESTConnector/UserDetailsDTO/CMakeFiles/UserDetailsDTO.dir/DependInfo.cmake"
   "RESTConnector/OPENSSL_AES_256/CMakeFiles/OpenSSLAesEncryptor.dir/DependInfo.cmake"
   )

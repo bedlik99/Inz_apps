@@ -7,6 +7,7 @@
 #include <string>
 #include <string.h>
 #include <iostream>
+#include <fstream>
 
 #if _DEBUG
 #pragma comment(lib, "libcrypto64MDd.lib")
@@ -201,56 +202,76 @@ int OpenSSLAesEncryptor::decrypt(unsigned char *ciphertext, int ciphertext_len, 
     return plaintext_len;
 }
 
-unsigned char* OpenSSLAesEncryptor::getKey() {
-    return key;
+std::string OpenSSLAesEncryptor::encryptAES256WithOpenSSL(std::string strToEncrypt){
+    /* A 256 bit key */
+    /* A 128 bit IV */
+    std::string key,iv;
+    readSecrects(key,iv);
+
+    unsigned char* charsToEncrypt = (unsigned char *)strToEncrypt.c_str();
+    /*
+     * Buffer for ciphertext. Ensure the buffer is long enough for the
+     * ciphertext which may be longer than the plaintext, depending on the
+     * algorithm and mode.
+    */
+    unsigned char ciphertext[bufferLength];
+
+    /* Encrypt the plaintext */
+    int ciphertext_l = encrypt(
+    charsToEncrypt, 
+    strlen((char *)charsToEncrypt),
+    (unsigned char *)key.c_str(),
+    (unsigned char *)iv.c_str(),
+    ciphertext);
+
+    std::string encoded64String = base64_encode(ciphertext,ciphertext_l);
+
+    return encoded64String;
 }
 
-unsigned char* OpenSSLAesEncryptor::getIV() {
-	return iv;
+std::string OpenSSLAesEncryptor::decryptAES256WithOpenSSL(std::string encoded64StrToDecrypt){
+    /* A 256 bit key */
+    /* A 128 bit IV */
+    std::string key,iv;
+    readSecrects(key,iv);     
+
+    /* Buffer for the decrypted text */
+    unsigned char decryptedtext[bufferLength];
+    
+    /*Encrypted ciphertext to be decrypted*/
+    unsigned char encryptedtextTmp[bufferLength];
+    strcpy((char *)encryptedtextTmp, base64_decode(encoded64StrToDecrypt).c_str());
+
+    /* Decrypt the ciphertext */
+    int decryptedtext_l = decrypt(
+    encryptedtextTmp,
+    strlen((char *)encryptedtextTmp),
+    (unsigned char *)key.c_str(),
+    (unsigned char *)iv.c_str(),
+    decryptedtext);
+
+    /* Add a NULL terminator. We are expecting printable text */
+    decryptedtext[decryptedtext_l] = '\0';
+
+    return (char *)decryptedtext;
 }
 
-std::string OpenSSLAesEncryptor::getCipherTextAsString(){
-	return (char *)ciphertextStr;
+void OpenSSLAesEncryptor::readSecrects(std::string& key, std::string& iv){
+    std::string tmpStr;
+    int it=0;
+    std::ifstream secretFile(secretPath);
+    while (std::getline(secretFile, tmpStr)) {
+        switch (it) {
+            case 0:
+                key = tmpStr;
+                break;
+            case 1:
+                iv = tmpStr;
+                break;        
+            default:
+                break;
+        }
+        it++;
+        if(it==2) break;
+    }   
 }
-
-int& OpenSSLAesEncryptor::getCipherTextLength(){
-	return ciphertext_len;
-} 
-
-std::string OpenSSLAesEncryptor::getDecryptedTextAsString(){
-	return (char*)decryptedtextStr;
-}
-
-int& OpenSSLAesEncryptor::getDecryptedTextLength(){
-	return decryptedtext_len;
-}
-
-const int OpenSSLAesEncryptor::getBufferLength(){
-	return bufferLength;
-}
-
-void OpenSSLAesEncryptor::setKey(unsigned char* keyToBeSetted) {
-	key = keyToBeSetted;
-}
-
-void OpenSSLAesEncryptor::setIV(unsigned char* ivToBeSetted) {
-	iv = ivToBeSetted;
-}
-
-void OpenSSLAesEncryptor::setCipherText(unsigned char cipherTextToSet[bufferLength], int length){
-	strncpy((char *)ciphertextStr,(char *)cipherTextToSet, length);
-}
-
-void OpenSSLAesEncryptor::setCipherTextLength(int cipherLength){
-	ciphertext_len = cipherLength;
-}
-
-void OpenSSLAesEncryptor::setDecryptedText(unsigned char decryptedTextToSet[bufferLength], int length){
-	strncpy((char *)decryptedtextStr, (char *)decryptedTextToSet, length);
-}
-
-void OpenSSLAesEncryptor::setDecryptedTextLength(int decryptedLength){
-	decryptedtext_len = decryptedLength;
-}
-
-
