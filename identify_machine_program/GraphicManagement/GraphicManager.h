@@ -16,7 +16,7 @@ private:
     sf::Text guideText = sf::Text(" I. User manual:",font, 22);
     sf::Text instructionText1 = sf::Text(" Use only keyboard keys to communicate with GUI",calibriFont,20);
     sf::Text instructionText2 = sf::Text("- Use TAB key to move between 'Index' nr' and 'Code' input field",calibriFont,18);
-    sf::Text instructionText3 = sf::Text("- Use ESC key to cancel registration of the machine if You registered it before",calibriFont,18);
+    sf::Text instructionText3 = sf::Text("- Use ESC key to cancel registration",calibriFont,18);
     sf::Text instructionText4 = sf::Text("- Use ENTER key to send given credentials",calibriFont,18);
     sf::Text instructionText5 = sf::Text("- Use BACKSPACE key to remove input from input fields",calibriFont,18);
     sf::Text requirementsText0 = sf::Text("II. Requirements: ",font, 22);
@@ -34,6 +34,7 @@ private:
     sf::Text codeInputText = sf::Text("", font, 20);
     sf::Text cursorIndexPointer = sf::Text("_", font, 20);
     sf::Text cursorCodePointer = sf::Text("_", font, 20);
+    sf::Text arrowLinePointer = sf::Text("<---",font,20);
 
 public:
     GraphicManager();
@@ -66,5 +67,6 @@ public:
     sf::Text& getCodeInputText();
     sf::Text& getCursorIndexPointer();
     sf::Text& getCursorCodePointer();
+    sf::Text& getArrowLinePointer();
 
 };

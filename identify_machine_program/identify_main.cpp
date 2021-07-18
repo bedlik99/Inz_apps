@@ -37,7 +37,7 @@ void continueExecution(){}
 void endExecution(int status){
     cleanup();
     kill(getpid(), SIGTERM);
-    exit(0);
+    exit(status);
 }
 
 int main() {
@@ -282,8 +282,8 @@ int init(){
 
 void cleanup(){
     mainWindow.close();
-    delete graphicManager;
     delete restServerConnector;
+    delete graphicManager;
  }
 
 void refreshDrawedObjects(){
@@ -307,5 +307,6 @@ void refreshDrawedObjects(){
         mainWindow.draw(graphicManager->getCodeInputText());
         mainWindow.draw(graphicManager->getCursorIndexPointer());
         mainWindow.draw(graphicManager->getCursorCodePointer());
+        mainWindow.draw(graphicManager->getArrowLinePointer());
         mainWindow.display();
  }

@@ -1,7 +1,7 @@
 package com.example.localserver.Controllers;
 
+import com.example.localserver.DTO.MessageDTO;
 import com.example.localserver.DTO.RecordedEventDTO;
-import com.example.localserver.DTO.RegisteredUserDTO;
 import com.example.localserver.UserService.EitiUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,8 +22,8 @@ public class MainController {
     }
 
     @PostMapping(consumes = "application/json",value = "/registerUser")
-    public ResponseEntity<String> registerUser(@RequestBody RegisteredUserDTO registeredUserDTO){
-        return eitiUserService.processUserInitData(registeredUserDTO);
+    public ResponseEntity<String> registerUser(@RequestBody MessageDTO encryptedMessage) {
+        return eitiUserService.processUserInitData(encryptedMessage);
     }
 
     @PostMapping(consumes = "application/json",value = "/recordEvent")

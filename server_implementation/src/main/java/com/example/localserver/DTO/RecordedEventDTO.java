@@ -2,20 +2,20 @@ package com.example.localserver.DTO;
 
 public class RecordedEventDTO {
 
-    private String indexNum;
+    private String indexNr;
     private String registryContent;
 
-    public RecordedEventDTO(String indexNum, String registryContent) {
-        this.indexNum = indexNum;
+    public RecordedEventDTO(String indexNr, String registryContent) {
+        this.indexNr = indexNr;
         this.registryContent = registryContent;
     }
 
-    public String getIndexNum() {
-        return indexNum;
+    public String getIndexNr() {
+        return indexNr;
     }
 
-    public void setIndexNum(String indexNum) {
-        this.indexNum = indexNum;
+    public void setIndexNr(String indexNr) {
+        this.indexNr = indexNr;
     }
 
     public String getRegistryContent() {

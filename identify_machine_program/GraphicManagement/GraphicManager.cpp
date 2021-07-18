@@ -115,6 +115,10 @@ sf::Text& GraphicManager::getCursorCodePointer(){
     return cursorCodePointer;
 }
 
+sf::Text& GraphicManager::getArrowLinePointer(){
+    return arrowLinePointer;
+}
+
 int GraphicManager::init_graphic_objects(){
 
     if (!font.loadFromFile("arial.ttf") || !calibriFont.loadFromFile("CalibriRegular.ttf"))
@@ -204,6 +208,9 @@ int GraphicManager::init_graphic_objects(){
     cursorCodePointer.setColor(sf::Color(255,255,255));
     cursorCodePointer.setPosition(150,90);
     cursorCodePointer.setLetterSpacing(2.8);
+
+    arrowLinePointer.setColor(sf::Color(0,0,0));
+    arrowLinePointer.setPosition(90,40);
 
     return 0;
 }

@@ -1,9 +1,9 @@
-INSERT INTO registered_user VALUES (1,'300700','r5uOu');
-INSERT INTO registered_user VALUES (2,'300600','8vkAE');
-INSERT INTO registered_user VALUES (3,'300500','gK4L0');
-INSERT INTO registered_user VALUES (4,'300400','Ku6aa');
-INSERT INTO registered_user VALUES (5,'300300','fWuD3');
-INSERT INTO registered_user VALUES (6,'300200','UUiW6');
+INSERT INTO registered_user VALUES (1,'300700','r5uOuv');
+INSERT INTO registered_user VALUES (2,'300600','8vkAE&');
+INSERT INTO registered_user VALUES (3,'300500','gK4L0#');
+INSERT INTO registered_user VALUES (4,'300400','Ku6aa!');
+INSERT INTO registered_user VALUES (5,'300300','fWuD31');
+INSERT INTO registered_user VALUES (6,'300200','UUiW62');
 
 INSERT INTO recorded_event VALUES (1,PARSEDATETIME('03-05-2021 13:00:56','dd-MM-yyyy HH:mm:ss'),'User Registered',1);
 INSERT INTO recorded_event VALUES (2,PARSEDATETIME('14-01-2021 15:35:46','dd-MM-yyyy HH:mm:ss'),'User Registered',2);
