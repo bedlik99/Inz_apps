@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/jan/Documents/inz_dyp/Projekty_C++/HttpRestClient/client
+CMAKE_SOURCE_DIR = /home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/main_service_program
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/jan/Documents/inz_dyp/Projekty_C++/HttpRestClient/client
+CMAKE_BINARY_DIR = /home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/main_service_program
 
 # Include any dependencies generated for this target.
 include CMakeFiles/HttpRestClient.dir/depend.make
@@ -57,35 +57,36 @@ include CMakeFiles/HttpRestClient.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/HttpRestClient.dir/flags.make
 
-CMakeFiles/HttpRestClient.dir/client_main.cpp.o: CMakeFiles/HttpRestClient.dir/flags.make
-CMakeFiles/HttpRestClient.dir/client_main.cpp.o: client_main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jan/Documents/inz_dyp/Projekty_C++/HttpRestClient/client/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/HttpRestClient.dir/client_main.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/HttpRestClient.dir/client_main.cpp.o -c /home/jan/Documents/inz_dyp/Projekty_C++/HttpRestClient/client/client_main.cpp
+CMakeFiles/HttpRestClient.dir/client_service.cpp.o: CMakeFiles/HttpRestClient.dir/flags.make
+CMakeFiles/HttpRestClient.dir/client_service.cpp.o: client_service.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/main_service_program/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/HttpRestClient.dir/client_service.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/HttpRestClient.dir/client_service.cpp.o -c /home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/main_service_program/client_service.cpp
 
-CMakeFiles/HttpRestClient.dir/client_main.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/HttpRestClient.dir/client_main.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jan/Documents/inz_dyp/Projekty_C++/HttpRestClient/client/client_main.cpp > CMakeFiles/HttpRestClient.dir/client_main.cpp.i
+CMakeFiles/HttpRestClient.dir/client_service.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/HttpRestClient.dir/client_service.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/main_service_program/client_service.cpp > CMakeFiles/HttpRestClient.dir/client_service.cpp.i
 
-CMakeFiles/HttpRestClient.dir/client_main.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/HttpRestClient.dir/client_main.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jan/Documents/inz_dyp/Projekty_C++/HttpRestClient/client/client_main.cpp -o CMakeFiles/HttpRestClient.dir/client_main.cpp.s
+CMakeFiles/HttpRestClient.dir/client_service.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/HttpRestClient.dir/client_service.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/main_service_program/client_service.cpp -o CMakeFiles/HttpRestClient.dir/client_service.cpp.s
 
 # Object files for target HttpRestClient
 HttpRestClient_OBJECTS = \
-"CMakeFiles/HttpRestClient.dir/client_main.cpp.o"
+"CMakeFiles/HttpRestClient.dir/client_service.cpp.o"
 
 # External object files for target HttpRestClient
 HttpRestClient_EXTERNAL_OBJECTS =
 
-HttpRestClient: CMakeFiles/HttpRestClient.dir/client_main.cpp.o
+HttpRestClient: CMakeFiles/HttpRestClient.dir/client_service.cpp.o
 HttpRestClient: CMakeFiles/HttpRestClient.dir/build.make
 HttpRestClient: /usr/lib/x86_64-linux-gnu/libcpprest.so.2.10
-HttpRestClient: MessageDTO/libMessageDTO.a
-HttpRestClient: IOConfig/libIOConfig.a
+HttpRestClient: RESTConnector/libRESTConnector.a
 HttpRestClient: /usr/lib/x86_64-linux-gnu/libssl.so
 HttpRestClient: /usr/lib/x86_64-linux-gnu/libcrypto.so
+HttpRestClient: RESTConnector/IOConfig/libIOConfig.a
+HttpRestClient: RESTConnector/OPENSSL_AES_256/libOpenSSLAesEncryptor.a
 HttpRestClient: CMakeFiles/HttpRestClient.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/jan/Documents/inz_dyp/Projekty_C++/HttpRestClient/client/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable HttpRestClient"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/main_service_program/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable HttpRestClient"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/HttpRestClient.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -98,6 +99,6 @@ CMakeFiles/HttpRestClient.dir/clean:
 .PHONY : CMakeFiles/HttpRestClient.dir/clean
 
 CMakeFiles/HttpRestClient.dir/depend:
-	cd /home/jan/Documents/inz_dyp/Projekty_C++/HttpRestClient/client && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/jan/Documents/inz_dyp/Projekty_C++/HttpRestClient/client /home/jan/Documents/inz_dyp/Projekty_C++/HttpRestClient/client /home/jan/Documents/inz_dyp/Projekty_C++/HttpRestClient/client /home/jan/Documents/inz_dyp/Projekty_C++/HttpRestClient/client /home/jan/Documents/inz_dyp/Projekty_C++/HttpRestClient/client/CMakeFiles/HttpRestClient.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/main_service_program && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/main_service_program /home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/main_service_program /home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/main_service_program /home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/main_service_program /home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/main_service_program/CMakeFiles/HttpRestClient.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/HttpRestClient.dir/depend
 

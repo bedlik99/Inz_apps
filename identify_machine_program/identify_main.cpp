@@ -119,6 +119,13 @@ int main() {
 
                         if(ASCII_DEC_CODE == 9){
                             isIndex = !isIndex;
+                            if(isIndex){
+                                graphicManager->getArrowLinePointer().setPosition(320,40);
+                                 
+                            }else{
+                                graphicManager->getArrowLinePointer().setPosition(320,90);  
+                            }
+                            refreshDrawedObjects();
                         }
 
                         if(isIndex && ((ASCII_DEC_CODE >=48 && ASCII_DEC_CODE <=57) || ASCII_DEC_CODE==8)) {
@@ -297,7 +304,6 @@ void refreshDrawedObjects(){
         mainWindow.draw(graphicManager->getInstructionText5());
         mainWindow.draw(graphicManager->getRequirementsText0());
         mainWindow.draw(graphicManager->getRequirementsText1());
-        mainWindow.draw(graphicManager->getRequirementsText2());
         mainWindow.draw(graphicManager->getQuitConsoleText());
         mainWindow.draw(graphicManager->getIndexLabel());
         mainWindow.draw(graphicManager->getIndexText());

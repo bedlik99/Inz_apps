@@ -1,5 +1,5 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/HttpRestClient.dir/client_main.cpp.o"
+  "CMakeFiles/HttpRestClient.dir/client_service.cpp.o"
   "HttpRestClient"
   "HttpRestClient.pdb"
 )

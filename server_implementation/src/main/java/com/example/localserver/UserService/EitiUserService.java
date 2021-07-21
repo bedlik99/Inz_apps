@@ -35,15 +35,26 @@ public class EitiUserService {
     }
 
     public ResponseEntity<String> processUserInitData(MessageDTO encryptedMessage){
-        RegisteredUserDTO registeredUser = decryptMessage(encryptedMessage.getValue());
+        RegisteredUserDTO registeredUser = decryptRegisterMessage(encryptedMessage.getValue());
         if(registeredUser!=null){
             if(validateUserData(registeredUser)){
-                eitiUserRepository.save(new RegisteredUser(registeredUser.getIndexNr(),registeredUser.getUniqueCode()));
+                RegisteredUser userToSave = new RegisteredUser(registeredUser.getIndexNr(),registeredUser.getUniqueCode());
+                eitiUserRepository.save(userToSave);
+                recordedEventRepository.save(new RecordedEvent("Maszyna zostala zarejestrowana", LocalDateTime.now(), userToSave));
                 return ResponseEntity.status(HttpStatus.OK).body(encryptMessage(registeredUser.getIndexNr()));
             }
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("");
         }
         return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("");
+    }
+
+    public void processEventContent(MessageDTO encryptedMessage) {
+        RecordedEventDTO recordedEvent = decryptLogMessage(encryptedMessage.getValue());
+        RegisteredUser searchedUser;
+        if (recordedEvent != null) {
+          searchedUser = eitiUserRepository.findStudentByIndexNum(recordedEvent.getIndexNr());
+          recordedEventRepository.save(new RecordedEvent(recordedEvent.getRegistryContent(), LocalDateTime.now(), searchedUser));
+        }
     }
 
     private String encryptMessage(String indexNr) {
@@ -57,7 +68,7 @@ public class EitiUserService {
         return encryptedResponse;
     }
 
-    private RegisteredUserDTO decryptMessage(String encryptedMessage)  {
+    private RegisteredUserDTO decryptRegisterMessage(String encryptedMessage)  {
         RegisteredUserDTO registeredUserDTO=null;
         try{
             String decryptedMessage = CryptoUtil.decrypt(encryptedMessage);
@@ -69,11 +80,16 @@ public class EitiUserService {
         return registeredUserDTO;
     }
 
-    public void processEventContent(RecordedEventDTO recordedEventDTO) {
-        RegisteredUser searchedUser = eitiUserRepository.findStudentByIndexNum(recordedEventDTO.getIndexNr());
-        if(searchedUser != null){
-            recordedEventRepository.save(new RecordedEvent(recordedEventDTO.getRegistryContent(), LocalDateTime.now(),searchedUser));
+    private RecordedEventDTO decryptLogMessage(String encryptedMessage)  {
+        RecordedEventDTO recordedEventDTO=null;
+        try{
+            String decryptedMessage = CryptoUtil.decrypt(encryptedMessage);
+            recordedEventDTO = new Gson().fromJson(decryptedMessage,RecordedEventDTO.class);
+        }catch (InvalidAlgorithmParameterException | NoSuchPaddingException | IllegalBlockSizeException
+                | NoSuchAlgorithmException | BadPaddingException | InvalidKeyException e) {
+            e.printStackTrace();
         }
+        return recordedEventDTO;
     }
 
     private boolean validateUserData(RegisteredUserDTO registeredUserDTO){

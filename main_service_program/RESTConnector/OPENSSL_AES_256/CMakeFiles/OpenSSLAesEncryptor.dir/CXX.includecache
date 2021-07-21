@@ -1,0 +1,34 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/main_service_program/RESTConnector/OPENSSL_AES_256/OpenSSLAesEncryptor.cpp
+OpenSSLAesEncryptor.h
+/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/main_service_program/RESTConnector/OPENSSL_AES_256/OpenSSLAesEncryptor.h
+openssl/conf.h
+-
+openssl/err.h
+-
+openssl/evp.h
+-
+stdio.h
+-
+stdlib.h
+-
+string
+-
+string.h
+-
+iostream
+-
+fstream
+-
+
+/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/main_service_program/RESTConnector/OPENSSL_AES_256/OpenSSLAesEncryptor.h
+string
+-
+

@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/jan/Documents/inz_dyp/Projekty_C++/HttpRestClient/client/client_main.cpp" "/home/jan/Documents/inz_dyp/Projekty_C++/HttpRestClient/client/CMakeFiles/HttpRestClient.dir/client_main.cpp.o"
+  "/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/main_service_program/client_service.cpp" "/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/main_service_program/CMakeFiles/HttpRestClient.dir/client_service.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
@@ -18,14 +18,16 @@ set(CMAKE_TARGET_DEFINITIONS_CXX
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "."
-  "MessageDTO"
-  "IOConfig"
+  "RESTConnector"
+  "RESTConnector/IOConfig"
+  "RESTConnector/OPENSSL_AES_256"
   )
 
 # Targets to which this target links.
 set(CMAKE_TARGET_LINKED_INFO_FILES
-  "/home/jan/Documents/inz_dyp/Projekty_C++/HttpRestClient/client/MessageDTO/CMakeFiles/MessageDTO.dir/DependInfo.cmake"
-  "/home/jan/Documents/inz_dyp/Projekty_C++/HttpRestClient/client/IOConfig/CMakeFiles/IOConfig.dir/DependInfo.cmake"
+  "/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/main_service_program/RESTConnector/CMakeFiles/RESTConnector.dir/DependInfo.cmake"
+  "/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/main_service_program/RESTConnector/IOConfig/CMakeFiles/IOConfig.dir/DependInfo.cmake"
+  "/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/main_service_program/RESTConnector/OPENSSL_AES_256/CMakeFiles/OpenSSLAesEncryptor.dir/DependInfo.cmake"
   )
 
 # Fortran module output directory.

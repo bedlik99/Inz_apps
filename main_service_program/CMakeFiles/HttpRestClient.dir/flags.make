@@ -6,5 +6,5 @@ CXX_FLAGS =   -std=gnu++17
 
 CXX_DEFINES = -DCPPREST_FORCE_HTTP_CLIENT_ASIO -DCPPREST_FORCE_HTTP_LISTENER_ASIO -DCPPREST_NO_SSL_LEAK_SUPPRESS
 
-CXX_INCLUDES = -I/home/jan/Documents/inz_dyp/Projekty_C++/HttpRestClient/client -I/home/jan/Documents/inz_dyp/Projekty_C++/HttpRestClient/client/MessageDTO -I/home/jan/Documents/inz_dyp/Projekty_C++/HttpRestClient/client/IOConfig 
+CXX_INCLUDES = -I/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/main_service_program -I/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/main_service_program/RESTConnector -I/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/main_service_program/RESTConnector/IOConfig -I/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/main_service_program/RESTConnector/OPENSSL_AES_256 
 

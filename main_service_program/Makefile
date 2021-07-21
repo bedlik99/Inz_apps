@@ -48,10 +48,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/jan/Documents/inz_dyp/Projekty_C++/HttpRestClient/client
+CMAKE_SOURCE_DIR = /home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/main_service_program
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/jan/Documents/inz_dyp/Projekty_C++/HttpRestClient/client
+CMAKE_BINARY_DIR = /home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/main_service_program
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +80,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/jan/Documents/inz_dyp/Projekty_C++/HttpRestClient/client/CMakeFiles /home/jan/Documents/inz_dyp/Projekty_C++/HttpRestClient/client/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/main_service_program/CMakeFiles /home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/main_service_program/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/jan/Documents/inz_dyp/Projekty_C++/HttpRestClient/client/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/main_service_program/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -124,17 +124,17 @@ HttpRestClient/fast:
 .PHONY : HttpRestClient/fast
 
 #=============================================================================
-# Target rules for targets named MessageDTO
+# Target rules for targets named RESTConnector
 
 # Build rule for target.
-MessageDTO: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 MessageDTO
-.PHONY : MessageDTO
+RESTConnector: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 RESTConnector
+.PHONY : RESTConnector
 
 # fast build rule for target.
-MessageDTO/fast:
-	$(MAKE) -f MessageDTO/CMakeFiles/MessageDTO.dir/build.make MessageDTO/CMakeFiles/MessageDTO.dir/build
-.PHONY : MessageDTO/fast
+RESTConnector/fast:
+	$(MAKE) -f RESTConnector/CMakeFiles/RESTConnector.dir/build.make RESTConnector/CMakeFiles/RESTConnector.dir/build
+.PHONY : RESTConnector/fast
 
 #=============================================================================
 # Target rules for targets named IOConfig
@@ -146,35 +146,48 @@ IOConfig: cmake_check_build_system
 
 # fast build rule for target.
 IOConfig/fast:
-	$(MAKE) -f IOConfig/CMakeFiles/IOConfig.dir/build.make IOConfig/CMakeFiles/IOConfig.dir/build
+	$(MAKE) -f RESTConnector/IOConfig/CMakeFiles/IOConfig.dir/build.make RESTConnector/IOConfig/CMakeFiles/IOConfig.dir/build
 .PHONY : IOConfig/fast
 
-client_main.o: client_main.cpp.o
+#=============================================================================
+# Target rules for targets named OpenSSLAesEncryptor
 
-.PHONY : client_main.o
+# Build rule for target.
+OpenSSLAesEncryptor: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 OpenSSLAesEncryptor
+.PHONY : OpenSSLAesEncryptor
+
+# fast build rule for target.
+OpenSSLAesEncryptor/fast:
+	$(MAKE) -f RESTConnector/OPENSSL_AES_256/CMakeFiles/OpenSSLAesEncryptor.dir/build.make RESTConnector/OPENSSL_AES_256/CMakeFiles/OpenSSLAesEncryptor.dir/build
+.PHONY : OpenSSLAesEncryptor/fast
+
+client_service.o: client_service.cpp.o
+
+.PHONY : client_service.o
 
 # target to build an object file
-client_main.cpp.o:
-	$(MAKE) -f CMakeFiles/HttpRestClient.dir/build.make CMakeFiles/HttpRestClient.dir/client_main.cpp.o
-.PHONY : client_main.cpp.o
+client_service.cpp.o:
+	$(MAKE) -f CMakeFiles/HttpRestClient.dir/build.make CMakeFiles/HttpRestClient.dir/client_service.cpp.o
+.PHONY : client_service.cpp.o
 
-client_main.i: client_main.cpp.i
+client_service.i: client_service.cpp.i
 
-.PHONY : client_main.i
+.PHONY : client_service.i
 
 # target to preprocess a source file
-client_main.cpp.i:
-	$(MAKE) -f CMakeFiles/HttpRestClient.dir/build.make CMakeFiles/HttpRestClient.dir/client_main.cpp.i
-.PHONY : client_main.cpp.i
+client_service.cpp.i:
+	$(MAKE) -f CMakeFiles/HttpRestClient.dir/build.make CMakeFiles/HttpRestClient.dir/client_service.cpp.i
+.PHONY : client_service.cpp.i
 
-client_main.s: client_main.cpp.s
+client_service.s: client_service.cpp.s
 
-.PHONY : client_main.s
+.PHONY : client_service.s
 
 # target to generate assembly for a file
-client_main.cpp.s:
-	$(MAKE) -f CMakeFiles/HttpRestClient.dir/build.make CMakeFiles/HttpRestClient.dir/client_main.cpp.s
-.PHONY : client_main.cpp.s
+client_service.cpp.s:
+	$(MAKE) -f CMakeFiles/HttpRestClient.dir/build.make CMakeFiles/HttpRestClient.dir/client_service.cpp.s
+.PHONY : client_service.cpp.s
 
 # Help Target
 help:
@@ -185,11 +198,12 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... HttpRestClient"
-	@echo "... MessageDTO"
+	@echo "... RESTConnector"
 	@echo "... IOConfig"
-	@echo "... client_main.o"
-	@echo "... client_main.i"
-	@echo "... client_main.s"
+	@echo "... OpenSSLAesEncryptor"
+	@echo "... client_service.o"
+	@echo "... client_service.i"
+	@echo "... client_service.s"
 .PHONY : help
 
 

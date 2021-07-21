@@ -1,7 +1,6 @@
 package com.example.localserver.Controllers;
 
 import com.example.localserver.DTO.MessageDTO;
-import com.example.localserver.DTO.RecordedEventDTO;
 import com.example.localserver.UserService.EitiUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,8 +27,8 @@ public class MainController {
 
     @PostMapping(consumes = "application/json",value = "/recordEvent")
     @ResponseStatus(value = HttpStatus.OK)
-    public void recordEvent(@RequestBody RecordedEventDTO recordedEventDTO){
-        eitiUserService.processEventContent(recordedEventDTO);
+    public void recordEvent(@RequestBody MessageDTO encryptedMessage){
+        eitiUserService.processEventContent(encryptedMessage);
     }
 
 }

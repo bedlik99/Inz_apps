@@ -5,6 +5,8 @@ public class RecordedEventDTO {
     private String indexNr;
     private String registryContent;
 
+    public RecordedEventDTO(){}
+
     public RecordedEventDTO(String indexNr, String registryContent) {
         this.indexNr = indexNr;
         this.registryContent = registryContent;
@@ -24,5 +26,12 @@ public class RecordedEventDTO {
 
     public void setRegistryContent(String registryContent) {
         this.registryContent = registryContent;
+    }
+
+    @Override
+    public String toString() {
+        return "{" + "indexNr='" + indexNr + '\'' +
+                ", registryContent='" + registryContent + '\'' +
+                '}';
     }
 }

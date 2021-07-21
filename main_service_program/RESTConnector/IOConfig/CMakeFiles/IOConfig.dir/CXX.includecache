@@ -1,0 +1,24 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/main_service_program/RESTConnector/IOConfig/IOConfig.cpp
+string
+-
+iostream
+-
+fstream
+-
+sys/stat.h
+-
+IOConfig.h
+/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/main_service_program/RESTConnector/IOConfig/IOConfig.h
+
+/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/main_service_program/RESTConnector/IOConfig/IOConfig.h
+string
+-
+

@@ -1,4 +1,4 @@
-# Install script for directory: /home/jan/Documents/inz_dyp/Projekty_C++/HttpRestClient/client
+# Install script for directory: /home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/main_service_program
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -39,8 +39,7 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/jan/Documents/inz_dyp/Projekty_C++/HttpRestClient/client/MessageDTO/cmake_install.cmake")
-  include("/home/jan/Documents/inz_dyp/Projekty_C++/HttpRestClient/client/IOConfig/cmake_install.cmake")
+  include("/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/main_service_program/RESTConnector/cmake_install.cmake")
 
 endif()
 
@@ -52,5 +51,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/jan/Documents/inz_dyp/Projekty_C++/HttpRestClient/client/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/main_service_program/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

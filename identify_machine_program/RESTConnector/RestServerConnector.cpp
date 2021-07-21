@@ -28,7 +28,7 @@ int RestServerConnector::sendData(std::string inputIndex, std::string inputCode)
 }
 
 int RestServerConnector::executeRequest(json::value json_par, std::string filePath, std::string endpointName){
-    static IOConfig ioConfig = IOConfig();
+    //static IOConfig ioConfig = IOConfig();
     static int returnedHttpCode;
     static std::string responseString;
     auto fileStream = std::make_shared<ostream>();
@@ -41,7 +41,7 @@ int RestServerConnector::executeRequest(json::value json_par, std::string filePa
                 *fileStream = outFile;
 
                 // Create http_client to send the request.
-                http_client client("http://localhost:8080");
+                http_client client(serverUrl);
 
                 uri_builder builder(endpointName);
                 //builder.append_query("q", "facebook");

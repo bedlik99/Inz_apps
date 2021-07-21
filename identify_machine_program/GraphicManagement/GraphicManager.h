@@ -21,7 +21,6 @@ private:
     sf::Text instructionText5 = sf::Text("- Use BACKSPACE key to remove input from input fields",calibriFont,18);
     sf::Text requirementsText0 = sf::Text("II. Requirements: ",font, 22);
     sf::Text requirementsText1 = sf::Text("* Both 'Index nr' and 'Code' are required",calibriFont,18);
-    sf::Text requirementsText2 = sf::Text("* You can register this machine only once",calibriFont,18);
     sf::Text indexText = sf::Text("Index nr: ", font, 20);
     sf::Text indexInputText = sf::Text("", font, 20);
     sf::Text errorText = sf::Text("",calibriFont,20);
@@ -34,7 +33,7 @@ private:
     sf::Text codeInputText = sf::Text("", font, 20);
     sf::Text cursorIndexPointer = sf::Text("_", font, 20);
     sf::Text cursorCodePointer = sf::Text("_", font, 20);
-    sf::Text arrowLinePointer = sf::Text("<---",font,20);
+    sf::Text arrowLinePointer = sf::Text("<",font,20);
 
 public:
     GraphicManager();
@@ -54,7 +53,6 @@ public:
     sf::Text& getInstructionText5();
     sf::Text& getRequirementsText0();
     sf::Text& getRequirementsText1();
-    sf::Text& getRequirementsText2();
     sf::Text& getIndexText();
     sf::Text& getIndexInputText();
     sf::Text& getErrorText();

@@ -44,86 +44,107 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/jan/Documents/inz_dyp/Projekty_C++/HttpRestClient/client
+CMAKE_SOURCE_DIR = /home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/main_service_program
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/jan/Documents/inz_dyp/Projekty_C++/HttpRestClient/client
+CMAKE_BINARY_DIR = /home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/main_service_program
 
 #=============================================================================
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
 all: CMakeFiles/HttpRestClient.dir/all
-all: MessageDTO/all
-all: IOConfig/all
+all: RESTConnector/all
 
 .PHONY : all
 
 # The main recursive "preinstall" target.
-preinstall: MessageDTO/preinstall
-preinstall: IOConfig/preinstall
+preinstall: RESTConnector/preinstall
 
 .PHONY : preinstall
 
 # The main recursive "clean" target.
 clean: CMakeFiles/HttpRestClient.dir/clean
-clean: MessageDTO/clean
-clean: IOConfig/clean
+clean: RESTConnector/clean
 
 .PHONY : clean
 
 #=============================================================================
-# Directory level rules for directory IOConfig
+# Directory level rules for directory RESTConnector
 
 # Recursive "all" directory target.
-IOConfig/all: IOConfig/CMakeFiles/IOConfig.dir/all
+RESTConnector/all: RESTConnector/CMakeFiles/RESTConnector.dir/all
+RESTConnector/all: RESTConnector/IOConfig/all
+RESTConnector/all: RESTConnector/OPENSSL_AES_256/all
 
-.PHONY : IOConfig/all
+.PHONY : RESTConnector/all
 
 # Recursive "preinstall" directory target.
-IOConfig/preinstall:
+RESTConnector/preinstall: RESTConnector/IOConfig/preinstall
+RESTConnector/preinstall: RESTConnector/OPENSSL_AES_256/preinstall
 
-.PHONY : IOConfig/preinstall
+.PHONY : RESTConnector/preinstall
 
 # Recursive "clean" directory target.
-IOConfig/clean: IOConfig/CMakeFiles/IOConfig.dir/clean
+RESTConnector/clean: RESTConnector/CMakeFiles/RESTConnector.dir/clean
+RESTConnector/clean: RESTConnector/IOConfig/clean
+RESTConnector/clean: RESTConnector/OPENSSL_AES_256/clean
 
-.PHONY : IOConfig/clean
+.PHONY : RESTConnector/clean
 
 #=============================================================================
-# Directory level rules for directory MessageDTO
+# Directory level rules for directory RESTConnector/IOConfig
 
 # Recursive "all" directory target.
-MessageDTO/all: MessageDTO/CMakeFiles/MessageDTO.dir/all
+RESTConnector/IOConfig/all: RESTConnector/IOConfig/CMakeFiles/IOConfig.dir/all
 
-.PHONY : MessageDTO/all
+.PHONY : RESTConnector/IOConfig/all
 
 # Recursive "preinstall" directory target.
-MessageDTO/preinstall:
+RESTConnector/IOConfig/preinstall:
 
-.PHONY : MessageDTO/preinstall
+.PHONY : RESTConnector/IOConfig/preinstall
 
 # Recursive "clean" directory target.
-MessageDTO/clean: MessageDTO/CMakeFiles/MessageDTO.dir/clean
+RESTConnector/IOConfig/clean: RESTConnector/IOConfig/CMakeFiles/IOConfig.dir/clean
 
-.PHONY : MessageDTO/clean
+.PHONY : RESTConnector/IOConfig/clean
+
+#=============================================================================
+# Directory level rules for directory RESTConnector/OPENSSL_AES_256
+
+# Recursive "all" directory target.
+RESTConnector/OPENSSL_AES_256/all: RESTConnector/OPENSSL_AES_256/CMakeFiles/OpenSSLAesEncryptor.dir/all
+
+.PHONY : RESTConnector/OPENSSL_AES_256/all
+
+# Recursive "preinstall" directory target.
+RESTConnector/OPENSSL_AES_256/preinstall:
+
+.PHONY : RESTConnector/OPENSSL_AES_256/preinstall
+
+# Recursive "clean" directory target.
+RESTConnector/OPENSSL_AES_256/clean: RESTConnector/OPENSSL_AES_256/CMakeFiles/OpenSSLAesEncryptor.dir/clean
+
+.PHONY : RESTConnector/OPENSSL_AES_256/clean
 
 #=============================================================================
 # Target rules for target CMakeFiles/HttpRestClient.dir
 
 # All Build rule for target.
-CMakeFiles/HttpRestClient.dir/all: MessageDTO/CMakeFiles/MessageDTO.dir/all
-CMakeFiles/HttpRestClient.dir/all: IOConfig/CMakeFiles/IOConfig.dir/all
+CMakeFiles/HttpRestClient.dir/all: RESTConnector/CMakeFiles/RESTConnector.dir/all
+CMakeFiles/HttpRestClient.dir/all: RESTConnector/IOConfig/CMakeFiles/IOConfig.dir/all
+CMakeFiles/HttpRestClient.dir/all: RESTConnector/OPENSSL_AES_256/CMakeFiles/OpenSSLAesEncryptor.dir/all
 	$(MAKE) -f CMakeFiles/HttpRestClient.dir/build.make CMakeFiles/HttpRestClient.dir/depend
 	$(MAKE) -f CMakeFiles/HttpRestClient.dir/build.make CMakeFiles/HttpRestClient.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/jan/Documents/inz_dyp/Projekty_C++/HttpRestClient/client/CMakeFiles --progress-num=1,2 "Built target HttpRestClient"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/main_service_program/CMakeFiles --progress-num=1,2 "Built target HttpRestClient"
 .PHONY : CMakeFiles/HttpRestClient.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/HttpRestClient.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/jan/Documents/inz_dyp/Projekty_C++/HttpRestClient/client/CMakeFiles 7
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/main_service_program/CMakeFiles 8
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/HttpRestClient.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/jan/Documents/inz_dyp/Projekty_C++/HttpRestClient/client/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/main_service_program/CMakeFiles 0
 .PHONY : CMakeFiles/HttpRestClient.dir/rule
 
 # Convenience name for target.
@@ -137,58 +158,86 @@ CMakeFiles/HttpRestClient.dir/clean:
 .PHONY : CMakeFiles/HttpRestClient.dir/clean
 
 #=============================================================================
-# Target rules for target MessageDTO/CMakeFiles/MessageDTO.dir
+# Target rules for target RESTConnector/CMakeFiles/RESTConnector.dir
 
 # All Build rule for target.
-MessageDTO/CMakeFiles/MessageDTO.dir/all:
-	$(MAKE) -f MessageDTO/CMakeFiles/MessageDTO.dir/build.make MessageDTO/CMakeFiles/MessageDTO.dir/depend
-	$(MAKE) -f MessageDTO/CMakeFiles/MessageDTO.dir/build.make MessageDTO/CMakeFiles/MessageDTO.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/jan/Documents/inz_dyp/Projekty_C++/HttpRestClient/client/CMakeFiles --progress-num=5,6,7 "Built target MessageDTO"
-.PHONY : MessageDTO/CMakeFiles/MessageDTO.dir/all
+RESTConnector/CMakeFiles/RESTConnector.dir/all: RESTConnector/IOConfig/CMakeFiles/IOConfig.dir/all
+RESTConnector/CMakeFiles/RESTConnector.dir/all: RESTConnector/OPENSSL_AES_256/CMakeFiles/OpenSSLAesEncryptor.dir/all
+	$(MAKE) -f RESTConnector/CMakeFiles/RESTConnector.dir/build.make RESTConnector/CMakeFiles/RESTConnector.dir/depend
+	$(MAKE) -f RESTConnector/CMakeFiles/RESTConnector.dir/build.make RESTConnector/CMakeFiles/RESTConnector.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/main_service_program/CMakeFiles --progress-num=7,8 "Built target RESTConnector"
+.PHONY : RESTConnector/CMakeFiles/RESTConnector.dir/all
 
 # Build rule for subdir invocation for target.
-MessageDTO/CMakeFiles/MessageDTO.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/jan/Documents/inz_dyp/Projekty_C++/HttpRestClient/client/CMakeFiles 3
-	$(MAKE) -f CMakeFiles/Makefile2 MessageDTO/CMakeFiles/MessageDTO.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/jan/Documents/inz_dyp/Projekty_C++/HttpRestClient/client/CMakeFiles 0
-.PHONY : MessageDTO/CMakeFiles/MessageDTO.dir/rule
+RESTConnector/CMakeFiles/RESTConnector.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/main_service_program/CMakeFiles 6
+	$(MAKE) -f CMakeFiles/Makefile2 RESTConnector/CMakeFiles/RESTConnector.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/main_service_program/CMakeFiles 0
+.PHONY : RESTConnector/CMakeFiles/RESTConnector.dir/rule
 
 # Convenience name for target.
-MessageDTO: MessageDTO/CMakeFiles/MessageDTO.dir/rule
+RESTConnector: RESTConnector/CMakeFiles/RESTConnector.dir/rule
 
-.PHONY : MessageDTO
+.PHONY : RESTConnector
 
 # clean rule for target.
-MessageDTO/CMakeFiles/MessageDTO.dir/clean:
-	$(MAKE) -f MessageDTO/CMakeFiles/MessageDTO.dir/build.make MessageDTO/CMakeFiles/MessageDTO.dir/clean
-.PHONY : MessageDTO/CMakeFiles/MessageDTO.dir/clean
+RESTConnector/CMakeFiles/RESTConnector.dir/clean:
+	$(MAKE) -f RESTConnector/CMakeFiles/RESTConnector.dir/build.make RESTConnector/CMakeFiles/RESTConnector.dir/clean
+.PHONY : RESTConnector/CMakeFiles/RESTConnector.dir/clean
 
 #=============================================================================
-# Target rules for target IOConfig/CMakeFiles/IOConfig.dir
+# Target rules for target RESTConnector/IOConfig/CMakeFiles/IOConfig.dir
 
 # All Build rule for target.
-IOConfig/CMakeFiles/IOConfig.dir/all:
-	$(MAKE) -f IOConfig/CMakeFiles/IOConfig.dir/build.make IOConfig/CMakeFiles/IOConfig.dir/depend
-	$(MAKE) -f IOConfig/CMakeFiles/IOConfig.dir/build.make IOConfig/CMakeFiles/IOConfig.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/jan/Documents/inz_dyp/Projekty_C++/HttpRestClient/client/CMakeFiles --progress-num=3,4 "Built target IOConfig"
-.PHONY : IOConfig/CMakeFiles/IOConfig.dir/all
+RESTConnector/IOConfig/CMakeFiles/IOConfig.dir/all:
+	$(MAKE) -f RESTConnector/IOConfig/CMakeFiles/IOConfig.dir/build.make RESTConnector/IOConfig/CMakeFiles/IOConfig.dir/depend
+	$(MAKE) -f RESTConnector/IOConfig/CMakeFiles/IOConfig.dir/build.make RESTConnector/IOConfig/CMakeFiles/IOConfig.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/main_service_program/CMakeFiles --progress-num=3,4 "Built target IOConfig"
+.PHONY : RESTConnector/IOConfig/CMakeFiles/IOConfig.dir/all
 
 # Build rule for subdir invocation for target.
-IOConfig/CMakeFiles/IOConfig.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/jan/Documents/inz_dyp/Projekty_C++/HttpRestClient/client/CMakeFiles 2
-	$(MAKE) -f CMakeFiles/Makefile2 IOConfig/CMakeFiles/IOConfig.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/jan/Documents/inz_dyp/Projekty_C++/HttpRestClient/client/CMakeFiles 0
-.PHONY : IOConfig/CMakeFiles/IOConfig.dir/rule
+RESTConnector/IOConfig/CMakeFiles/IOConfig.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/main_service_program/CMakeFiles 2
+	$(MAKE) -f CMakeFiles/Makefile2 RESTConnector/IOConfig/CMakeFiles/IOConfig.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/main_service_program/CMakeFiles 0
+.PHONY : RESTConnector/IOConfig/CMakeFiles/IOConfig.dir/rule
 
 # Convenience name for target.
-IOConfig: IOConfig/CMakeFiles/IOConfig.dir/rule
+IOConfig: RESTConnector/IOConfig/CMakeFiles/IOConfig.dir/rule
 
 .PHONY : IOConfig
 
 # clean rule for target.
-IOConfig/CMakeFiles/IOConfig.dir/clean:
-	$(MAKE) -f IOConfig/CMakeFiles/IOConfig.dir/build.make IOConfig/CMakeFiles/IOConfig.dir/clean
-.PHONY : IOConfig/CMakeFiles/IOConfig.dir/clean
+RESTConnector/IOConfig/CMakeFiles/IOConfig.dir/clean:
+	$(MAKE) -f RESTConnector/IOConfig/CMakeFiles/IOConfig.dir/build.make RESTConnector/IOConfig/CMakeFiles/IOConfig.dir/clean
+.PHONY : RESTConnector/IOConfig/CMakeFiles/IOConfig.dir/clean
+
+#=============================================================================
+# Target rules for target RESTConnector/OPENSSL_AES_256/CMakeFiles/OpenSSLAesEncryptor.dir
+
+# All Build rule for target.
+RESTConnector/OPENSSL_AES_256/CMakeFiles/OpenSSLAesEncryptor.dir/all:
+	$(MAKE) -f RESTConnector/OPENSSL_AES_256/CMakeFiles/OpenSSLAesEncryptor.dir/build.make RESTConnector/OPENSSL_AES_256/CMakeFiles/OpenSSLAesEncryptor.dir/depend
+	$(MAKE) -f RESTConnector/OPENSSL_AES_256/CMakeFiles/OpenSSLAesEncryptor.dir/build.make RESTConnector/OPENSSL_AES_256/CMakeFiles/OpenSSLAesEncryptor.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/main_service_program/CMakeFiles --progress-num=5,6 "Built target OpenSSLAesEncryptor"
+.PHONY : RESTConnector/OPENSSL_AES_256/CMakeFiles/OpenSSLAesEncryptor.dir/all
+
+# Build rule for subdir invocation for target.
+RESTConnector/OPENSSL_AES_256/CMakeFiles/OpenSSLAesEncryptor.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/main_service_program/CMakeFiles 2
+	$(MAKE) -f CMakeFiles/Makefile2 RESTConnector/OPENSSL_AES_256/CMakeFiles/OpenSSLAesEncryptor.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/main_service_program/CMakeFiles 0
+.PHONY : RESTConnector/OPENSSL_AES_256/CMakeFiles/OpenSSLAesEncryptor.dir/rule
+
+# Convenience name for target.
+OpenSSLAesEncryptor: RESTConnector/OPENSSL_AES_256/CMakeFiles/OpenSSLAesEncryptor.dir/rule
+
+.PHONY : OpenSSLAesEncryptor
+
+# clean rule for target.
+RESTConnector/OPENSSL_AES_256/CMakeFiles/OpenSSLAesEncryptor.dir/clean:
+	$(MAKE) -f RESTConnector/OPENSSL_AES_256/CMakeFiles/OpenSSLAesEncryptor.dir/build.make RESTConnector/OPENSSL_AES_256/CMakeFiles/OpenSSLAesEncryptor.dir/clean
+.PHONY : RESTConnector/OPENSSL_AES_256/CMakeFiles/OpenSSLAesEncryptor.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

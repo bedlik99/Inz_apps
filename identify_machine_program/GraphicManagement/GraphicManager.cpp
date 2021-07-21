@@ -63,10 +63,6 @@ sf::Text& GraphicManager::getRequirementsText1(){
     return requirementsText1;
 }
 
-sf::Text& GraphicManager::getRequirementsText2(){
-    return requirementsText2;
-}
-
 sf::Text& GraphicManager::getIndexText(){
     return indexText;
 }
@@ -149,9 +145,6 @@ int GraphicManager::init_graphic_objects(){
     requirementsText1.setPosition(5,500);
     requirementsText1.setColor(sf::Color(0, 0, 0));
 
-    requirementsText2.setPosition(5,550);
-    requirementsText2.setColor(sf::Color(0, 0, 0));
-
     registerText.setPosition(200,650);
     registerText.setColor(sf::Color(0, 0, 0));
 
@@ -210,7 +203,7 @@ int GraphicManager::init_graphic_objects(){
     cursorCodePointer.setLetterSpacing(2.8);
 
     arrowLinePointer.setColor(sf::Color(0,0,0));
-    arrowLinePointer.setPosition(90,40);
+    arrowLinePointer.setPosition(320,40);
 
     return 0;
 }
