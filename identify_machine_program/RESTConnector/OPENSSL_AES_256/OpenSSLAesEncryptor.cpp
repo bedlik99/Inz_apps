@@ -274,6 +274,7 @@ void OpenSSLAesEncryptor::readSecrects(std::string& key, std::string& iv){
         it++;
         if(it==2) break;
     }   
+    secretFile.close();
 }
 
 const std::string OpenSSLAesEncryptor::getSecretPath(){

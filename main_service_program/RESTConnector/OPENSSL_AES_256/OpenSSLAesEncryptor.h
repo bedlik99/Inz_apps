@@ -6,7 +6,7 @@ private:
     "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     "abcdefghijklmnopqrstuvwxyz"
     "0123456789+/";
-    const static int bufferLength = 1024;
+    const static int bufferLength = 2048;
     const std::string secretPath = "/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/scrtk/keys";
 
     std::string base64_encode(unsigned char* bytes_to_encode, int in_len);

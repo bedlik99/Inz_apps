@@ -14,7 +14,7 @@ void waitForBlink();
 void continueExecution();
 void endExecution(int status);
 void refreshDrawedObjects();
-void handleInfoWindow(std::string errorInfo);
+void handleInfoWindow(std::string errorInfo,std::string windowTitle);
 int handleApprovalWindow();
 int init();
 void cleanup();
@@ -69,7 +69,7 @@ int main() {
                         if(ASCII_DEC_CODE == 13){
                             if(indexInput.getSize()!=6 || codeInput.getSize()!=6){
                                 if(indexInput.getSize()!=6 && codeInput.getSize()!=6){
-                                    handleInfoWindow(graphicManager->getFormatErrorInfo());
+                                    handleInfoWindow(graphicManager->getFormatErrorInfo(),"Error");
                                     indexInput="";
                                     codeInput="";
                                     graphicManager->getIndexInputText().setString(indexInput);
@@ -80,14 +80,14 @@ int main() {
                                     graphicManager->getCursorIndexPointer().setString(tmpIndexCursor);
                                     refreshDrawedObjects();
                                 }else if(indexInput.getSize()!=6){
-                                    handleInfoWindow(graphicManager->getFormatErrorInfo());
+                                    handleInfoWindow(graphicManager->getFormatErrorInfo(),"Error");
                                     indexInput="";
                                     graphicManager->getIndexInputText().setString(indexInput);
                                     tmpIndexCursor="_";
                                     graphicManager->getCursorIndexPointer().setString(tmpIndexCursor);
                                     refreshDrawedObjects();
                                 }else{
-                                    handleInfoWindow(graphicManager->getFormatErrorInfo());
+                                    handleInfoWindow(graphicManager->getFormatErrorInfo(),"Error");
                                     codeInput="";
                                     graphicManager->getCodeInputText().setString(codeInput);
                                     tmpCodeCursor="_";
@@ -100,14 +100,14 @@ int main() {
                                     restCommunicationReturnCode = restServerConnector->sendData(static_cast<std::string>(indexInput),static_cast<std::string>(codeInput));
                                     switch (restCommunicationReturnCode){
                                         case 200:
-                                            handleInfoWindow(graphicManager->getSuccesfullResponseInfo().append(std::to_string(restCommunicationReturnCode)));
+                                            handleInfoWindow(graphicManager->getSuccesfullResponseInfo().append(std::to_string(restCommunicationReturnCode)),"Success - Registration completed");
                                             mainWindow.close();
                                             exit(0);
                                         case -5:
-                                            handleInfoWindow(graphicManager->getNoConnectionErrorInfo());
+                                            handleInfoWindow(graphicManager->getNoConnectionErrorInfo(),"Error");
                                             break;              
                                         default :
-                                            handleInfoWindow(graphicManager->getServerErrorInfo().append(std::to_string(restCommunicationReturnCode)));
+                                            handleInfoWindow(graphicManager->getServerErrorInfo().append(std::to_string(restCommunicationReturnCode)),"Error");
                                             break;
                                     }
 
@@ -170,8 +170,8 @@ int main() {
     return 0;
 }
 
-void handleInfoWindow(std::string errorInfo){
-    sf::RenderWindow errorWindow(sf::VideoMode(650, 500), "Error",sf::Style::Titlebar);
+void handleInfoWindow(std::string errorInfo, std::string windowTitle){
+    sf::RenderWindow errorWindow(sf::VideoMode(650, 500), windowTitle,sf::Style::Titlebar);
     graphicManager->getErrorText().setString(errorInfo);
     errorWindow.setPosition(sf::Vector2i(2, 2));
     errorWindow.requestFocus();

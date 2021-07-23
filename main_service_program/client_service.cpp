@@ -9,7 +9,8 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <signal.h>
-#include <fcntl.h>
+#include <fcntl.h>   
+#include <mutex>          
 #include "IOConfig/IOConfig.h"
 #include "RESTConnector/RestServerConnector.h"
 
@@ -26,8 +27,7 @@ static long long int currentLogLineNumber=0;
 static IOConfig ioConfig;
 static RestServerConnector* restServerConnector = new RestServerConnector();
 static OpenSSLAesEncryptor* openSSLCryptoUtil = new OpenSSLAesEncryptor();
-static std::set<std::string> filePaths;
-static int filePathsInitSize;
+static std::set<std::string> fileNames;
 static int fd,wd1,wd2;
 
 void continueExecution();
@@ -75,7 +75,6 @@ int main(void) {
         char buffer[BUF_LEN];
 
         /* Step 3. Read buffer*/
-        filePathsInitSize = filePaths.size();
         length = read(fd, buffer, BUF_LEN);
         /* Step 4. Process the events which has occurred */
         while (i < length) {
@@ -111,28 +110,30 @@ void sig_handler(int status) {
     close(fd);
 }
 
-void findLastLineInLogFile(){
+void findLastLineInLogFile() {
     std::string tmpStr;
     std::ifstream logsFile(logsFilePath);
     while (std::getline(logsFile, tmpStr)) {
       currentLogLineNumber++;
     }  
+    logsFile.close();
     std::cout << "\nCount init lines in a log file: " << currentLogLineNumber << "\n";
 }
 
-void processNewLogRecords(){
+void processNewLogRecords() {
     std::string tmpStr;
     long long int it=1;
     std::ifstream logsFile(logsFilePath);
     while (std::getline(logsFile, tmpStr)) {
-        if(it>currentLogLineNumber){
-            //std::cout << "Linia nr: " << it << " " << tmpStr << " " << std::endl;
+        if(it>currentLogLineNumber && tmpStr != "\n" && !ioConfig.trim(tmpStr).empty()){
+            std::cout << "\nLinia nr: " << it << " " << tmpStr << std::endl;
             std::string decryptedRegistryContent = openSSLCryptoUtil->decryptAES256WithOpenSSL(tmpStr);
             std::string decryptedIndexNr = openSSLCryptoUtil->decryptAES256WithOpenSSL(readEncryptedIndexNrFromFile());
             restServerConnector->sendData(decryptedIndexNr,decryptedRegistryContent);
         }
         it++;
     }  
+    logsFile.close();
     currentLogLineNumber = --it;
 }
 
@@ -140,7 +141,30 @@ std::string readEncryptedIndexNrFromFile(){
     std::string idxStr;
     std::ifstream encIndexFile(registrationFilePath);
     std::getline(encIndexFile,idxStr);
+    encIndexFile.close();
     return idxStr;
+}
+
+void processNewlyCreatedLabFiles() {
+    std::string fileName;
+    std::ofstream outputLogsFile;
+    outputLogsFile.open(logsFilePath,std::ios::app);
+
+    if(outputLogsFile.is_open()){
+        for (const auto &entry : fs::directory_iterator(labFilesFolderPath)) {
+            fileName = entry.path().string();
+            fileName = fileName.substr(fileName.find_last_of("/")+1,fileName.size());
+
+            if (entry.is_regular_file() && outputLogsFile.is_open()  && fileNames.find(fileName) == fileNames.end()) {
+                fileNames.insert(fileName);
+
+                std::string registryContent = "Plik [" + fileName + "] zostal stworzony w folderze laboratoryjnym";
+                std::string encryptedRegistryContent = openSSLCryptoUtil->encryptAES256WithOpenSSL(registryContent);
+                outputLogsFile << encryptedRegistryContent << std::endl;
+            }
+        }
+        outputLogsFile.close();
+    }
 }
 
 void init(){
@@ -161,27 +185,6 @@ void cleanup(){
     delete openSSLCryptoUtil;
 }
 
-void processNewlyCreatedLabFiles() {
-    std::string fileName;
-    std::string newFileNameToBeSent;
-    for (const auto &entry : fs::directory_iterator(labFilesFolderPath)) {
-        fileName = entry.path().string();
-        fileName = fileName.substr(fileName.find_last_of("/")+1,fileName.size());
-
-        if (entry.is_regular_file()) {
-            filePaths.insert(fileName);
-            if(filePaths.size() != filePathsInitSize){
-                newFileNameToBeSent = fileName;
-                std::string decryptedRegistryContent = "Plik [" + newFileNameToBeSent + "] zostal stworzony w folderze laboratoryjnym";
-                std::string decryptedIndexNr = openSSLCryptoUtil->decryptAES256WithOpenSSL(readEncryptedIndexNrFromFile());
-                restServerConnector->sendData(decryptedIndexNr,decryptedRegistryContent);
-
-                filePathsInitSize++;
-            }
-        }
-    }
-}
-
 // void readContentOfFile(std::string pathOfFile) {
 //     std::ifstream tmpFileStream(pathOfFile);
 //     std::string fileContents((std::istreambuf_iterator<char>(tmpFileStream)),
@@ -189,7 +192,7 @@ void processNewlyCreatedLabFiles() {
 //     std::cout << fileContents << std::endl;
 //     // NEXT PARSE CONTENTS OF THE FILE TO e.g. JSON FORMAT AND SEND IT ON SERVER
 //                             processNewlyCreatedLabFiles();
-//                         for (auto i = filePaths.begin(); i != filePaths.end(); i++) {
+//                         for (auto i = fileNames.begin(); i != fileNames.end(); i++) {
 //                             readContentOfFile(*i);
 //                         }
 // }
