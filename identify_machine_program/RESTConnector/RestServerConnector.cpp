@@ -11,9 +11,15 @@ using namespace web::http;            // Common HTTP functionality
 using namespace web::http::client;    // HTTP client features
 using namespace concurrency::streams; // Asynchronous streams
 
-RestServerConnector::RestServerConnector(){}
+RestServerConnector::RestServerConnector(){
+    openSSLCryptoUtil = new OpenSSLAesEncryptor();
+}
+
 RestServerConnector::~RestServerConnector(){
-    delete openSSLCryptoUtil;
+    if(openSSLCryptoUtil != nullptr){
+        delete openSSLCryptoUtil;
+        openSSLCryptoUtil = nullptr;
+    }
 }
 
 int RestServerConnector::sendData(std::string inputIndex, std::string inputCode) {

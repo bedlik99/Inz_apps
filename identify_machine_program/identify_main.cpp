@@ -26,8 +26,8 @@ static sf::String tmpIndexCursor="_";
 static sf::String tmpCodeCursor="_";  
 static bool isIndex = true;
 static bool secondHasElapsed = true;
-static GraphicManager* graphicManager = new GraphicManager();
-static RestServerConnector* restServerConnector = new RestServerConnector();
+static GraphicManager* graphicManager = nullptr;
+static RestServerConnector* restServerConnector = nullptr;
 static IOConfig ioConfig;
 static sf::Clock customClock;
 static sf::Mutex blinkMutex;
@@ -279,6 +279,8 @@ void blinkChosenLine(){
 }   
 
 int init(){
+    restServerConnector = new RestServerConnector();
+    graphicManager = new GraphicManager();
     if(ioConfig.doesFileExist(restServerConnector->getRegistrationFilePath()) 
     && !ioConfig.isSecretFileEmpty(restServerConnector->getRegistrationFilePath())){
             return -1;
@@ -289,8 +291,14 @@ int init(){
 
 void cleanup(){
     mainWindow.close();
-    delete restServerConnector;
-    delete graphicManager;
+    if(restServerConnector != nullptr){
+        delete restServerConnector;
+        restServerConnector = nullptr;
+    }
+    if(graphicManager != nullptr){
+        delete graphicManager;
+        graphicManager = nullptr;
+    }
  }
 
 void refreshDrawedObjects(){

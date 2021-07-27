@@ -9,11 +9,15 @@
 /home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/main_service_program/RESTConnector/OPENSSL_AES_256/OpenSSLAesEncryptor.cpp
 OpenSSLAesEncryptor.h
 /home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/main_service_program/RESTConnector/OPENSSL_AES_256/OpenSSLAesEncryptor.h
+openssl/bio.h
+-
 openssl/conf.h
 -
 openssl/err.h
 -
 openssl/evp.h
+-
+algorithm
 -
 stdio.h
 -
@@ -23,12 +27,26 @@ string
 -
 string.h
 -
+math.h
+-
 iostream
 -
 fstream
 -
+vector
+-
+cassert
+-
+limits
+-
+stdexcept
+-
+cctype
+-
 
 /home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/main_service_program/RESTConnector/OPENSSL_AES_256/OpenSSLAesEncryptor.h
 string
+-
+vector
 -
 

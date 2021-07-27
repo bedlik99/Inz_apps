@@ -29,16 +29,16 @@ public class EitiUserService {
     private final RecordedEventRepository recordedEventRepository;
 
     @Autowired
-    public EitiUserService(EitiUserRepository eitiUserRepository,RecordedEventRepository recordedEventRepository) {
+    public EitiUserService(EitiUserRepository eitiUserRepository, RecordedEventRepository recordedEventRepository) {
         this.eitiUserRepository = eitiUserRepository;
         this.recordedEventRepository = recordedEventRepository;
     }
 
-    public ResponseEntity<String> processUserInitData(MessageDTO encryptedMessage){
+    public ResponseEntity<String> processUserInitData(MessageDTO encryptedMessage) {
         RegisteredUserDTO registeredUser = decryptRegisterMessage(encryptedMessage.getValue());
-        if(registeredUser!=null){
-            if(validateUserData(registeredUser)){
-                RegisteredUser userToSave = new RegisteredUser(registeredUser.getIndexNr(),registeredUser.getUniqueCode());
+        if (registeredUser != null) {
+            if (validateUserData(registeredUser)) {
+                RegisteredUser userToSave = new RegisteredUser(registeredUser.getIndexNr(), registeredUser.getUniqueCode());
                 eitiUserRepository.save(userToSave);
                 recordedEventRepository.save(new RecordedEvent("Maszyna zostala zarejestrowana", LocalDateTime.now(), userToSave));
                 return ResponseEntity.status(HttpStatus.OK).body(encryptMessage(registeredUser.getIndexNr()));
@@ -52,48 +52,85 @@ public class EitiUserService {
         RecordedEventDTO recordedEvent = decryptLogMessage(encryptedMessage.getValue());
         RegisteredUser searchedUser;
         if (recordedEvent != null) {
-          searchedUser = eitiUserRepository.findStudentByIndexNum(recordedEvent.getIndexNr());
-          recordedEventRepository.save(new RecordedEvent(recordedEvent.getRegistryContent(), LocalDateTime.now(), searchedUser));
+            searchedUser = eitiUserRepository.findStudentByIndexNum(recordedEvent.getIndexNr());
+            recordedEventRepository.save(new RecordedEvent(recordedEvent.getRegistryContent(), LocalDateTime.now(), searchedUser));
         }
     }
 
-    private String encryptMessage(String indexNr) {
-        String encryptedResponse="";
-        try{
-            encryptedResponse = CryptoUtil.encrypt(indexNr);
-        }catch (InvalidAlgorithmParameterException | NoSuchPaddingException | IllegalBlockSizeException
+    private String encryptMessage(String str) {
+        String encryptedResponse = "";
+        str = fillStringWithHashtags(str);
+        try {
+            encryptedResponse = CryptoUtil.encrypt(str);
+        } catch (InvalidAlgorithmParameterException | NoSuchPaddingException | IllegalBlockSizeException
                 | NoSuchAlgorithmException | BadPaddingException | InvalidKeyException e) {
             e.printStackTrace();
         }
         return encryptedResponse;
     }
 
-    private RegisteredUserDTO decryptRegisterMessage(String encryptedMessage)  {
-        RegisteredUserDTO registeredUserDTO=null;
-        try{
+    private RegisteredUserDTO decryptRegisterMessage(String encryptedMessage) {
+        RegisteredUserDTO registeredUserDTO = null;
+        try {
             String decryptedMessage = CryptoUtil.decrypt(encryptedMessage);
-            registeredUserDTO = new Gson().fromJson(decryptedMessage,RegisteredUserDTO.class);
-        }catch (InvalidAlgorithmParameterException | NoSuchPaddingException | IllegalBlockSizeException
+            decryptedMessage = removeHashtagsFromString(decryptedMessage);
+            registeredUserDTO = new Gson().fromJson(decryptedMessage, RegisteredUserDTO.class);
+        } catch (InvalidAlgorithmParameterException | NoSuchPaddingException | IllegalBlockSizeException
                 | NoSuchAlgorithmException | BadPaddingException | InvalidKeyException e) {
             e.printStackTrace();
         }
         return registeredUserDTO;
     }
 
-    private RecordedEventDTO decryptLogMessage(String encryptedMessage)  {
-        RecordedEventDTO recordedEventDTO=null;
-        try{
+    private RecordedEventDTO decryptLogMessage(String encryptedMessage) {
+        RecordedEventDTO recordedEventDTO = null;
+        try {
             String decryptedMessage = CryptoUtil.decrypt(encryptedMessage);
-            recordedEventDTO = new Gson().fromJson(decryptedMessage,RecordedEventDTO.class);
-        }catch (InvalidAlgorithmParameterException | NoSuchPaddingException | IllegalBlockSizeException
+            decryptedMessage = removeHashtagsFromString(decryptedMessage);
+            recordedEventDTO = new Gson().fromJson(decryptedMessage, RecordedEventDTO.class);
+        } catch (InvalidAlgorithmParameterException | NoSuchPaddingException | IllegalBlockSizeException
                 | NoSuchAlgorithmException | BadPaddingException | InvalidKeyException e) {
             e.printStackTrace();
         }
         return recordedEventDTO;
     }
 
-    private boolean validateUserData(RegisteredUserDTO registeredUserDTO){
+    private boolean validateUserData(RegisteredUserDTO registeredUserDTO) {
         return registeredUserDTO.getIndexNr().matches("[0-9]{6}") &&
                 registeredUserDTO.getUniqueCode().length() == 6;
+    }
+
+    private String fillStringWithHashtags(String str) {
+        if (str.length() == 0)
+            return "";
+
+        long stringNecessarySize = findMaxRangeOfStringLength(str.length(), 0, 16);
+        StringBuilder strBuilder = new StringBuilder(str);
+        long numberOfNeededHashtags = stringNecessarySize - str.length();
+
+        for (long i = 0; i < numberOfNeededHashtags; i++) {
+            strBuilder.insert(0, "#");
+        }
+        return strBuilder.toString();
+    }
+
+    private long findMaxRangeOfStringLength(long strLength, long lowRange, long highRange) {
+        if (strLength >= lowRange && strLength < highRange) {
+            return highRange;
+        }
+        lowRange += 16;
+        highRange += 16;
+        return findMaxRangeOfStringLength(strLength, lowRange, highRange);
+    }
+
+    private String removeHashtagsFromString(String str) {
+        int strLength = str.length();
+        for (int i = 0; i < strLength; i++) {
+            if (str.charAt(i) != '#') {
+                str = str.substring(i);
+                break;
+            }
+        }
+        return str;
     }
 }

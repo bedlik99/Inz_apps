@@ -1,13 +1,21 @@
 #include "OpenSSLAesEncryptor.h"
+#include <openssl/bio.h>
 #include <openssl/conf.h>
 #include <openssl/err.h>
 #include <openssl/evp.h>
+#include <algorithm>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string>
 #include <string.h>
+#include <math.h>
 #include <iostream>
 #include <fstream>
+#include <vector>
+#include <cassert>
+#include <limits>
+#include <stdexcept>
+#include <cctype>
 
 #if _DEBUG
 #pragma comment(lib, "libcrypto64MDd.lib")
@@ -16,6 +24,8 @@
 #pragma comment(lib, "libcrypto64MT.lib")
 #pragma comment(lib, "libssl64MT.lib")
 #endif
+
+static inline bool is_base64(unsigned char c);
 
 using namespace std;
 
@@ -106,6 +116,7 @@ std::string OpenSSLAesEncryptor::base64_decode(std::string &encoded_string) {
         for (j = 0; (j < i - 1); j++) ret += char_array_3[j];
     }
 
+
     return ret;
 }
 
@@ -130,6 +141,8 @@ int OpenSSLAesEncryptor::encrypt(unsigned char *plaintext, int plaintext_len, un
      */
     if (1 != EVP_EncryptInit_ex(ctx, EVP_aes_256_cbc(), NULL, key, iv))
         handleErrors();
+    
+    EVP_CIPHER_CTX_set_padding(ctx, 0);
 
     /*
      * Provide the message to be encrypted, and obtain the encrypted output.
@@ -180,6 +193,7 @@ int OpenSSLAesEncryptor::decrypt(unsigned char *ciphertext, int ciphertext_len, 
     if (1 != EVP_DecryptInit_ex(ctx, EVP_aes_256_cbc(), NULL, key, iv))
         handleErrors();
 
+    EVP_CIPHER_CTX_set_padding(ctx, 0);
     /*
      * Provide the message to be decrypted, and obtain the plaintext output.
      * EVP_DecryptUpdate can be called multiple times if necessary.
@@ -202,58 +216,96 @@ int OpenSSLAesEncryptor::decrypt(unsigned char *ciphertext, int ciphertext_len, 
     return plaintext_len;
 }
 
+bool OpenSSLAesEncryptor::fillStringWithHashtags(std::string& str) {
+    if (str.length() == 0)
+        return false;
+
+    long stringNecessarySize = findMaxRangeOfStringLength(str.length(), 0, 16);
+    long numberOfNeededHashtags = stringNecessarySize - str.length();
+
+    for (long i = 0; i < numberOfNeededHashtags; i++) {
+        str = '#' + str;
+    }
+    return true;
+}
+
+long OpenSSLAesEncryptor::findMaxRangeOfStringLength(long strLength, long lowRange, long highRange) {
+    if (strLength >= lowRange && strLength < highRange) {
+        return highRange;
+    }
+    lowRange += 16;
+    highRange += 16;
+    return findMaxRangeOfStringLength(strLength, lowRange, highRange);
+}
+
+void OpenSSLAesEncryptor::removeHashtagsFromString(std::string& str) {
+    int strLength = str.length();
+    for (int i = 0; i < strLength; i++) {
+        if (str[i] != '#') {
+            str = str.substr(i);
+            break;
+        }
+    }
+}
+
 std::string OpenSSLAesEncryptor::encryptAES256WithOpenSSL(std::string strToEncrypt){
     /* A 256 bit key */
     /* A 128 bit IV */
     std::string key,iv;
     readSecrects(key,iv);
+    std::string encoded64String;
 
-    unsigned char* charsToEncrypt = (unsigned char *)strToEncrypt.c_str();
-    /*
-     * Buffer for ciphertext. Ensure the buffer is long enough for the
-     * ciphertext which may be longer than the plaintext, depending on the
-     * algorithm and mode.
-    */
-    unsigned char ciphertext[bufferLength];
+    if(fillStringWithHashtags(strToEncrypt)){
+        unsigned char* charsToEncrypt = (unsigned char *)strToEncrypt.c_str();
+        /*
+        * Buffer for ciphertext. Ensure the buffer is long enough for the
+        * ciphertext which may be longer than the plaintext, depending on the
+        * algorithm and mode.
+        */
+        unsigned char ciphertext[bufferLength];
+        /* Encrypt the plaintext */
+        int ciphertext_l = encrypt(
+        charsToEncrypt, 
+        strlen((char *)charsToEncrypt),
+        (unsigned char *)key.c_str(),
+        (unsigned char *)iv.c_str(),
+        ciphertext);
 
-    /* Encrypt the plaintext */
-    int ciphertext_l = encrypt(
-    charsToEncrypt, 
-    strlen((char *)charsToEncrypt),
-    (unsigned char *)key.c_str(),
-    (unsigned char *)iv.c_str(),
-    ciphertext);
+        encoded64String = base64_encode(ciphertext,ciphertext_l);
 
-    std::string encoded64String = base64_encode(ciphertext,ciphertext_l);
-
+    }
     return encoded64String;
 }
 
 std::string OpenSSLAesEncryptor::decryptAES256WithOpenSSL(std::string encoded64StrToDecrypt){
     /* A 256 bit key */
     /* A 128 bit IV */
-    std::string key,iv;
-    readSecrects(key,iv);     
+    std::string key,iv,decryptedStringToReturn;
+    readSecrects(key,iv);
 
     /* Buffer for the decrypted text */
     unsigned char decryptedtext[bufferLength];
-    
+        
     /*Encrypted ciphertext to be decrypted*/
     unsigned char encryptedtextTmp[bufferLength];
-    strcpy((char *)encryptedtextTmp, base64_decode(encoded64StrToDecrypt).c_str());
+
+    std::string decoded64String = base64_decode(encoded64StrToDecrypt);
 
     /* Decrypt the ciphertext */
     int decryptedtext_l = decrypt(
-    encryptedtextTmp,
-    strlen((char *)encryptedtextTmp),
+    (unsigned char*)decoded64String.c_str(),
+    decoded64String.length(),
     (unsigned char *)key.c_str(),
     (unsigned char *)iv.c_str(),
     decryptedtext);
 
     /* Add a NULL terminator. We are expecting printable text */
     decryptedtext[decryptedtext_l] = '\0';
+    decryptedStringToReturn = (char *)decryptedtext;
 
-    return (char *)decryptedtext;
+    removeHashtagsFromString(decryptedStringToReturn);
+
+    return decryptedStringToReturn;
 }
 
 void OpenSSLAesEncryptor::readSecrects(std::string& key, std::string& iv){

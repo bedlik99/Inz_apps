@@ -10,9 +10,14 @@ using namespace web::http;            // Common HTTP functionality
 using namespace web::http::client;    // HTTP client features
 using namespace concurrency::streams; // Asynchronous streams
 
-RestServerConnector::RestServerConnector(){}
+RestServerConnector::RestServerConnector(){
+    openSSLCryptoUtil = new OpenSSLAesEncryptor();
+}
 RestServerConnector::~RestServerConnector(){
-    delete openSSLCryptoUtil;
+    if(openSSLCryptoUtil != nullptr){
+        delete openSSLCryptoUtil;
+        openSSLCryptoUtil = nullptr;
+    }
 }
 
 int RestServerConnector::sendData(std::string fileReadIndexNr, std::string registryContent) {
@@ -42,7 +47,6 @@ int RestServerConnector::executeRequest(json::value json_par, std::string filePa
             .then([=](http_response response) {
                 returnedHttpCode = response.status_code();
                 // responseString = response.extract_string().get();   
-
                 return response.body().read_to_end(fileStream->streambuf());
             })
             // Close the file stream.
@@ -72,8 +76,4 @@ json::value RestServerConnector::returnEncryptedMessageDTO(std::string fileReadI
 
 const std::string RestServerConnector::getRegistrationFilePath(){
     return registrationFilePath;
-}
-
-OpenSSLAesEncryptor* RestServerConnector::getOpenSSLCryptoUtil(){
-    return openSSLCryptoUtil;
 }

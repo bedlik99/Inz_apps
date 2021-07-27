@@ -4,13 +4,13 @@
 #include <iostream>
 #include <set>
 #include <filesystem>
+#include <algorithm>
 #include <stdio.h>
 #include <sys/inotify.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <signal.h>
-#include <fcntl.h>   
-#include <mutex>          
+#include <fcntl.h>          
 #include "IOConfig/IOConfig.h"
 #include "RESTConnector/RestServerConnector.h"
 
@@ -23,17 +23,18 @@ const static std::string logsFolderPath = "/home/jan/Documents/inz_dyp/Projekty_
 const std::string registrationFilePath = "/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/rgstr_trace/rqrm";
 const static std::string logsFilePath = "/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/output_files/main_logs";
 const static std::string labFilesFolderPath = "/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/output_files/lab_files";
+const char* errorNotifyMsg = "notify-send -u critical -t 600000 [\"STATUS: ERROR - CREDENTIALS NOT SENT\"] \"Machine was not initialized. \nDo relog and send credentials again. \nIf error occurs download different linux image.\"";
+const char* successNotifyMsg = "notify-send -u normal -t 30000 [\"STATUS: OK\"] \"\nMachine is ready to be used.\"";
 static long long int currentLogLineNumber=0;
 static IOConfig ioConfig;
-static RestServerConnector* restServerConnector = new RestServerConnector();
-static OpenSSLAesEncryptor* openSSLCryptoUtil = new OpenSSLAesEncryptor();
+static RestServerConnector* restServerConnector = nullptr;
+static OpenSSLAesEncryptor* openSSLCryptoUtil = nullptr;
 static std::set<std::string> fileNames;
 static int fd,wd1,wd2;
 
 void continueExecution();
 void endExecution(int status);
 void processNewlyCreatedLabFiles();
-//void readContentOfFile(std::string);
 void sig_handler(int);
 void processNewLogRecords();
 void findLastLineInLogFile();
@@ -51,7 +52,6 @@ void endExecution(int status){
 int main(void) {
     ptrace(PTRACE_TRACEME, 0, 0, 0) < 0 ? endExecution(0) : continueExecution();
     init();
-    findLastLineInLogFile();
 
     signal(SIGINT, sig_handler);
     /* Step 1. Initialize inotify */
@@ -117,7 +117,6 @@ void findLastLineInLogFile() {
       currentLogLineNumber++;
     }  
     logsFile.close();
-    std::cout << "\nCount init lines in a log file: " << currentLogLineNumber << "\n";
 }
 
 void processNewLogRecords() {
@@ -125,8 +124,8 @@ void processNewLogRecords() {
     long long int it=1;
     std::ifstream logsFile(logsFilePath);
     while (std::getline(logsFile, tmpStr)) {
-        if(it>currentLogLineNumber && tmpStr != "\n" && !ioConfig.trim(tmpStr).empty()){
-            std::cout << "\nLinia nr: " << it << " " << tmpStr << std::endl;
+        if(it>currentLogLineNumber && tmpStr != "\n" && !tmpStr.empty()){
+            //std::cout << "\nLinia nr: " << it << " " << tmpStr << std::endl;
             std::string decryptedRegistryContent = openSSLCryptoUtil->decryptAES256WithOpenSSL(tmpStr);
             std::string decryptedIndexNr = openSSLCryptoUtil->decryptAES256WithOpenSSL(readEncryptedIndexNrFromFile());
             restServerConnector->sendData(decryptedIndexNr,decryptedRegistryContent);
@@ -154,10 +153,8 @@ void processNewlyCreatedLabFiles() {
         for (const auto &entry : fs::directory_iterator(labFilesFolderPath)) {
             fileName = entry.path().string();
             fileName = fileName.substr(fileName.find_last_of("/")+1,fileName.size());
-
             if (entry.is_regular_file() && outputLogsFile.is_open()  && fileNames.find(fileName) == fileNames.end()) {
                 fileNames.insert(fileName);
-
                 std::string registryContent = "Plik [" + fileName + "] zostal stworzony w folderze laboratoryjnym";
                 std::string encryptedRegistryContent = openSSLCryptoUtil->encryptAES256WithOpenSSL(registryContent);
                 outputLogsFile << encryptedRegistryContent << std::endl;
@@ -167,32 +164,40 @@ void processNewlyCreatedLabFiles() {
     }
 }
 
+void checkAlreadyCreatedFilesOnStart(){
+    std::string fileName;
+    for (const auto & file : std::filesystem::directory_iterator(labFilesFolderPath)){
+        fileName = file.path().string();
+        fileName = fileName.substr(fileName.find_last_of("/")+1,fileName.size());
+        fileNames.insert(fileName);
+    }
+}
+
 void init(){
+    restServerConnector = new RestServerConnector();
+    openSSLCryptoUtil = new OpenSSLAesEncryptor();
     if(!ioConfig.doesFileExist(registrationFilePath)){
-        system("notify-send -u critical -t 600000 [\"STATUS: ERROR - CREDENTIALS NOT SENT\"] \"Machine was not initialized. \nDo relog and send credentials again. \nIf error occurs download different linux image.\"");
+        system(errorNotifyMsg);
         cleanup();
         exit(-1);
     }else if(ioConfig.isSecretFileEmpty(registrationFilePath)){
-        system("notify-send -u critical -t 600000 [\"STATUS: ERROR - CREDENTIALS NOT SENT\"] \"Machine was not initialized. \nDo relog and send credentials again. \nIf error occurs download different linux image.\"");
+        system(errorNotifyMsg);
         cleanup();
         exit(-1);
     }
-    system("notify-send -u normal -t 60000 [\"STATUS: OK\"] \"\nMachine is ready to be used.\"");
+    findLastLineInLogFile();
+    checkAlreadyCreatedFilesOnStart();
+    system(successNotifyMsg);
 }
 
 void cleanup(){
-    delete restServerConnector;
-    delete openSSLCryptoUtil;
+    if(restServerConnector != nullptr){
+        delete restServerConnector;
+        restServerConnector = nullptr;
+    }
+    if(openSSLCryptoUtil != nullptr){
+        delete openSSLCryptoUtil;
+        openSSLCryptoUtil = nullptr;
+    }
 }
 
-// void readContentOfFile(std::string pathOfFile) {
-//     std::ifstream tmpFileStream(pathOfFile);
-//     std::string fileContents((std::istreambuf_iterator<char>(tmpFileStream)),
-//                              std::istreambuf_iterator<char>());
-//     std::cout << fileContents << std::endl;
-//     // NEXT PARSE CONTENTS OF THE FILE TO e.g. JSON FORMAT AND SEND IT ON SERVER
-//                             processNewlyCreatedLabFiles();
-//                         for (auto i = fileNames.begin(); i != fileNames.end(); i++) {
-//                             readContentOfFile(*i);
-//                         }
-// }

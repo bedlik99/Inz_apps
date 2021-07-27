@@ -1,4 +1,5 @@
 #include <string>
+#include <vector>
 
 class OpenSSLAesEncryptor {
 private:
@@ -6,7 +7,7 @@ private:
     "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     "abcdefghijklmnopqrstuvwxyz"
     "0123456789+/";
-    const static int bufferLength = 1024;
+    const static int bufferLength = 2048;
     const std::string secretPath = "/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/scrtk/keys";
 
     std::string base64_encode(unsigned char* bytes_to_encode, int in_len);
@@ -15,10 +16,12 @@ private:
     int decrypt(unsigned char *ciphertext, int ciphertext_len, unsigned char *key,unsigned char *iv, unsigned char *plaintext);
     int encrypt(unsigned char *plaintext, int plaintext_len, unsigned char *key, unsigned char *iv, unsigned char *ciphertext);
     void readSecrects(std::string& key, std::string& iv);
+    bool fillStringWithHashtags(std::string& str);
+    void removeHashtagsFromString(std::string& str);
+    long findMaxRangeOfStringLength(long strLength, long lowRange, long highRange);
 public:
     OpenSSLAesEncryptor();
     std::string encryptAES256WithOpenSSL(std::string strToEncrypt);
     std::string decryptAES256WithOpenSSL(std::string encoded64StrToDecrypt);
     const std::string getSecretPath();
-
 };

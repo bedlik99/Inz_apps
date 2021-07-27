@@ -9,6 +9,8 @@
 /home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/main_service_program/RESTConnector/OPENSSL_AES_256/OpenSSLAesEncryptor.h
 string
 -
+vector
+-
 
 /home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/main_service_program/RESTConnector/RestServerConnector.h
 string
@@ -31,6 +33,8 @@ set
 -
 filesystem
 -
+algorithm
+-
 stdio.h
 -
 sys/inotify.h
@@ -42,8 +46,6 @@ stdlib.h
 signal.h
 -
 fcntl.h
--
-mutex
 -
 IOConfig/IOConfig.h
 /home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/main_service_program/IOConfig/IOConfig.h

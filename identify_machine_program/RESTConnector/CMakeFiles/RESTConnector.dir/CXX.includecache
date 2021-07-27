@@ -13,6 +13,8 @@ string
 /home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/RESTConnector/OPENSSL_AES_256/OpenSSLAesEncryptor.h
 string
 -
+vector
+-
 
 /home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/RESTConnector/RestServerConnector.cpp
 cpprest/http_client.h
