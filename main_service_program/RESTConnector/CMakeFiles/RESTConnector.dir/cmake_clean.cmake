@@ -1,5 +1,6 @@
 file(REMOVE_RECURSE
   "CMakeFiles/RESTConnector.dir/RestServerConnector.cpp.o"
+  "CMakeFiles/RESTConnector.dir/RestServerConnector.cpp.o.d"
   "libRESTConnector.a"
   "libRESTConnector.pdb"
 )

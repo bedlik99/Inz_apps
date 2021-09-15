@@ -1,4 +1,8 @@
-INSERT INTO registered_user VALUES (1,'300700','r5uOuv');
+INSERT INTO employee_user VALUES (1,'$2a$12$7eBBtGtxPEHmoE3j2T2GOeAPsxlE92oyWL6cIjBI5YXWzzXE6TMsm','eiti');
+INSERT INTO role VALUES (1,'EMPLOYEE');
+INSERT INTO user_role VALUES(1,1);
+
+INSERT INTO registered_user VALUES (1,'300700','t@#Dg3');
 INSERT INTO registered_user VALUES (2,'300600','8vkAE&');
 INSERT INTO registered_user VALUES (3,'300500','gK4L0#');
 INSERT INTO registered_user VALUES (4,'300400','Ku6aa!');

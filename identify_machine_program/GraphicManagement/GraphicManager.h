@@ -4,19 +4,15 @@
 class GraphicManager {
 
 private:
+    const std::string fontPath = "/home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program/";
     sf::Font font;
     sf::Font calibriFont;
-    std::string formatErrorInfo = "Format of the input is wrong. Data was not sent."; 
-    std::string serverErrorInfo = "Server response is not successful. Response code: ";
-    std::string noConnectionErrorInfo = "Failed to connect to any resolved endpoint";
-    std::string succesfullResponseInfo = "Registration process ended succesfully. Response Code: ";
+    std::string formatErrorInfo = "Format of the input is wrong. Registration do not succeed."; 
     sf::RectangleShape indexLabel = sf::RectangleShape(sf::Vector2f(300, 30));
-    sf::Text quitConsoleText = sf::Text("Cancel (ESC)",calibriFont,18);
-    sf::Text registerText = sf::Text("Send (ENTER)",font,26);
+    sf::Text registerText = sf::Text("Register (ENTER)",font,26);
     sf::Text guideText = sf::Text(" I. User manual:",font, 22);
     sf::Text instructionText1 = sf::Text(" Use only keyboard keys to communicate with GUI",calibriFont,20);
     sf::Text instructionText2 = sf::Text("- Use TAB key to move between 'Index' nr' and 'Code' input field",calibriFont,18);
-    sf::Text instructionText3 = sf::Text("- Use ESC key to cancel registration",calibriFont,18);
     sf::Text instructionText4 = sf::Text("- Use ENTER key to send given credentials",calibriFont,18);
     sf::Text instructionText5 = sf::Text("- Use BACKSPACE key to remove input from input fields",calibriFont,18);
     sf::Text requirementsText0 = sf::Text("II. Requirements: ",font, 22);
@@ -38,17 +34,12 @@ private:
 public:
     GraphicManager();
     int init_graphic_objects();
-    std::string getSuccesfullResponseInfo();
-    std::string getNoConnectionErrorInfo();
     std::string getFormatErrorInfo();
-    std::string getServerErrorInfo();
     sf::RectangleShape& getIndexLabel();
-    sf::Text& getQuitConsoleText();
     sf::Text& getRegisterText();
     sf::Text& getGuideText();
     sf::Text& getInstructionText1();
     sf::Text& getInstructionText2();
-    sf::Text& getInstructionText3();
     sf::Text& getInstructionText4();
     sf::Text& getInstructionText5();
     sf::Text& getRequirementsText0();

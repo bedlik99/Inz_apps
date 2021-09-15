@@ -20,8 +20,9 @@ RestServerConnector::~RestServerConnector(){
     }
 }
 
-int RestServerConnector::sendData(std::string fileReadIndexNr, std::string registryContent) {
-    return executeRequest(returnEncryptedMessageDTO(fileReadIndexNr,registryContent), serverResponseFile, recordEventEndpoint);    
+int RestServerConnector::sendData(std::string credentials, std::string registryContent,bool isRegistration) {
+    std::string selectedEndpoint = (isRegistration ? registerUserEndpoint : recordEventEndpoint); 
+    return executeRequest(returnEncryptedMessageDTO(credentials,registryContent,isRegistration),serverResponseFile, selectedEndpoint);
 }
 
 int RestServerConnector::executeRequest(json::value json_par, std::string filePath, std::string endpointName){
@@ -60,20 +61,21 @@ int RestServerConnector::executeRequest(json::value json_par, std::string filePa
         requestTask.wait();
 
     } catch (const std::exception &e){
-        return -5;
+        return -1;
     }
     return returnedHttpCode;
 }
 
-json::value RestServerConnector::returnEncryptedMessageDTO(std::string fileReadIndexNr, std::string registryContent){
-    std::string userDataAsJson = "{\"indexNr\":\""+fileReadIndexNr+"\",\"registryContent\":\""+registryContent+"\"}";
+json::value RestServerConnector::returnEncryptedMessageDTO(std::string credentials, std::string registryContent,bool isRegistration){
+    std::string userDataAsJson;
+    if(isRegistration){
+        userDataAsJson = "{\"uniqueCode\":\""+credentials.substr(6,6)+"\",\"indexNr\":\""+credentials.substr(0,6)+"\"}";
+    }else{
+        userDataAsJson = "{\"indexNr\":\""+credentials.substr(0,6)+"\",\"registryContent\":\""+registryContent+"\"}";
+    }
     std::string encryptedValue = openSSLCryptoUtil->encryptAES256WithOpenSSL(userDataAsJson);
     std::string encryptedMessageString = "{\"value\":\""+encryptedValue+"\"}";
     json::value json_encrypted_message = json_encrypted_message.parse(encryptedMessageString);
 
     return json_encrypted_message;
-}
-
-const std::string RestServerConnector::getRegistrationFilePath(){
-    return registrationFilePath;
 }

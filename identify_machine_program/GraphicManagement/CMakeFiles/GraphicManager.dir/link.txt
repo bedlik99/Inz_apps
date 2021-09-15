@@ -1,2 +1,2 @@
-/usr/bin/ar qc libGraphicManager.a  CMakeFiles/GraphicManager.dir/GraphicManager.cpp.o
+/usr/bin/ar qc libGraphicManager.a CMakeFiles/GraphicManager.dir/GraphicManager.cpp.o
 /usr/bin/ranlib libGraphicManager.a

@@ -1,2 +1,0 @@
-/usr/bin/ar qc libIOConfig.a  CMakeFiles/IOConfig.dir/IOConfig.cpp.o
-/usr/bin/ranlib libIOConfig.a

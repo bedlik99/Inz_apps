@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Student logs</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/handleSubmitButton.js}" async></script>
+</head>
+
+<body style="background-color: #ebe7e4">
+    <div style="margin-right: 5px;text-align: right;margin-top: 8px" >
+        <form th:action="@{/logout}" method="post">
+            <button class="btn btn-success" type="submit" >Logout</button>
+        </form>
+    </div>
+    <form id="submitFormId" th:action="@{/logged/findStudentLogs}" method="POST" class="form-horizontal">
+        <h3 style="text-align:center;font-family: 'JetBrains Mono';margin-top:10px">
+            Wpisz numer indeksu uzytkownika do wyszukania jego logow</h3>
+        <br>
+        <div style="text-align: center">
+            <label>
+                <input id="inputId" style="font-size: 24px;text-align:center;height:40px" type="text"
+                       placeholder="indexNr" autofocus required/><br>
+            </label>&nbsp;&nbsp;
+            <button id="submitButtonId" style="width:200px;height:40px;margin-bottom:6px" name="submitButtonIndex"
+                    type="submit" class="btn btn-dark">Szukaj</button>
+        </div>
+        <br>
+    </form>
+    <div style="text-align:center">
+        <button style="width:500px;height: 120px;font-size: 22px;color: black" class="btn btn-light" disabled>
+           <h5 style="font-family: 'JetBrains Mono'" th:text="${'Wybrano uzytkownika o indeksie: ' + chosenIdx}"></h5>
+           <h5 style="font-family: 'JetBrains Mono'" th:text="${'Liczba stworzonych logow: ' + recordedLogs.size()}"></h5>
+        </button>
+    </div><br>
+    <div style="text-align: center">
+        <table class="table table-hover" style="background-color: white">
+            <thead>
+                <tr>
+                    <th scope="col">Zawartosc logu</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="recordedLog:${recordedLogs}">
+                    <td th:text="${recordedLog.getRegistryContent()}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

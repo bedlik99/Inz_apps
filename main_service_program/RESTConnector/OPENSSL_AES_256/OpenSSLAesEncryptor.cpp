@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include <string>
 #include <string.h>
 #include <math.h>
@@ -36,8 +37,8 @@ static inline bool is_base64(unsigned char c) {
 }
 
 // base64 encoding
-std::string OpenSSLAesEncryptor::base64_encode(unsigned char *bytes_to_encode, int in_len) {
-    std::string ret;
+string OpenSSLAesEncryptor::base64_encode(unsigned char *bytes_to_encode, int in_len) {
+    string ret;
     int i = 0;
     int j = 0;
     unsigned char char_array_3[3];
@@ -77,13 +78,13 @@ std::string OpenSSLAesEncryptor::base64_encode(unsigned char *bytes_to_encode, i
 }
 
 // base64 decoding
-std::string OpenSSLAesEncryptor::base64_decode(std::string &encoded_string) {
+string OpenSSLAesEncryptor::base64_decode(string &encoded_string) {
     int in_len = encoded_string.size();
     int i = 0;
     int j = 0;
     int in_ = 0;
     unsigned char char_array_4[4], char_array_3[3];
-    std::string ret;
+    string ret;
 
     while (in_len-- && (encoded_string[in_] != '=') && is_base64(encoded_string[in_])) {
         char_array_4[i++] = encoded_string[in_];
@@ -216,17 +217,84 @@ int OpenSSLAesEncryptor::decrypt(unsigned char *ciphertext, int ciphertext_len, 
     return plaintext_len;
 }
 
-bool OpenSSLAesEncryptor::fillStringWithHashtags(std::string& str) {
+bool OpenSSLAesEncryptor::fillStringWithChars(string& str) {
     if (str.length() == 0)
         return false;
 
-    long stringNecessarySize = findMaxRangeOfStringLength(str.length(), 0, 16);
-    long numberOfNeededHashtags = stringNecessarySize - str.length();
+    long stringNecessarySize=str.length();
 
-    for (long i = 0; i < numberOfNeededHashtags; i++) {
-        str = '#' + str;
+    if(str.length() % 16 != 0)
+        stringNecessarySize = findMaxRangeOfStringLength(str.length(), 0, 16);
+    
+    long numberOfNeededChars = stringNecessarySize - str.length();
+    string neededChars = convert_ASCII_To16System(numberOfNeededChars);
+
+    for (long i = 0; i < numberOfNeededChars-1; i++) {
+        int randomCharIndex = rand() % 88;
+        neededChars = neededChars + writable_chars[randomCharIndex];
     }
+
+    if(numberOfNeededChars!=0)
+        str = neededChars + str;
+
     return true;
+}
+
+string OpenSSLAesEncryptor::convert_ASCII_To16System(int charASCIIValue){
+    string neededChars="";
+    switch (charASCIIValue){
+        case 10:
+            neededChars = "A";
+            break;
+        case 11:
+            neededChars = "B";
+            break;
+        case 12:
+            neededChars = "C";
+            break;
+        case 13:
+            neededChars = "D";
+            break;
+        case 14:
+            neededChars = "E";
+            break;
+        case 15:
+            neededChars = "F";
+            break;
+        default:
+            neededChars = to_string(charASCIIValue);
+            break;
+    }
+    return neededChars;
+}
+
+int OpenSSLAesEncryptor::convert_ASCII_To10System(char charASCIIValue){
+    int decimalValue=0;
+    switch (charASCIIValue){
+        case 'A':
+            decimalValue = 10;
+            break;
+        case 'B':
+            decimalValue = 11;
+            break;
+        case 'C':
+            decimalValue = 12;
+            break;
+        case 'D':
+            decimalValue = 13;
+            break;
+        case 'E':
+            decimalValue = 14;
+            break;
+        case 'F':
+            decimalValue = 15;
+            break;
+        default:
+            decimalValue = (int)charASCIIValue - 48;
+            break;
+    }
+
+    return decimalValue;
 }
 
 long OpenSSLAesEncryptor::findMaxRangeOfStringLength(long strLength, long lowRange, long highRange) {
@@ -238,24 +306,21 @@ long OpenSSLAesEncryptor::findMaxRangeOfStringLength(long strLength, long lowRan
     return findMaxRangeOfStringLength(strLength, lowRange, highRange);
 }
 
-void OpenSSLAesEncryptor::removeHashtagsFromString(std::string& str) {
-    int strLength = str.length();
-    for (int i = 0; i < strLength; i++) {
-        if (str[i] != '#') {
-            str = str.substr(i);
-            break;
-        }
+void OpenSSLAesEncryptor::removeCharsFromString(string& str) {
+    if(str.at(0) != '{' && str.at(0) != '['){
+        char firstDigitASCII = str.at(0);
+        int startingNumberOfChars = convert_ASCII_To10System(firstDigitASCII);
+        str = str.substr(startingNumberOfChars);
     }
 }
 
-std::string OpenSSLAesEncryptor::encryptAES256WithOpenSSL(std::string strToEncrypt){
+string OpenSSLAesEncryptor::encryptAES256WithOpenSSL(string strToEncrypt){
     /* A 256 bit key */
     /* A 128 bit IV */
-    std::string key,iv;
+    string key,iv;
     readSecrects(key,iv);
-    std::string encoded64String;
-
-    if(fillStringWithHashtags(strToEncrypt)){
+    string encoded64String="";
+    if(fillStringWithChars(strToEncrypt)){
         unsigned char* charsToEncrypt = (unsigned char *)strToEncrypt.c_str();
         /*
         * Buffer for ciphertext. Ensure the buffer is long enough for the
@@ -272,15 +337,14 @@ std::string OpenSSLAesEncryptor::encryptAES256WithOpenSSL(std::string strToEncry
         ciphertext);
 
         encoded64String = base64_encode(ciphertext,ciphertext_l);
-
     }
     return encoded64String;
 }
 
-std::string OpenSSLAesEncryptor::decryptAES256WithOpenSSL(std::string encoded64StrToDecrypt){
+string OpenSSLAesEncryptor::decryptAES256WithOpenSSL(string encoded64StrToDecrypt){
     /* A 256 bit key */
     /* A 128 bit IV */
-    std::string key,iv,decryptedStringToReturn;
+    string key,iv,decryptedStringToReturn;
     readSecrects(key,iv);
 
     /* Buffer for the decrypted text */
@@ -289,7 +353,7 @@ std::string OpenSSLAesEncryptor::decryptAES256WithOpenSSL(std::string encoded64S
     /*Encrypted ciphertext to be decrypted*/
     unsigned char encryptedtextTmp[bufferLength];
 
-    std::string decoded64String = base64_decode(encoded64StrToDecrypt);
+    string decoded64String = base64_decode(encoded64StrToDecrypt);
 
     /* Decrypt the ciphertext */
     int decryptedtext_l = decrypt(
@@ -303,16 +367,16 @@ std::string OpenSSLAesEncryptor::decryptAES256WithOpenSSL(std::string encoded64S
     decryptedtext[decryptedtext_l] = '\0';
     decryptedStringToReturn = (char *)decryptedtext;
 
-    removeHashtagsFromString(decryptedStringToReturn);
+    removeCharsFromString(decryptedStringToReturn);
 
     return decryptedStringToReturn;
 }
 
-void OpenSSLAesEncryptor::readSecrects(std::string& key, std::string& iv){
-    std::string tmpStr;
+void OpenSSLAesEncryptor::readSecrects(string& key, string& iv){
+    string tmpStr;
     int it=0;
-    std::ifstream secretFile(secretPath);
-    while (std::getline(secretFile, tmpStr)) {
+    ifstream secretFile(secretPath);
+    while (getline(secretFile, tmpStr)) {
         switch (it) {
             case 0:
                 key = tmpStr;
@@ -329,6 +393,6 @@ void OpenSSLAesEncryptor::readSecrects(std::string& key, std::string& iv){
     secretFile.close();
 }
 
-const std::string OpenSSLAesEncryptor::getSecretPath(){
+const string OpenSSLAesEncryptor::getSecretPath(){
     return secretPath;
 }

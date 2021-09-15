@@ -17,6 +17,7 @@ public abstract class CryptoUtil {
     private static final IvParameterSpec iv = new IvParameterSpec(new byte[]{'4', 'q', 'U', 'T', 'M', 'L', 'k', 'E', '1', '5', 'P', 'X', 'g', '6', 'B', 'm'});
     private static final SecretKeySpec key = new SecretKeySpec(byteArrayKey, "AES");
     private static final String algorithm = "AES/CBC/NoPadding";
+    private static final String writable_chars = "P_3Auw|g!4EHS1.#W0<+oR?OIZ'9k*6=hCUGtTbQN(f;7/%lr8>LzD2$sy5p@Mq,acBdveKV)nm~ij`Y:&JXF^x-";
 
     public static String encrypt(String input)
             throws NoSuchPaddingException, NoSuchAlgorithmException,
@@ -41,7 +42,67 @@ public abstract class CryptoUtil {
                 .decode(cipherText));
         return new String(plainText);
     }
-/*
+
+    public static String getWritable_chars() {
+        return writable_chars;
+    }
+
+    public static String convert_ASCII_To16System(int charASCIIValue){
+        String neededChars="";
+        switch (charASCIIValue){
+            case 10:
+                neededChars = "A";
+                break;
+            case 11:
+                neededChars = "B";
+                break;
+            case 12:
+                neededChars = "C";
+                break;
+            case 13:
+                neededChars = "D";
+                break;
+            case 14:
+                neededChars = "E";
+                break;
+            case 15:
+                neededChars = "F";
+                break;
+            default:
+                neededChars = String.valueOf(charASCIIValue);
+                break;
+        }
+        return neededChars;
+    }
+
+    public static int convert_ASCII_To10System(String charASCIIValue){
+        int decimalValue=0;
+        switch (charASCIIValue){
+            case "A":
+                decimalValue = 10;
+                break;
+            case "B":
+                decimalValue = 11;
+                break;
+            case "C":
+                decimalValue = 12;
+                break;
+            case "D":
+                decimalValue = 13;
+                break;
+            case "E":
+                decimalValue = 14;
+                break;
+            case "F":
+                decimalValue = 15;
+                break;
+            default:
+                decimalValue = Integer.parseInt(charASCIIValue);
+                break;
+        }
+        return decimalValue;
+    }
+    /*
        public static SecretKey generateKey(int n) throws NoSuchAlgorithmException {
         KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
         keyGenerator.init(n);

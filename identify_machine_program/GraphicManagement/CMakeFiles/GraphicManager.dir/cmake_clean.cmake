@@ -1,5 +1,6 @@
 file(REMOVE_RECURSE
   "CMakeFiles/GraphicManager.dir/GraphicManager.cpp.o"
+  "CMakeFiles/GraphicManager.dir/GraphicManager.cpp.o.d"
   "libGraphicManager.a"
   "libGraphicManager.pdb"
 )

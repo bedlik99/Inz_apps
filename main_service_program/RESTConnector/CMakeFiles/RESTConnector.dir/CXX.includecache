@@ -6,13 +6,13 @@
 
 #IncludeRegexTransform: 
 
-/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/main_service_program/RESTConnector/OPENSSL_AES_256/OpenSSLAesEncryptor.h
+/home/cerber/Documents/inz_dyp/working_folder_inz/main_service_program/RESTConnector/OPENSSL_AES_256/OpenSSLAesEncryptor.h
 string
 -
 vector
 -
 
-/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/main_service_program/RESTConnector/RestServerConnector.cpp
+/home/cerber/Documents/inz_dyp/working_folder_inz/main_service_program/RESTConnector/RestServerConnector.cpp
 cpprest/http_client.h
 -
 cpprest/filestream.h
@@ -22,13 +22,13 @@ string
 vector
 -
 RestServerConnector.h
-/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/main_service_program/RESTConnector/RestServerConnector.h
+/home/cerber/Documents/inz_dyp/working_folder_inz/main_service_program/RESTConnector/RestServerConnector.h
 
-/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/main_service_program/RESTConnector/RestServerConnector.h
+/home/cerber/Documents/inz_dyp/working_folder_inz/main_service_program/RESTConnector/RestServerConnector.h
 string
 -
 cpprest/http_client.h
 -
 OPENSSL_AES_256/OpenSSLAesEncryptor.h
-/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/main_service_program/RESTConnector/OPENSSL_AES_256/OpenSSLAesEncryptor.h
+/home/cerber/Documents/inz_dyp/working_folder_inz/main_service_program/RESTConnector/OPENSSL_AES_256/OpenSSLAesEncryptor.h
 

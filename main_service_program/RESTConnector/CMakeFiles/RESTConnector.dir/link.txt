@@ -1,2 +1,2 @@
-/usr/bin/ar qc libRESTConnector.a  CMakeFiles/RESTConnector.dir/RestServerConnector.cpp.o
+/usr/bin/ar qc libRESTConnector.a CMakeFiles/RESTConnector.dir/RestServerConnector.cpp.o
 /usr/bin/ranlib libRESTConnector.a

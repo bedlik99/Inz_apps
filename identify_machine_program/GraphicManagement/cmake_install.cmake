@@ -1,4 +1,4 @@
-# Install script for directory: /home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/identify_machine_program/GraphicManagement
+# Install script for directory: /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program/GraphicManagement
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -35,5 +35,10 @@ endif()
 # Is this installation the result of a crosscompile?
 if(NOT DEFINED CMAKE_CROSSCOMPILING)
   set(CMAKE_CROSSCOMPILING "FALSE")
+endif()
+
+# Set default install directory permissions.
+if(NOT DEFINED CMAKE_OBJDUMP)
+  set(CMAKE_OBJDUMP "/usr/bin/objdump")
 endif()
 

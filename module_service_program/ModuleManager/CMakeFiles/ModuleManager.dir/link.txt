@@ -1,0 +1,2 @@
+/usr/bin/ar qc libModuleManager.a CMakeFiles/ModuleManager.dir/ModuleManager.cpp.o
+/usr/bin/ranlib libModuleManager.a

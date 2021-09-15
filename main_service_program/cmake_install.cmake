@@ -1,4 +1,4 @@
-# Install script for directory: /home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/main_service_program
+# Install script for directory: /home/cerber/Documents/inz_dyp/working_folder_inz/main_service_program
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -37,9 +37,14 @@ if(NOT DEFINED CMAKE_CROSSCOMPILING)
   set(CMAKE_CROSSCOMPILING "FALSE")
 endif()
 
+# Set default install directory permissions.
+if(NOT DEFINED CMAKE_OBJDUMP)
+  set(CMAKE_OBJDUMP "/usr/bin/objdump")
+endif()
+
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/main_service_program/RESTConnector/cmake_install.cmake")
+  include("/home/cerber/Documents/inz_dyp/working_folder_inz/main_service_program/RESTConnector/cmake_install.cmake")
 
 endif()
 
@@ -51,5 +56,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/jan/Documents/inz_dyp/Projekty_C++/working_folder_inz/main_service_program/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/cerber/Documents/inz_dyp/working_folder_inz/main_service_program/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

@@ -1,1 +1,0 @@
-/usr/bin/c++     CMakeFiles/HttpRestClient.dir/client_service.cpp.o  -o HttpRestClient  /usr/lib/x86_64-linux-gnu/libcpprest.so.2.10 RESTConnector/libRESTConnector.a -lpthread /usr/lib/x86_64-linux-gnu/libssl.so /usr/lib/x86_64-linux-gnu/libcrypto.so RESTConnector/IOConfig/libIOConfig.a RESTConnector/OPENSSL_AES_256/libOpenSSLAesEncryptor.a 

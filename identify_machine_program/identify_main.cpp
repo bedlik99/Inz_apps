@@ -2,24 +2,30 @@
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
 #include <sys/ptrace.h>
+#include <boost/algorithm/string.hpp>
 #include <iostream>
+#include <unistd.h>
+#include <fstream>
 #include <string>
 #include <cmath>
-#include "GraphicManager.h"
-#include "RESTConnector/RestServerConnector.h"
-#include "RESTConnector/IOConfig/IOConfig.h"
+#include <dirent.h>
+#include <time.h>
+#include <sys/signal.h>
+#include "GraphicManagement/GraphicManager.h"
+#include "IOConfig/IOConfig.h"
 
-void blinkChosenLine();
-void waitForBlink();
-void continueExecution();
+void continueExecutionV();
+int  continueExecutionI();
 void endExecution(int status);
 void refreshDrawedObjects();
+void createRegisterLog(std::string indexInput, std::string codeInput);
 void handleInfoWindow(std::string errorInfo,std::string windowTitle);
 int handleApprovalWindow();
 int init();
 void cleanup();
 
-static sf::RenderWindow mainWindow(sf::VideoMode(600, 700), "Registration",sf::Style::Titlebar);
+const static std::string logsFilePath = "/etc/identify_lab_data/logs_dir/main_logs";
+static sf::RenderWindow mainWindow(sf::VideoMode(500, 650), "Registration",sf::Style::Titlebar);
 static sf::String indexInput;
 static sf::String codeInput;  
 static sf::String tmpIndexCursor="_";
@@ -27,44 +33,28 @@ static sf::String tmpCodeCursor="_";
 static bool isIndex = true;
 static bool secondHasElapsed = true;
 static GraphicManager* graphicManager = nullptr;
-static RestServerConnector* restServerConnector = nullptr;
 static IOConfig ioConfig;
-static sf::Clock customClock;
-static sf::Mutex blinkMutex;
-static __INT64_TYPE__ firstTime=0;
 
-void continueExecution(){}
+void continueExecutionV(){}
+int  continueExecutionI(){return 0;}
 void endExecution(int status){
     cleanup();
-    kill(getpid(), SIGTERM);
     exit(status);
 }
 
 int main() {
-
-    ptrace(PTRACE_TRACEME, 0, 0, 0) < 0 ? endExecution(0) : continueExecution();
-    init() != 0 ? endExecution(-1) : continueExecution();
-
+    init() != 0 ? endExecution(-1) : continueExecutionV();
     int ASCII_DEC_CODE = 0; 
     int restCommunicationReturnCode = 0;
     while (mainWindow.isOpen()) {
-        sf::Event event;
-
-        if(abs(customClock.getElapsedTime().asMilliseconds() - firstTime) > 500){
-            sf::Thread thread(&waitForBlink);
-            thread.launch();
-        }
-      
-        while (mainWindow.pollEvent(event) ) {
         
+        sf::Event event;
+        refreshDrawedObjects();
+        while (mainWindow.waitEvent(event) ) {
+    
             switch (event.type){
                 case sf::Event::TextEntered: 
                      ASCII_DEC_CODE = static_cast<int>(event.key.code);
-
-                        if(ASCII_DEC_CODE == 27){
-                            if(handleApprovalWindow()==1)
-                            mainWindow.close();
-                        }
  
                         if(ASCII_DEC_CODE == 13){
                             if(indexInput.getSize()!=6 || codeInput.getSize()!=6){
@@ -94,34 +84,18 @@ int main() {
                                     graphicManager->getCursorCodePointer().setString(tmpCodeCursor);
                                     refreshDrawedObjects();
                                 }
-
                             }else{
                                 if(handleApprovalWindow()==1){
-                                    restCommunicationReturnCode = restServerConnector->sendData(static_cast<std::string>(indexInput),static_cast<std::string>(codeInput));
-                                    switch (restCommunicationReturnCode){
-                                        case 200:
-                                            handleInfoWindow(graphicManager->getSuccesfullResponseInfo().append(std::to_string(restCommunicationReturnCode)),"Success - Registration completed");
-                                            mainWindow.close();
-                                            exit(0);
-                                        case -5:
-                                            handleInfoWindow(graphicManager->getNoConnectionErrorInfo(),"Error");
-                                            break;              
-                                        default :
-                                            handleInfoWindow(graphicManager->getServerErrorInfo().append(std::to_string(restCommunicationReturnCode)),"Error");
-                                            break;
-                                    }
-
-
+                                    createRegisterLog(indexInput,codeInput);
+                                    endExecution(0);
                                 }
                             }
-
                         }
 
                         if(ASCII_DEC_CODE == 9){
                             isIndex = !isIndex;
                             if(isIndex){
                                 graphicManager->getArrowLinePointer().setPosition(320,40);
-                                 
                             }else{
                                 graphicManager->getArrowLinePointer().setPosition(320,90);  
                             }
@@ -159,40 +133,53 @@ int main() {
                                 graphicManager->getCodeInputText().setString(codeInput);   
                                 refreshDrawedObjects();
                             }
-                        
                         }
                     break;  
             }   
-        refreshDrawedObjects();
+            refreshDrawedObjects();
         }
     }
     cleanup();
     return 0;
 }
 
+void createRegisterLog(std::string indexInput, std::string codeInput){
+    if(ioConfig.trim(indexInput).length()==6 && ioConfig.trim(codeInput).length()==6){
+        std::ofstream outputLogsFile;
+        outputLogsFile.open(logsFilePath,std::ios::app);
+        std::string registryInfo = indexInput + " " + codeInput;
+        outputLogsFile << registryInfo << std::endl;
+        outputLogsFile.close();
+    }
+}
+
 void handleInfoWindow(std::string errorInfo, std::string windowTitle){
     sf::RenderWindow errorWindow(sf::VideoMode(650, 500), windowTitle,sf::Style::Titlebar);
     graphicManager->getErrorText().setString(errorInfo);
     errorWindow.setPosition(sf::Vector2i(2, 2));
-    errorWindow.requestFocus();
+    errorWindow.setKeyRepeatEnabled(false);
+    errorWindow.setFramerateLimit(60);
     mainWindow.setVisible(false);
 
     while (errorWindow.isOpen()) {
         sf::Event event;
-        while (errorWindow.pollEvent(event)) {
-                switch (event.type){
-                    case sf::Event::TextEntered:
-                        if(static_cast<int>(event.key.code) == 13){
-                            errorWindow.close();
-                        }
-                        break;
-                 }
-
-        }
         errorWindow.clear(sf::Color(230, 230, 230));
         errorWindow.draw(graphicManager->getErrorText());
         errorWindow.draw(graphicManager->getErrorGoBackText());
         errorWindow.display();
+        while (errorWindow.waitEvent(event)) {
+            switch (event.type){
+                case sf::Event::TextEntered:
+                    if(static_cast<int>(event.key.code) == 13){
+                        errorWindow.close();
+                    }
+                    break;
+            }
+            errorWindow.clear(sf::Color(230, 230, 230));
+            errorWindow.draw(graphicManager->getErrorText());
+            errorWindow.draw(graphicManager->getErrorGoBackText());
+            errorWindow.display();         
+        }
     }
     mainWindow.setPosition(sf::Vector2i(2, 2));
     mainWindow.setVisible(true);
@@ -204,14 +191,19 @@ int handleApprovalWindow(){
     int return_code=0;
     graphicManager->getConfirmInputText().setString("");
     confirmationWindow.setPosition(sf::Vector2i(2, 2));
-    confirmationWindow.requestFocus();
+    confirmationWindow.setKeyRepeatEnabled(false);
+    confirmationWindow.setFramerateLimit(60);
     mainWindow.setVisible(false);
 
     while (confirmationWindow.isOpen()) {
         sf::Event event;
-        while (confirmationWindow.pollEvent(event)) {
+        confirmationWindow.clear(sf::Color(230, 230, 230));
+        confirmationWindow.draw(graphicManager->getConfirmationText());
+        confirmationWindow.draw(graphicManager->getConfirmInputText());
+        confirmationWindow.draw(graphicManager->getConfirmEnterText());
+        confirmationWindow.display();
+        while (confirmationWindow.waitEvent(event)) {
                 switch (event.type){
-
                     case sf::Event::TextEntered:
                         ASCII_DEC_CODE = static_cast<int>(event.key.code);
 
@@ -221,6 +213,7 @@ int handleApprovalWindow(){
                             confirmationWindow.clear(sf::Color(230, 230, 230));
                             confirmationWindow.draw(graphicManager->getConfirmationText());
                             confirmationWindow.draw(graphicManager->getConfirmInputText());
+                            confirmationWindow.draw(graphicManager->getConfirmEnterText());
                             confirmationWindow.display();
                         }
                         if(ASCII_DEC_CODE == 13 && !graphicManager->getConfirmInputText().getString().isEmpty()){
@@ -228,12 +221,12 @@ int handleApprovalWindow(){
                         }
                         break;
                 }
+            confirmationWindow.clear(sf::Color(230, 230, 230));
+            confirmationWindow.draw(graphicManager->getConfirmationText());
+            confirmationWindow.draw(graphicManager->getConfirmInputText());
+            confirmationWindow.draw(graphicManager->getConfirmEnterText());
+            confirmationWindow.display();
         }
-        confirmationWindow.clear(sf::Color(230, 230, 230));
-        confirmationWindow.draw(graphicManager->getConfirmationText());
-        confirmationWindow.draw(graphicManager->getConfirmInputText());
-        confirmationWindow.draw(graphicManager->getConfirmEnterText());
-        confirmationWindow.display();
     }
     mainWindow.setPosition(sf::Vector2i(2, 2));
     mainWindow.setVisible(true);
@@ -241,60 +234,23 @@ int handleApprovalWindow(){
     return return_code;
 }
 
-void waitForBlink(){
-        blinkMutex.lock();
-        sf::Thread thread(&blinkChosenLine);
-        thread.launch();
-        blinkMutex.unlock();
-}
-
-void blinkChosenLine(){
-        blinkMutex.lock();
-
-        if(secondHasElapsed && abs(customClock.getElapsedTime().asMilliseconds() - firstTime) > 1200) {
-
-            if(isIndex){
-                graphicManager->getCursorIndexPointer().setColor(sf::Color(255, 255, 255));
-                refreshDrawedObjects();
-                firstTime = customClock.restart().asMilliseconds();
-            }else{
-                graphicManager->getCursorCodePointer().setColor(sf::Color(255, 255, 255));
-                refreshDrawedObjects();
-                firstTime = customClock.restart().asMilliseconds();           
-            }
-            secondHasElapsed = false;
-        }
-
-        if(!secondHasElapsed && abs(customClock.getElapsedTime().asMilliseconds() - firstTime) > 800) {
-            if(isIndex){
-                graphicManager->getCursorIndexPointer().setColor(sf::Color(0, 0, 0));
-                refreshDrawedObjects();
-            }else{
-                graphicManager->getCursorCodePointer().setColor(sf::Color(0, 0, 0));
-                refreshDrawedObjects();
-            }
-            secondHasElapsed = true;
-        }
-        blinkMutex.unlock();
-}   
-
 int init(){
-    restServerConnector = new RestServerConnector();
-    graphicManager = new GraphicManager();
-    if(ioConfig.doesFileExist(restServerConnector->getRegistrationFilePath()) 
-    && !ioConfig.isSecretFileEmpty(restServerConnector->getRegistrationFilePath())){
-            return -1;
-    }
+    mainWindow.setVisible(false);
+    (ioConfig.isFileEmpty(logsFilePath) && !ioConfig.areCredentialsPresent()) ? continueExecutionV() : endExecution(0);
+    sleep(8);
+    (ioConfig.getProcIdByName("MainService") == -1 || ioConfig.getProcIdByName("ModuleService") == -1) ? kill(getpid(),SIGSTOP) : continueExecutionI();
+
     mainWindow.setPosition(sf::Vector2i(2, 2));
+    mainWindow.setVisible(true);
+    mainWindow.setKeyRepeatEnabled(false);
+    mainWindow.setFramerateLimit(60);
+
+    graphicManager = new GraphicManager();
     return graphicManager->init_graphic_objects();
 }
 
 void cleanup(){
     mainWindow.close();
-    if(restServerConnector != nullptr){
-        delete restServerConnector;
-        restServerConnector = nullptr;
-    }
     if(graphicManager != nullptr){
         delete graphicManager;
         graphicManager = nullptr;
@@ -307,12 +263,10 @@ void refreshDrawedObjects(){
         mainWindow.draw(graphicManager->getRegisterText());
         mainWindow.draw(graphicManager->getInstructionText1());
         mainWindow.draw(graphicManager->getInstructionText2());
-        mainWindow.draw(graphicManager->getInstructionText3());
         mainWindow.draw(graphicManager->getInstructionText4());
         mainWindow.draw(graphicManager->getInstructionText5());
         mainWindow.draw(graphicManager->getRequirementsText0());
         mainWindow.draw(graphicManager->getRequirementsText1());
-        mainWindow.draw(graphicManager->getQuitConsoleText());
         mainWindow.draw(graphicManager->getIndexLabel());
         mainWindow.draw(graphicManager->getIndexText());
         mainWindow.draw(graphicManager->getCodeLabel());
