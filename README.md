@@ -27,19 +27,7 @@ To rebuild needed files.
 ./startClient
 ```
 <hr>
-<p>Bash script is calling doing 3 things. The commands used in bash can be seen when opening 'startClient' script. The commands are:</p>
 
-```
-1) echo "" > results.txt
-2) cmake --build .
-3) ./HttpRestClient
-```
-
- 1) Clear results.txt file when launching client.
- 2) Build project.
- 3) Run HttpRestClient.o file. This file is being build everytime project is build(2.).
-
-<hr>
 <h2>Running server (Temporary)</h2>
 <p>Server was written using Java version 11 so it is recommended version to have on your local machine. However 1.8 Java version should be also compatible.<p>
 <p>Only Jar file is added. To run server simply execute jar file with command:</p>

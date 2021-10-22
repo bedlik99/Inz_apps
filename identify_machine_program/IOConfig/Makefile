@@ -57,10 +57,10 @@ RM = /usr/local/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program
+CMAKE_SOURCE_DIR = /home/cerber/Documents/lab_supervision/identify_machine_program
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program
+CMAKE_BINARY_DIR = /home/cerber/Documents/lab_supervision/identify_machine_program
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,14 +87,14 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program && $(CMAKE_COMMAND) -E cmake_progress_start /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program/CMakeFiles /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program/IOConfig//CMakeFiles/progress.marks
-	cd /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 IOConfig/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program/CMakeFiles 0
+	cd /home/cerber/Documents/lab_supervision/identify_machine_program && $(CMAKE_COMMAND) -E cmake_progress_start /home/cerber/Documents/lab_supervision/identify_machine_program/CMakeFiles /home/cerber/Documents/lab_supervision/identify_machine_program/IOConfig//CMakeFiles/progress.marks
+	cd /home/cerber/Documents/lab_supervision/identify_machine_program && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 IOConfig/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/cerber/Documents/lab_supervision/identify_machine_program/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 IOConfig/clean
+	cd /home/cerber/Documents/lab_supervision/identify_machine_program && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 IOConfig/clean
 .PHONY : clean
 
 # The main clean target
@@ -103,22 +103,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 IOConfig/preinstall
+	cd /home/cerber/Documents/lab_supervision/identify_machine_program && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 IOConfig/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 IOConfig/preinstall
+	cd /home/cerber/Documents/lab_supervision/identify_machine_program && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 IOConfig/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/cerber/Documents/lab_supervision/identify_machine_program && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 IOConfig/CMakeFiles/IOConfig.dir/rule:
-	cd /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 IOConfig/CMakeFiles/IOConfig.dir/rule
+	cd /home/cerber/Documents/lab_supervision/identify_machine_program && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 IOConfig/CMakeFiles/IOConfig.dir/rule
 .PHONY : IOConfig/CMakeFiles/IOConfig.dir/rule
 
 # Convenience name for target.
@@ -127,7 +127,7 @@ IOConfig: IOConfig/CMakeFiles/IOConfig.dir/rule
 
 # fast build rule for target.
 IOConfig/fast:
-	cd /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program && $(MAKE) $(MAKESILENT) -f IOConfig/CMakeFiles/IOConfig.dir/build.make IOConfig/CMakeFiles/IOConfig.dir/build
+	cd /home/cerber/Documents/lab_supervision/identify_machine_program && $(MAKE) $(MAKESILENT) -f IOConfig/CMakeFiles/IOConfig.dir/build.make IOConfig/CMakeFiles/IOConfig.dir/build
 .PHONY : IOConfig/fast
 
 IOConfig.o: IOConfig.cpp.o
@@ -135,7 +135,7 @@ IOConfig.o: IOConfig.cpp.o
 
 # target to build an object file
 IOConfig.cpp.o:
-	cd /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program && $(MAKE) $(MAKESILENT) -f IOConfig/CMakeFiles/IOConfig.dir/build.make IOConfig/CMakeFiles/IOConfig.dir/IOConfig.cpp.o
+	cd /home/cerber/Documents/lab_supervision/identify_machine_program && $(MAKE) $(MAKESILENT) -f IOConfig/CMakeFiles/IOConfig.dir/build.make IOConfig/CMakeFiles/IOConfig.dir/IOConfig.cpp.o
 .PHONY : IOConfig.cpp.o
 
 IOConfig.i: IOConfig.cpp.i
@@ -143,7 +143,7 @@ IOConfig.i: IOConfig.cpp.i
 
 # target to preprocess a source file
 IOConfig.cpp.i:
-	cd /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program && $(MAKE) $(MAKESILENT) -f IOConfig/CMakeFiles/IOConfig.dir/build.make IOConfig/CMakeFiles/IOConfig.dir/IOConfig.cpp.i
+	cd /home/cerber/Documents/lab_supervision/identify_machine_program && $(MAKE) $(MAKESILENT) -f IOConfig/CMakeFiles/IOConfig.dir/build.make IOConfig/CMakeFiles/IOConfig.dir/IOConfig.cpp.i
 .PHONY : IOConfig.cpp.i
 
 IOConfig.s: IOConfig.cpp.s
@@ -151,7 +151,7 @@ IOConfig.s: IOConfig.cpp.s
 
 # target to generate assembly for a file
 IOConfig.cpp.s:
-	cd /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program && $(MAKE) $(MAKESILENT) -f IOConfig/CMakeFiles/IOConfig.dir/build.make IOConfig/CMakeFiles/IOConfig.dir/IOConfig.cpp.s
+	cd /home/cerber/Documents/lab_supervision/identify_machine_program && $(MAKE) $(MAKESILENT) -f IOConfig/CMakeFiles/IOConfig.dir/build.make IOConfig/CMakeFiles/IOConfig.dir/IOConfig.cpp.s
 .PHONY : IOConfig.cpp.s
 
 # Help Target
@@ -177,6 +177,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/cerber/Documents/lab_supervision/identify_machine_program && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

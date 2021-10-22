@@ -57,10 +57,10 @@ RM = /usr/local/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program
+CMAKE_SOURCE_DIR = /home/cerber/Documents/lab_supervision/identify_machine_program
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program
+CMAKE_BINARY_DIR = /home/cerber/Documents/lab_supervision/identify_machine_program
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,14 +87,14 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program && $(CMAKE_COMMAND) -E cmake_progress_start /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program/CMakeFiles /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program/GraphicManagement//CMakeFiles/progress.marks
-	cd /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 GraphicManagement/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program/CMakeFiles 0
+	cd /home/cerber/Documents/lab_supervision/identify_machine_program && $(CMAKE_COMMAND) -E cmake_progress_start /home/cerber/Documents/lab_supervision/identify_machine_program/CMakeFiles /home/cerber/Documents/lab_supervision/identify_machine_program/GraphicManagement//CMakeFiles/progress.marks
+	cd /home/cerber/Documents/lab_supervision/identify_machine_program && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 GraphicManagement/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/cerber/Documents/lab_supervision/identify_machine_program/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 GraphicManagement/clean
+	cd /home/cerber/Documents/lab_supervision/identify_machine_program && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 GraphicManagement/clean
 .PHONY : clean
 
 # The main clean target
@@ -103,22 +103,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 GraphicManagement/preinstall
+	cd /home/cerber/Documents/lab_supervision/identify_machine_program && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 GraphicManagement/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 GraphicManagement/preinstall
+	cd /home/cerber/Documents/lab_supervision/identify_machine_program && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 GraphicManagement/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/cerber/Documents/lab_supervision/identify_machine_program && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 GraphicManagement/CMakeFiles/GraphicManager.dir/rule:
-	cd /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 GraphicManagement/CMakeFiles/GraphicManager.dir/rule
+	cd /home/cerber/Documents/lab_supervision/identify_machine_program && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 GraphicManagement/CMakeFiles/GraphicManager.dir/rule
 .PHONY : GraphicManagement/CMakeFiles/GraphicManager.dir/rule
 
 # Convenience name for target.
@@ -127,7 +127,7 @@ GraphicManager: GraphicManagement/CMakeFiles/GraphicManager.dir/rule
 
 # fast build rule for target.
 GraphicManager/fast:
-	cd /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program && $(MAKE) $(MAKESILENT) -f GraphicManagement/CMakeFiles/GraphicManager.dir/build.make GraphicManagement/CMakeFiles/GraphicManager.dir/build
+	cd /home/cerber/Documents/lab_supervision/identify_machine_program && $(MAKE) $(MAKESILENT) -f GraphicManagement/CMakeFiles/GraphicManager.dir/build.make GraphicManagement/CMakeFiles/GraphicManager.dir/build
 .PHONY : GraphicManager/fast
 
 GraphicManager.o: GraphicManager.cpp.o
@@ -135,7 +135,7 @@ GraphicManager.o: GraphicManager.cpp.o
 
 # target to build an object file
 GraphicManager.cpp.o:
-	cd /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program && $(MAKE) $(MAKESILENT) -f GraphicManagement/CMakeFiles/GraphicManager.dir/build.make GraphicManagement/CMakeFiles/GraphicManager.dir/GraphicManager.cpp.o
+	cd /home/cerber/Documents/lab_supervision/identify_machine_program && $(MAKE) $(MAKESILENT) -f GraphicManagement/CMakeFiles/GraphicManager.dir/build.make GraphicManagement/CMakeFiles/GraphicManager.dir/GraphicManager.cpp.o
 .PHONY : GraphicManager.cpp.o
 
 GraphicManager.i: GraphicManager.cpp.i
@@ -143,7 +143,7 @@ GraphicManager.i: GraphicManager.cpp.i
 
 # target to preprocess a source file
 GraphicManager.cpp.i:
-	cd /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program && $(MAKE) $(MAKESILENT) -f GraphicManagement/CMakeFiles/GraphicManager.dir/build.make GraphicManagement/CMakeFiles/GraphicManager.dir/GraphicManager.cpp.i
+	cd /home/cerber/Documents/lab_supervision/identify_machine_program && $(MAKE) $(MAKESILENT) -f GraphicManagement/CMakeFiles/GraphicManager.dir/build.make GraphicManagement/CMakeFiles/GraphicManager.dir/GraphicManager.cpp.i
 .PHONY : GraphicManager.cpp.i
 
 GraphicManager.s: GraphicManager.cpp.s
@@ -151,7 +151,7 @@ GraphicManager.s: GraphicManager.cpp.s
 
 # target to generate assembly for a file
 GraphicManager.cpp.s:
-	cd /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program && $(MAKE) $(MAKESILENT) -f GraphicManagement/CMakeFiles/GraphicManager.dir/build.make GraphicManagement/CMakeFiles/GraphicManager.dir/GraphicManager.cpp.s
+	cd /home/cerber/Documents/lab_supervision/identify_machine_program && $(MAKE) $(MAKESILENT) -f GraphicManagement/CMakeFiles/GraphicManager.dir/build.make GraphicManagement/CMakeFiles/GraphicManager.dir/GraphicManager.cpp.s
 .PHONY : GraphicManager.cpp.s
 
 # Help Target
@@ -177,6 +177,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/cerber/Documents/lab_supervision/identify_machine_program && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

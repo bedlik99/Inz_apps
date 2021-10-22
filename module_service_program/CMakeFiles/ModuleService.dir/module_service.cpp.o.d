@@ -1,5 +1,5 @@
 CMakeFiles/ModuleService.dir/module_service.cpp.o: \
- /home/cerber/Documents/inz_dyp/working_folder_inz/module_service_program/module_service.cpp \
+ /home/cerber/Documents/lab_supervision/module_service_program/module_service.cpp \
  /usr/include/stdc-predef.h /usr/include/c++/9/set \
  /usr/include/c++/9/bits/stl_tree.h \
  /usr/include/c++/9/bits/stl_algobase.h \
@@ -204,5 +204,5 @@ CMakeFiles/ModuleService.dir/module_service.cpp.o: \
  /usr/include/x86_64-linux-gnu/bits/posix1_lim.h \
  /usr/include/x86_64-linux-gnu/bits/local_lim.h \
  /usr/include/linux/limits.h \
- /home/cerber/Documents/inz_dyp/working_folder_inz/module_service_program/IOConfig/IOConfig.h \
- /home/cerber/Documents/inz_dyp/working_folder_inz/module_service_program/ModuleManager/ModuleManager.h
+ /home/cerber/Documents/lab_supervision/module_service_program/IOConfig/IOConfig.h \
+ /home/cerber/Documents/lab_supervision/module_service_program/ModuleManager/ModuleManager.h

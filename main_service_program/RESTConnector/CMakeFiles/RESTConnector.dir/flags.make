@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/cerber/Documents/inz_dyp/working_folder_inz/main_service_program/RESTConnector/IOConfig -I/home/cerber/Documents/inz_dyp/working_folder_inz/main_service_program/RESTConnector/OPENSSL_AES_256
+CXX_INCLUDES = -I/home/cerber/Documents/lab_supervision/main_service_program/RESTConnector/IOConfig -I/home/cerber/Documents/lab_supervision/main_service_program/RESTConnector/OPENSSL_AES_256
 
 CXX_FLAGS = -std=gnu++17
 

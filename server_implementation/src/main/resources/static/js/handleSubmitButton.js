@@ -6,8 +6,8 @@ window.onload = () => {
 
     indexInput.addEventListener('input',() => {
         if(numRegex.test(indexInput.value.substring(indexInput.value.length-1))){
-            if(indexInput.value.length > 6){
-                indexInput.value = indexInput.value.substring(0,6);
+            if(indexInput.value.length > 8){
+                indexInput.value = indexInput.value.substring(0,8);
             }
         }else{
             indexInput.value = indexInput.value.substring(0,indexInput.value.length-1);
@@ -15,11 +15,11 @@ window.onload = () => {
     });
 
     submitButton.addEventListener('click',() => {
-        if(indexInput.value.length != 6){
+        if(indexInput.value.length != 8){
             submitForm.onsubmit = () => {
                 return false;
             }
-            alert("Podano nieprawidlowy numer indeksu");
+            alert("Podano nieprawidlowy numer email");
         }else{
             submitForm.onsubmit = () => {
                 submitButton.value = indexInput.value;

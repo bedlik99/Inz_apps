@@ -1,3 +1,4 @@
 #!/bin/bash
+killall -9 IdentifyOnStart
 cmake --build .
-./IdentifyOnStart
+#./IdentifyOnStart

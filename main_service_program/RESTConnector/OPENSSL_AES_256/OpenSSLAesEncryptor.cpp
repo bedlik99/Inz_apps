@@ -392,7 +392,3 @@ void OpenSSLAesEncryptor::readSecrects(string& key, string& iv){
     }   
     secretFile.close();
 }
-
-const string OpenSSLAesEncryptor::getSecretPath(){
-    return secretPath;
-}

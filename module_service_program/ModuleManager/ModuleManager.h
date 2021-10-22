@@ -9,6 +9,13 @@ using namespace std;
    - sciezka lub sciezki do folderow ktore beda skanowane przez serwis modulowy -> scan_folder_paths
    - pelne nazwy plikow/przedroski/przyrostki nazw plikow ktore beda brane pod uwage
      przez serwis modulowy skanujacy wybrane foldery -> full_file_names; prefix_file_names; suffix_file_names
+   _________________________________________________________________________________________________
+ * W pliku lab_end_date o sciezce: "/home/cerber/Documents/lab_supervision/identify_lab_data/lab_end_date"
+ * nalezy wpisac koncowa date laboratorium
+ * Gdy aktualny dzien, bedzie pozniej niz podana data to serwis skanujacy foldery
+ * oraz komunikujacy sie z serwerem zostana zatrzymane
+ * Format: yyyy-mm-dd_hh:mm:ss 
+ * np.     2021-10-16_18:50:06
  * _________________________________________________________________________________________________
  * UWAGA! W przypadku podawania sciezek folderow ktore maja byc skanowane, nalezy uprzednio stworzyc 
  * foldery o podanych sciezkach
@@ -17,15 +24,15 @@ using namespace std;
 class ModuleManager {
 
     private:
-
         /*
          * Tablica do modyfikowania.
          * Przechowuje sciezki do folderow ktore beda skanowane przez modul
          * tj. gdy pojawi sie w folderze plik to zostanie stworzony log, ktory potem zostanie wyslany na serwer 
         */
-        const string scan_folder_paths[2]={
-            "/home/stud/Documents/lab_files",
-            "/home/stud/Documents/lab_files2"
+        const string scan_folder_paths[3]={
+            "/home/stud",
+            "/home/stud/Desktop/working_dir/pycharm",
+            "/home/stud/Desktop/working_dir/vsc"
         };
 
         /*
@@ -33,9 +40,8 @@ class ModuleManager {
          * Przechowuje pelne nazwy plikow ktore maja byc uwzgledniane 
          * przez modul skanujacy folder(y)
         */
-        const string full_files_names[2]={
-            "pkc_zad1",
-            "pkc_zad2"
+        const string full_files_names[1]={
+            ".bash_history"
         };
 
         /*
@@ -43,19 +49,15 @@ class ModuleManager {
          * Przechowuje przedrostki nazw plikow, ktore beda tworzone podczas
          * laboratorium i beda brane pod uwage przez modul skanujacy folder(y)
         */
-        const string prefix_files_names[2]={
-            "pkc_zad",
-            "pkc_cw"
-        };
+        const string prefix_files_names[0]={};
 
         /*
          * Tablica do modyfikowania.
          * Przechowuje przyrostki nazw plikow, ktore beda tworzone podczas
          * laboratorium i beda brane pod uwage przez modul skanujacy folder(y)
         */
-        const string suffix_files_names[2]{
-            ".py",
-            ".txt"
+        const string suffix_files_names[1]{
+          ".py"
         };
 
     public:

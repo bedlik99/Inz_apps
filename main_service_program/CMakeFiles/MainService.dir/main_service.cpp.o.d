@@ -1,5 +1,5 @@
 CMakeFiles/MainService.dir/main_service.cpp.o: \
- /home/cerber/Documents/inz_dyp/working_folder_inz/main_service_program/main_service.cpp \
+ /home/cerber/Documents/lab_supervision/main_service_program/main_service.cpp \
  /usr/include/stdc-predef.h /usr/include/cpprest/http_client.h \
  /usr/include/c++/9/memory /usr/include/c++/9/bits/stl_algobase.h \
  /usr/include/x86_64-linux-gnu/c++/9/bits/c++config.h \
@@ -1063,6 +1063,6 @@ CMakeFiles/MainService.dir/main_service.cpp.o: \
  /usr/include/x86_64-linux-gnu/sys/inotify.h \
  /usr/include/x86_64-linux-gnu/bits/inotify.h /usr/include/dirent.h \
  /usr/include/x86_64-linux-gnu/bits/dirent.h \
- /home/cerber/Documents/inz_dyp/working_folder_inz/main_service_program/RESTConnector/IOConfig/IOConfig.h \
- /home/cerber/Documents/inz_dyp/working_folder_inz/main_service_program/RESTConnector/RestServerConnector.h \
- /home/cerber/Documents/inz_dyp/working_folder_inz/main_service_program/RESTConnector/OPENSSL_AES_256/OpenSSLAesEncryptor.h
+ /home/cerber/Documents/lab_supervision/main_service_program/RESTConnector/IOConfig/IOConfig.h \
+ /home/cerber/Documents/lab_supervision/main_service_program/RESTConnector/RestServerConnector.h \
+ /home/cerber/Documents/lab_supervision/main_service_program/RESTConnector/OPENSSL_AES_256/OpenSSLAesEncryptor.h

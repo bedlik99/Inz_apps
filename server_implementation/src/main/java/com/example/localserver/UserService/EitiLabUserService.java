@@ -38,15 +38,15 @@ public class EitiLabUserService {
         this.recordedEventRepository = recordedEventRepository;
     }
 
-    public List<RecordedEventDTO> findStudentRegistries(String indexNr){
+    public List<RecordedEventDTO> findStudentRegistries(String email){
         List<RecordedEventDTO> recordedLogsList = new ArrayList<>();
-        RegisteredUser searchedUser = eitiLabUserRepository.findStudentByIndexNr(indexNr);
-        if(indexNr != null && searchedUser != null){
-            if(indexNr.trim().length() == 6){
+        RegisteredUser searchedUser = eitiLabUserRepository.findStudentByEmail(email);
+        if(email != null && searchedUser != null){
+            if(email.trim().length() == 18){
                 Set<RecordedEvent> recordedEvents = searchedUser.getEventRegistries();
                 recordedEvents.stream()
                         .sorted(Comparator.comparing(RecordedEvent::getDateTime))
-                        .forEach(el -> recordedLogsList.add(new RecordedEventDTO(indexNr,el.getRegistryContent())));
+                        .forEach(el -> recordedLogsList.add(new RecordedEventDTO(email,el.getRegistryContent())));
             }
         }
         return recordedLogsList;
@@ -57,7 +57,7 @@ public class EitiLabUserService {
                 (RegisteredLabUserDTO) decryptMessage(encryptedMessage.getValue(),true);
         if (registeredUser != null) {
             if (validateUserData(registeredUser)) {
-                RegisteredUser userToSave = new RegisteredUser(registeredUser.getIndexNr(), registeredUser.getUniqueCode());
+                RegisteredUser userToSave = new RegisteredUser(registeredUser.getMail(), registeredUser.getUniqueCode());
                 eitiLabUserRepository.save(userToSave);
                 recordedEventRepository.save(new RecordedEvent("Maszyna zostala zarejestrowana", LocalDateTime.now(), userToSave));
                 return ResponseEntity.status(HttpStatus.OK).body("");
@@ -71,10 +71,11 @@ public class EitiLabUserService {
         RecordedEventDTO recordedEvent =
                 (RecordedEventDTO) decryptMessage(encryptedMessage.getValue(),false);
         RegisteredUser searchedUser=null;
-        if (recordedEvent != null && !recordedEvent.getIndexNr().isEmpty()) {
-            searchedUser = eitiLabUserRepository.findStudentByIndexNr(recordedEvent.getIndexNr());
+        if (recordedEvent != null && !recordedEvent.getMail().isEmpty()) {
+            searchedUser = eitiLabUserRepository.findStudentByEmail(recordedEvent.getMail());
             if(searchedUser != null)
-            recordedEventRepository.save(new RecordedEvent(recordedEvent.getRegistryContent(), LocalDateTime.now(), searchedUser));
+                recordedEventRepository.save(new RecordedEvent(
+                        recordedEvent.getRegistryContent(), LocalDateTime.now(), searchedUser));
         }
     }
 
@@ -94,11 +95,10 @@ public class EitiLabUserService {
         try {
             String decryptedMessage = CryptoUtil.decrypt(encryptedMessage);
             decryptedMessage = removeCharsFromString(decryptedMessage);
-            if(isRegistration){
+            if(isRegistration)
                 return new Gson().fromJson(decryptedMessage, RegisteredLabUserDTO.class);
-            }else {
+            else
                 return new Gson().fromJson(decryptedMessage, RecordedEventDTO.class);
-            }
         } catch (InvalidAlgorithmParameterException | NoSuchPaddingException | IllegalBlockSizeException
                 | NoSuchAlgorithmException | BadPaddingException | InvalidKeyException e) {
             e.printStackTrace();
@@ -107,28 +107,23 @@ public class EitiLabUserService {
     }
 
     private boolean validateUserData(RegisteredLabUserDTO registeredLabUserDTO) {
-        return registeredLabUserDTO.getIndexNr().matches("[0-9]{6}") &&
-                registeredLabUserDTO.getUniqueCode().length() == 6;
+        return registeredLabUserDTO.getMail().matches("[0-9]{8}@pw.edu.pl") &&
+                registeredLabUserDTO.getUniqueCode().length() == 8;
     }
 
     private String fillStringWithChars(String str) {
-        if (str.length() == 0)
+        if (str.length() == 0) {
             return "";
-
+        }
         long stringNecessarySize = str.length();
-        if(stringNecessarySize % 16 != 0)
-            stringNecessarySize = findMaxRangeOfStringLength(str.length(), 0, 16);
-
+        stringNecessarySize = (stringNecessarySize % 16 != 0) ? findMaxRangeOfStringLength(str.length(), 0, 16) : stringNecessarySize;
         long numberOfNeededChars = stringNecessarySize - str.length();
         StringBuilder neededChars = new StringBuilder(CryptoUtil.convert_ASCII_To16System((int)numberOfNeededChars));
-
         for (long i = 0; i < numberOfNeededChars-1; i++) {
             int randomCharIndex = (int)Math.floor(Math.random()*88);
             neededChars.append(CryptoUtil.getWritable_chars().charAt(randomCharIndex));
         }
-        if(numberOfNeededChars!=0)
-            str = neededChars + str;
-
+        str = numberOfNeededChars!=0 ? (neededChars + str) : str;
         return str;
     }
 

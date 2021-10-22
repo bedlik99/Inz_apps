@@ -1,4 +1,4 @@
-# Install script for directory: /home/cerber/Documents/inz_dyp/working_folder_inz/main_service_program
+# Install script for directory: /home/cerber/Documents/lab_supervision/main_service_program
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -44,7 +44,7 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/cerber/Documents/inz_dyp/working_folder_inz/main_service_program/RESTConnector/cmake_install.cmake")
+  include("/home/cerber/Documents/lab_supervision/main_service_program/RESTConnector/cmake_install.cmake")
 
 endif()
 
@@ -56,5 +56,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/cerber/Documents/inz_dyp/working_folder_inz/main_service_program/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/cerber/Documents/lab_supervision/main_service_program/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

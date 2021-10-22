@@ -1,5 +1,5 @@
 ModuleManager/CMakeFiles/ModuleManager.dir/ModuleManager.cpp.o: \
- /home/cerber/Documents/inz_dyp/working_folder_inz/module_service_program/ModuleManager/ModuleManager.cpp \
+ /home/cerber/Documents/lab_supervision/module_service_program/ModuleManager/ModuleManager.cpp \
  /usr/include/stdc-predef.h /usr/include/c++/9/string \
  /usr/include/x86_64-linux-gnu/c++/9/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/9/bits/os_defines.h \
@@ -122,4 +122,4 @@ ModuleManager/CMakeFiles/ModuleManager.dir/ModuleManager.cpp.o: \
  /usr/include/c++/9/bits/stl_relops.h \
  /usr/include/c++/9/bits/stl_vector.h \
  /usr/include/c++/9/bits/stl_bvector.h /usr/include/c++/9/bits/vector.tcc \
- /home/cerber/Documents/inz_dyp/working_folder_inz/module_service_program/ModuleManager/ModuleManager.h
+ /home/cerber/Documents/lab_supervision/module_service_program/ModuleManager/ModuleManager.h

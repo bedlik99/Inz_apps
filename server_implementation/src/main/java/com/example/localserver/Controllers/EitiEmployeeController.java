@@ -3,7 +3,6 @@ package com.example.localserver.Controllers;
 import com.example.localserver.DTO.RecordedEventDTO;
 import com.example.localserver.UserService.EitiLabUserService;
 import com.example.localserver.UserService.EmployeeUserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -49,11 +48,12 @@ public class EitiEmployeeController {
     }
 
     @PostMapping("/logged/findStudentLogs")
-    public String showStudentsRecords(@RequestParam(name="submitButtonIndex") String indexNr,
+    public String showStudentsRecords(@RequestParam(name="submitButtonIndex") String email,
                                       Model theModel){
-        List<RecordedEventDTO> recordedEvents = eitiLabUserService.findStudentRegistries(indexNr);
+        String fullEmail = email+"@pw.edu.pl";
+        List<RecordedEventDTO> recordedEvents = eitiLabUserService.findStudentRegistries(fullEmail);
         theModel.addAttribute("recordedLogs",recordedEvents);
-        theModel.addAttribute("chosenIdx",indexNr);
+        theModel.addAttribute("chosenIdx",fullEmail);
         return "teacher-page";
     }
 

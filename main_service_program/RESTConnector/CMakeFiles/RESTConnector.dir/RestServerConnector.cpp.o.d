@@ -1,5 +1,5 @@
 RESTConnector/CMakeFiles/RESTConnector.dir/RestServerConnector.cpp.o: \
- /home/cerber/Documents/inz_dyp/working_folder_inz/main_service_program/RESTConnector/RestServerConnector.cpp \
+ /home/cerber/Documents/lab_supervision/main_service_program/RESTConnector/RestServerConnector.cpp \
  /usr/include/stdc-predef.h /usr/include/cpprest/http_client.h \
  /usr/include/c++/9/memory /usr/include/c++/9/bits/stl_algobase.h \
  /usr/include/x86_64-linux-gnu/c++/9/bits/c++config.h \
@@ -1056,5 +1056,5 @@ RESTConnector/CMakeFiles/RESTConnector.dir/RestServerConnector.cpp.o: \
  /usr/include/boost/asio/ssl/detail/write_op.hpp \
  /usr/include/boost/asio/ssl/stream_service.hpp \
  /usr/include/cpprest/filestream.h /usr/include/cpprest/details/fileio.h \
- /home/cerber/Documents/inz_dyp/working_folder_inz/main_service_program/RESTConnector/RestServerConnector.h \
- /home/cerber/Documents/inz_dyp/working_folder_inz/main_service_program/RESTConnector/OPENSSL_AES_256/OpenSSLAesEncryptor.h
+ /home/cerber/Documents/lab_supervision/main_service_program/RESTConnector/RestServerConnector.h \
+ /home/cerber/Documents/lab_supervision/main_service_program/RESTConnector/OPENSSL_AES_256/OpenSSLAesEncryptor.h

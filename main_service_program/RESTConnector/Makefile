@@ -57,10 +57,10 @@ RM = /usr/local/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/cerber/Documents/inz_dyp/working_folder_inz/main_service_program
+CMAKE_SOURCE_DIR = /home/cerber/Documents/lab_supervision/main_service_program
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/cerber/Documents/inz_dyp/working_folder_inz/main_service_program
+CMAKE_BINARY_DIR = /home/cerber/Documents/lab_supervision/main_service_program
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,14 +87,14 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/cerber/Documents/inz_dyp/working_folder_inz/main_service_program && $(CMAKE_COMMAND) -E cmake_progress_start /home/cerber/Documents/inz_dyp/working_folder_inz/main_service_program/CMakeFiles /home/cerber/Documents/inz_dyp/working_folder_inz/main_service_program/RESTConnector//CMakeFiles/progress.marks
-	cd /home/cerber/Documents/inz_dyp/working_folder_inz/main_service_program && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 RESTConnector/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/cerber/Documents/inz_dyp/working_folder_inz/main_service_program/CMakeFiles 0
+	cd /home/cerber/Documents/lab_supervision/main_service_program && $(CMAKE_COMMAND) -E cmake_progress_start /home/cerber/Documents/lab_supervision/main_service_program/CMakeFiles /home/cerber/Documents/lab_supervision/main_service_program/RESTConnector//CMakeFiles/progress.marks
+	cd /home/cerber/Documents/lab_supervision/main_service_program && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 RESTConnector/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/cerber/Documents/lab_supervision/main_service_program/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/cerber/Documents/inz_dyp/working_folder_inz/main_service_program && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 RESTConnector/clean
+	cd /home/cerber/Documents/lab_supervision/main_service_program && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 RESTConnector/clean
 .PHONY : clean
 
 # The main clean target
@@ -103,22 +103,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/cerber/Documents/inz_dyp/working_folder_inz/main_service_program && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 RESTConnector/preinstall
+	cd /home/cerber/Documents/lab_supervision/main_service_program && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 RESTConnector/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/cerber/Documents/inz_dyp/working_folder_inz/main_service_program && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 RESTConnector/preinstall
+	cd /home/cerber/Documents/lab_supervision/main_service_program && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 RESTConnector/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /home/cerber/Documents/inz_dyp/working_folder_inz/main_service_program && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/cerber/Documents/lab_supervision/main_service_program && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 RESTConnector/CMakeFiles/RESTConnector.dir/rule:
-	cd /home/cerber/Documents/inz_dyp/working_folder_inz/main_service_program && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 RESTConnector/CMakeFiles/RESTConnector.dir/rule
+	cd /home/cerber/Documents/lab_supervision/main_service_program && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 RESTConnector/CMakeFiles/RESTConnector.dir/rule
 .PHONY : RESTConnector/CMakeFiles/RESTConnector.dir/rule
 
 # Convenience name for target.
@@ -127,7 +127,7 @@ RESTConnector: RESTConnector/CMakeFiles/RESTConnector.dir/rule
 
 # fast build rule for target.
 RESTConnector/fast:
-	cd /home/cerber/Documents/inz_dyp/working_folder_inz/main_service_program && $(MAKE) $(MAKESILENT) -f RESTConnector/CMakeFiles/RESTConnector.dir/build.make RESTConnector/CMakeFiles/RESTConnector.dir/build
+	cd /home/cerber/Documents/lab_supervision/main_service_program && $(MAKE) $(MAKESILENT) -f RESTConnector/CMakeFiles/RESTConnector.dir/build.make RESTConnector/CMakeFiles/RESTConnector.dir/build
 .PHONY : RESTConnector/fast
 
 RestServerConnector.o: RestServerConnector.cpp.o
@@ -135,7 +135,7 @@ RestServerConnector.o: RestServerConnector.cpp.o
 
 # target to build an object file
 RestServerConnector.cpp.o:
-	cd /home/cerber/Documents/inz_dyp/working_folder_inz/main_service_program && $(MAKE) $(MAKESILENT) -f RESTConnector/CMakeFiles/RESTConnector.dir/build.make RESTConnector/CMakeFiles/RESTConnector.dir/RestServerConnector.cpp.o
+	cd /home/cerber/Documents/lab_supervision/main_service_program && $(MAKE) $(MAKESILENT) -f RESTConnector/CMakeFiles/RESTConnector.dir/build.make RESTConnector/CMakeFiles/RESTConnector.dir/RestServerConnector.cpp.o
 .PHONY : RestServerConnector.cpp.o
 
 RestServerConnector.i: RestServerConnector.cpp.i
@@ -143,7 +143,7 @@ RestServerConnector.i: RestServerConnector.cpp.i
 
 # target to preprocess a source file
 RestServerConnector.cpp.i:
-	cd /home/cerber/Documents/inz_dyp/working_folder_inz/main_service_program && $(MAKE) $(MAKESILENT) -f RESTConnector/CMakeFiles/RESTConnector.dir/build.make RESTConnector/CMakeFiles/RESTConnector.dir/RestServerConnector.cpp.i
+	cd /home/cerber/Documents/lab_supervision/main_service_program && $(MAKE) $(MAKESILENT) -f RESTConnector/CMakeFiles/RESTConnector.dir/build.make RESTConnector/CMakeFiles/RESTConnector.dir/RestServerConnector.cpp.i
 .PHONY : RestServerConnector.cpp.i
 
 RestServerConnector.s: RestServerConnector.cpp.s
@@ -151,7 +151,7 @@ RestServerConnector.s: RestServerConnector.cpp.s
 
 # target to generate assembly for a file
 RestServerConnector.cpp.s:
-	cd /home/cerber/Documents/inz_dyp/working_folder_inz/main_service_program && $(MAKE) $(MAKESILENT) -f RESTConnector/CMakeFiles/RESTConnector.dir/build.make RESTConnector/CMakeFiles/RESTConnector.dir/RestServerConnector.cpp.s
+	cd /home/cerber/Documents/lab_supervision/main_service_program && $(MAKE) $(MAKESILENT) -f RESTConnector/CMakeFiles/RESTConnector.dir/build.make RESTConnector/CMakeFiles/RESTConnector.dir/RestServerConnector.cpp.s
 .PHONY : RestServerConnector.cpp.s
 
 # Help Target
@@ -177,6 +177,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/cerber/Documents/inz_dyp/working_folder_inz/main_service_program && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/cerber/Documents/lab_supervision/main_service_program && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

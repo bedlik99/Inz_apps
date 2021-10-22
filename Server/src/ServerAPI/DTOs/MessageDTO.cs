@@ -8,7 +8,6 @@ namespace ServerAPI.DTOs
 	public class MessageDTO
 	{
 		public MessageDTO() { }
-
 		public string Value { get; set; }
 		public override string ToString()
 		{

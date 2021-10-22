@@ -19,7 +19,76 @@ namespace ServerAPI.Migrations
                 .HasAnnotation("ProductVersion", "5.0.9")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("ServerAPI.Models.RecordedEvent", b =>
+            modelBuilder.Entity("ServerAPI.Entities.Employee", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Password")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("EmployeeItems");
+                });
+
+            modelBuilder.Entity("ServerAPI.Entities.Laboratory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("LabName")
+                        .IsRequired()
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
+
+                    b.Property<string>("LabOrganizer")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("LaboratoryItems");
+                });
+
+            modelBuilder.Entity("ServerAPI.Entities.LaboratoryRequirements", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Content")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ExpirationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("LaboratoryId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LaboratoryId");
+
+                    b.ToTable("LaboratoryRequirementsItems");
+                });
+
+            modelBuilder.Entity("ServerAPI.Entities.RecordedEvent", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -42,17 +111,28 @@ namespace ServerAPI.Migrations
                     b.ToTable("RecordedEventItems");
                 });
 
-            modelBuilder.Entity("ServerAPI.Models.RegisteredUser", b =>
+            modelBuilder.Entity("ServerAPI.Entities.RegisteredUser", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("IndexNum")
+                    b.Property<string>("Email")
                         .IsRequired()
-                        .HasMaxLength(6)
-                        .HasColumnType("nvarchar(6)");
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("LaboratoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("NoWarning")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Surname")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UniqueCode")
                         .IsRequired()
@@ -60,12 +140,50 @@ namespace ServerAPI.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("LaboratoryId");
+
                     b.ToTable("RegisteredUserItems");
                 });
 
-            modelBuilder.Entity("ServerAPI.Models.RecordedEvent", b =>
+            modelBuilder.Entity("ServerAPI.Entities.Role", b =>
                 {
-                    b.HasOne("ServerAPI.Models.RegisteredUser", "RegisteredUser")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("RoleName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RoleItems");
+                });
+
+            modelBuilder.Entity("ServerAPI.Entities.Employee", b =>
+                {
+                    b.HasOne("ServerAPI.Entities.Role", "Role")
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("ServerAPI.Entities.LaboratoryRequirements", b =>
+                {
+                    b.HasOne("ServerAPI.Entities.Laboratory", "Laboratory")
+                        .WithMany("LaboratoryRequirements")
+                        .HasForeignKey("LaboratoryId");
+
+                    b.Navigation("Laboratory");
+                });
+
+            modelBuilder.Entity("ServerAPI.Entities.RecordedEvent", b =>
+                {
+                    b.HasOne("ServerAPI.Entities.RegisteredUser", "RegisteredUser")
                         .WithMany("EventRegistries")
                         .HasForeignKey("RegisteredUserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -74,7 +192,21 @@ namespace ServerAPI.Migrations
                     b.Navigation("RegisteredUser");
                 });
 
-            modelBuilder.Entity("ServerAPI.Models.RegisteredUser", b =>
+            modelBuilder.Entity("ServerAPI.Entities.RegisteredUser", b =>
+                {
+                    b.HasOne("ServerAPI.Entities.Laboratory", "Laboratory")
+                        .WithMany()
+                        .HasForeignKey("LaboratoryId");
+
+                    b.Navigation("Laboratory");
+                });
+
+            modelBuilder.Entity("ServerAPI.Entities.Laboratory", b =>
+                {
+                    b.Navigation("LaboratoryRequirements");
+                });
+
+            modelBuilder.Entity("ServerAPI.Entities.RegisteredUser", b =>
                 {
                     b.Navigation("EventRegistries");
                 });

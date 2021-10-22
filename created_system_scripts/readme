@@ -1,0 +1,5 @@
+1. /etc/systemd/system/eiti-main.service - Program serwisowy uruchamiający jako serwis plik binarny MainService. 
+2. /etc/systemd/system/eiti-module.service - Program serwisowy uruchamiający jako serwis plik binarny ModuleService.
+3. /etc/profile.d/init-machine.sh - Plik bashowy, uruchamiający podczas każdego logowania plik binarny IdentifyOnStart. (graficzny formularz) 
+4. /home/cerber/Documents/lab_supervision/identify_lab_data - folder z plikami konfiguracyjnymi: klucz do szyfrowania,logi, odpowiedzi serwera*. 
+5. /stud/.bashrc - Zostaly dodane linijki aby output z terminala zostal natychmiastowo zapisywany do pliku z historia logow

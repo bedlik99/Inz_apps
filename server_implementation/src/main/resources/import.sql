@@ -2,12 +2,12 @@ INSERT INTO employee_user VALUES (1,'$2a$12$7eBBtGtxPEHmoE3j2T2GOeAPsxlE92oyWL6c
 INSERT INTO role VALUES (1,'EMPLOYEE');
 INSERT INTO user_role VALUES(1,1);
 
-INSERT INTO registered_user VALUES (1,'300700','t@#Dg3');
-INSERT INTO registered_user VALUES (2,'300600','8vkAE&');
-INSERT INTO registered_user VALUES (3,'300500','gK4L0#');
-INSERT INTO registered_user VALUES (4,'300400','Ku6aa!');
-INSERT INTO registered_user VALUES (5,'300300','fWuD31');
-INSERT INTO registered_user VALUES (6,'300200','UUiW62');
+INSERT INTO registered_user VALUES (1,'12345678@pw.edu.pl','t@#Dg3sa');
+INSERT INTO registered_user VALUES (2,'30060023@pw.edu.pl','8vkAE&sd');
+INSERT INTO registered_user VALUES (3,'30050064@pw.edu.pl','gK4L0##G');
+INSERT INTO registered_user VALUES (4,'30040099@pw.edu.pl','Ku6aa!Pl');
+INSERT INTO registered_user VALUES (5,'30030011@pw.edu.pl','fWuD31(j');
+INSERT INTO registered_user VALUES (6,'30020039@pw.edu.pl','UUiW62$#');
 
 INSERT INTO recorded_event VALUES (1,PARSEDATETIME('03-05-2021 13:00:56','dd-MM-yyyy HH:mm:ss'),'User Registered',1);
 INSERT INTO recorded_event VALUES (2,PARSEDATETIME('14-01-2021 15:35:46','dd-MM-yyyy HH:mm:ss'),'User Registered',2);

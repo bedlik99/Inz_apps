@@ -13,13 +13,13 @@
 
 namespace fs = std::filesystem;
 
-const static std::string logsFolderPath = "/etc/identify_lab_data/logs_dir";
-const static std::string logsFilePath = "/etc/identify_lab_data/logs_dir/main_logs";
+const static std::string thisProcessName = "MainService";
+const static std::string logsFolderPath = "/home/cerber/Documents/lab_supervision/identify_lab_data/logs_dir";
+const static std::string logsFilePath = logsFolderPath+"/main_logs";
 static long long int lastLogLineNumber=0;
 static bool isRegistration;
 static IOConfig ioConfig;
 static RestServerConnector* restServerConnector = nullptr;
-static OpenSSLAesEncryptor* openSSLCryptoUtil = nullptr;
 static int fd,wd1;
 
 void continueExecutionV();
@@ -28,7 +28,8 @@ void endExecution(int status);
 void sig_handler(int);
 void processNewLogRecords();
 void findLastLineInLogFile();
-std::string readCredentials();
+void readCredentials(std::string &email,std::string &uniqueCode);
+void clearCredentials(int httpReturnCode);
 void resume_registration();
 void init();
 void cleanup();
@@ -108,47 +109,93 @@ void findLastLineInLogFile() {
 }
 
 void processNewLogRecords() {
-    std::string tmpStr;
+    std::string tmpStr(""),email(""),uniqueCode("");
     long long int it=1;
+    int httpReturnCode=0;
     std::ifstream logsFile(logsFilePath);
     while (std::getline(logsFile, tmpStr)) {
         if(it>lastLogLineNumber && !ioConfig.trim(tmpStr).empty()){
-            std::string user_credentials = readCredentials();
-            if(lastLogLineNumber==0 && isRegistration && !user_credentials.empty()){
-                restServerConnector->sendData(user_credentials,tmpStr,isRegistration);
-                isRegistration = false;
-            }else if(!user_credentials.empty()){
-                restServerConnector->sendData(user_credentials,tmpStr,isRegistration);
+            readCredentials(email,uniqueCode);
+            if(isRegistration && !ioConfig.trim(email).empty() && !ioConfig.trim(uniqueCode).empty()){
+                httpReturnCode = restServerConnector->sendData(email,uniqueCode,tmpStr,isRegistration);
+                std::string command = "ps -q "+std::to_string(ioConfig.getProcIdByName("IdentifyOnStart"))+" -o state --no-headers";
+                std::string commandValue;
+                while(true){
+                    std::vector <std::string> resultSet;
+                    ioConfig.getCommandOutput(command,resultSet);
+                    for(std::string &el: resultSet){
+                        if(el.compare("T")==0){
+                            commandValue = el;
+                            break;
+                        }
+                    }
+                    if(commandValue.compare("T")==0)
+                        break;
+                    sleep(1);
+                }
+                switch (httpReturnCode){
+                    case 200:
+                        isRegistration = false;
+                        kill(ioConfig.getProcIdByName("IdentifyOnStart"),SIGCONT);
+                        break;
+                    case 401:
+                        clearCredentials(httpReturnCode);
+                        it--;
+                        kill(ioConfig.getProcIdByName("IdentifyOnStart"),SIGCONT);
+                        break;
+                    default:
+                        //problemy z serwerem (np. wylaczony)
+                        clearCredentials(httpReturnCode);
+                        it--;
+                        kill(ioConfig.getProcIdByName("IdentifyOnStart"),SIGCONT);
+                        break;
+                }
+            }else if(ioConfig.trim(email).length()==18 && ioConfig.trim(uniqueCode).length()==8){
+                httpReturnCode = restServerConnector->sendData(email,uniqueCode,tmpStr,isRegistration);
             }
         }
-        it++;
+        if(!ioConfig.trim(tmpStr).empty())
+            if(ioConfig.trim(tmpStr).compare("500")!=0 || lastLogLineNumber!=0)
+                it++;
     }  
     logsFile.close();
     lastLogLineNumber = --it;
 }
 
-std::string readCredentials(){
-    std::string credentials;
+void readCredentials(std::string &email,std::string &uniqueCode){
+    std::string credentials("");
     std::ifstream encIndexFile(logsFilePath);
     std::getline(encIndexFile,credentials);
     encIndexFile.close();
-    if(ioConfig.trim(credentials).empty()){
+    if(ioConfig.trim(credentials).length()==26){
+        email = credentials.substr(0,18);
+        uniqueCode = credentials.substr(19,8);
+    }else if(ioConfig.trim(credentials).compare("500")!=0){
         showError();
-        return "";
     }
-    return (credentials.substr(0,6)+credentials.substr(7,6));
+}
+
+void clearCredentials(int httpReturnCode){
+    std::ofstream outputLogsFile;
+    outputLogsFile.open(logsFilePath,std::ios::trunc);
+    if(httpReturnCode!=401)
+        outputLogsFile << "500";
+    outputLogsFile.close();
 }
 
 void init(){
+    if(ioConfig.currentDateTime().compare(ioConfig.readLabEndDate()) >= 0){
+        system("systemctl disable eiti-main.service");
+        kill(getpid(),SIGSTOP);
+        endExecution(0);
+    }
     restServerConnector = new RestServerConnector();
-    openSSLCryptoUtil = new OpenSSLAesEncryptor();
     findLastLineInLogFile();
 }
 
 void showError(){
-    system("notify-send -u critical [\"STATUS: ERROR\"] \"Maszyna nie jest prawidlowo zidentyfikowana. \nNie korzystaj z tej maszyny.\"");
-    std::ofstream outfile("/home/stud/Desktop/user_Error");
-    outfile << "Maszyna nie zostala prawidlowo zidentyfikowana. Nie korzystaj z tej maszyny." << std::endl;
+    std::ofstream outfile("/home/stud/Desktop/ERROR_"+ioConfig.currentDateTime());
+    outfile << "Maszyna nie zostala prawidlowo skonfigurowana. Przed korzystaniem z maszyny musi zostac wykonana rejestracja.\n Zrestartuj maszyne i zarejestruj jeszcze raz. Jezeli rejestracja jest niemozliwa lub kolejne pliki bledu pojawiaja sie na pulpicie - zmien obraz maszyny" << std::endl;
     outfile.close();
 }
 
@@ -156,10 +203,6 @@ void cleanup(){
     if(restServerConnector != nullptr){
         delete restServerConnector;
         restServerConnector = nullptr;
-    }
-    if(openSSLCryptoUtil != nullptr){
-        delete openSSLCryptoUtil;
-        openSSLCryptoUtil = nullptr;
     }
 }
 

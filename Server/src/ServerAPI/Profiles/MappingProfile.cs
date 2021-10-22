@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using ServerAPI.DTOs;
-using ServerAPI.Models;
+using ServerAPI.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,8 +12,8 @@ namespace ServerAPI.Profiles
 	{
 		public MappingProfile()
 		{
-			CreateMap<RegisteredUser, RegisteredUserDTO>()
-				.ForMember(m => m.IndexNr, c => c.MapFrom(s => s.IndexNum))
+			CreateMap<RegisteredUser, RegisteredLabUserDTO>()
+				.ForMember(m => m.Email, c => c.MapFrom(s => s.Email))
 				.ForMember(m => m.UniqueCode, c => c.MapFrom(s => s.UniqueCode));
 
 			CreateMap<RecordedEvent, RecordedEventDTO>()

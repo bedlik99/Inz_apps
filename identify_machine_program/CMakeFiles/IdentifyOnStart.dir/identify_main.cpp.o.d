@@ -1,5 +1,5 @@
 CMakeFiles/IdentifyOnStart.dir/identify_main.cpp.o: \
- /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program/identify_main.cpp \
+ /home/cerber/Documents/lab_supervision/identify_machine_program/identify_main.cpp \
  /usr/include/stdc-predef.h /usr/include/SFML/Graphics.hpp \
  /usr/include/SFML/Window.hpp /usr/include/SFML/System.hpp \
  /usr/include/SFML/Config.hpp /usr/include/SFML/System/Clock.hpp \
@@ -660,5 +660,5 @@ CMakeFiles/IdentifyOnStart.dir/identify_main.cpp.o: \
  /usr/include/x86_64-linux-gnu/bits/ss_flags.h \
  /usr/include/x86_64-linux-gnu/bits/types/struct_sigstack.h \
  /usr/include/x86_64-linux-gnu/bits/sigthread.h \
- /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program/GraphicManagement/GraphicManager.h \
- /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program/IOConfig/IOConfig.h
+ /home/cerber/Documents/lab_supervision/identify_machine_program/GraphicManagement/GraphicManager.h \
+ /home/cerber/Documents/lab_supervision/identify_machine_program/IOConfig/IOConfig.h

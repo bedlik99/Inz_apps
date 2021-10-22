@@ -8,8 +8,8 @@ private:
     "abcdefghijklmnopqrstuvwxyz"
     "0123456789+/";
     const std::string writable_chars = "P_3Auw|g!4EHS1.#W0<+oR?OIZ'9k*6=hCUGtTbQN(f;7/%lr8>LzD2$sy5p@Mq,acBdveKV)nm~ij`Y:&JXF^x-";
-    const static int bufferLength = 2048;
-    const std::string secretPath = "/etc/identify_lab_data/keys";
+    const static int bufferLength = 8192;
+    const std::string secretPath = "/home/cerber/Documents/lab_supervision/identify_lab_data/keys";
 
     std::string base64_encode(unsigned char* bytes_to_encode, int in_len);
     std::string base64_decode(std::string & encoded_string);
@@ -26,5 +26,4 @@ public:
     OpenSSLAesEncryptor();
     std::string encryptAES256WithOpenSSL(std::string strToEncrypt);
     std::string decryptAES256WithOpenSSL(std::string encoded64StrToDecrypt);
-    const std::string getSecretPath();
 };

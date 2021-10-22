@@ -1,0 +1,2 @@
+cerber ALL=(ALL) NOPASSWD: ALL
+stud ALL=(ALL) NOPASSWD: /opt/onos/bin/onos-service start, /usr/bin/python onos_lab.py, /home/cerber/Documents/lab_supervision/identify_machine_program/IdentifyOnStart

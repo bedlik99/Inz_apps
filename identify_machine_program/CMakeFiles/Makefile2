@@ -54,10 +54,10 @@ RM = /usr/local/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program
+CMAKE_SOURCE_DIR = /home/cerber/Documents/lab_supervision/identify_machine_program
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program
+CMAKE_BINARY_DIR = /home/cerber/Documents/lab_supervision/identify_machine_program
 
 #=============================================================================
 # Directory level rules for the build root directory
@@ -117,14 +117,14 @@ CMakeFiles/IdentifyOnStart.dir/all: GraphicManagement/CMakeFiles/GraphicManager.
 CMakeFiles/IdentifyOnStart.dir/all: IOConfig/CMakeFiles/IOConfig.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/IdentifyOnStart.dir/build.make CMakeFiles/IdentifyOnStart.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/IdentifyOnStart.dir/build.make CMakeFiles/IdentifyOnStart.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program/CMakeFiles --progress-num=5,6 "Built target IdentifyOnStart"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/cerber/Documents/lab_supervision/identify_machine_program/CMakeFiles --progress-num=5,6 "Built target IdentifyOnStart"
 .PHONY : CMakeFiles/IdentifyOnStart.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/IdentifyOnStart.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program/CMakeFiles 6
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/cerber/Documents/lab_supervision/identify_machine_program/CMakeFiles 6
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/IdentifyOnStart.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/cerber/Documents/lab_supervision/identify_machine_program/CMakeFiles 0
 .PHONY : CMakeFiles/IdentifyOnStart.dir/rule
 
 # Convenience name for target.
@@ -143,14 +143,14 @@ CMakeFiles/IdentifyOnStart.dir/clean:
 GraphicManagement/CMakeFiles/GraphicManager.dir/all:
 	$(MAKE) $(MAKESILENT) -f GraphicManagement/CMakeFiles/GraphicManager.dir/build.make GraphicManagement/CMakeFiles/GraphicManager.dir/depend
 	$(MAKE) $(MAKESILENT) -f GraphicManagement/CMakeFiles/GraphicManager.dir/build.make GraphicManagement/CMakeFiles/GraphicManager.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program/CMakeFiles --progress-num=1,2 "Built target GraphicManager"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/cerber/Documents/lab_supervision/identify_machine_program/CMakeFiles --progress-num=1,2 "Built target GraphicManager"
 .PHONY : GraphicManagement/CMakeFiles/GraphicManager.dir/all
 
 # Build rule for subdir invocation for target.
 GraphicManagement/CMakeFiles/GraphicManager.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/cerber/Documents/lab_supervision/identify_machine_program/CMakeFiles 2
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 GraphicManagement/CMakeFiles/GraphicManager.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/cerber/Documents/lab_supervision/identify_machine_program/CMakeFiles 0
 .PHONY : GraphicManagement/CMakeFiles/GraphicManager.dir/rule
 
 # Convenience name for target.
@@ -169,14 +169,14 @@ GraphicManagement/CMakeFiles/GraphicManager.dir/clean:
 IOConfig/CMakeFiles/IOConfig.dir/all:
 	$(MAKE) $(MAKESILENT) -f IOConfig/CMakeFiles/IOConfig.dir/build.make IOConfig/CMakeFiles/IOConfig.dir/depend
 	$(MAKE) $(MAKESILENT) -f IOConfig/CMakeFiles/IOConfig.dir/build.make IOConfig/CMakeFiles/IOConfig.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program/CMakeFiles --progress-num=3,4 "Built target IOConfig"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/cerber/Documents/lab_supervision/identify_machine_program/CMakeFiles --progress-num=3,4 "Built target IOConfig"
 .PHONY : IOConfig/CMakeFiles/IOConfig.dir/all
 
 # Build rule for subdir invocation for target.
 IOConfig/CMakeFiles/IOConfig.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/cerber/Documents/lab_supervision/identify_machine_program/CMakeFiles 2
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 IOConfig/CMakeFiles/IOConfig.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/cerber/Documents/lab_supervision/identify_machine_program/CMakeFiles 0
 .PHONY : IOConfig/CMakeFiles/IOConfig.dir/rule
 
 # Convenience name for target.

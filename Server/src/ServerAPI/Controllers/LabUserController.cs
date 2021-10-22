@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ServerAPI.DTOs;
-using ServerAPI.Models;
+using ServerAPI.Entities;
 using ServerAPI.Repositories;
 using System;
 using System.Collections.Generic;
@@ -10,8 +10,8 @@ using System.Threading.Tasks;
 namespace ServerAPI.Controllers
 {
 	//Setting up a routing
-	[Route("/")]
-	//This provides: Routing, Automatic HTTP 400 Errors, Details,
+	[Route("api/")]
+	//This provides: Routing, Automatic HTTP 400 Errors, Details
 	[ApiController]
 	public class LabUserController : ControllerBase
 	{
@@ -23,12 +23,12 @@ namespace ServerAPI.Controllers
 
 		[Route("registerUser")]
 		[HttpPost]
-		public ActionResult<RegisteredUserDTO> RegisterUser([FromBody] MessageDTO encryptedMessage)
+		public ActionResult<string> RegisterUser([FromBody] MessageDTO encryptedMessage)
 		{
 			var result = _repository.ProcessUserInitData(encryptedMessage);
-			if(result == null)
-			{
-				return BadRequest();
+			if(!result)
+			{	
+				return Unauthorized("Could not authenticate user. Check your credentials and try!");
 			}
 			return Ok();
 		}
@@ -37,24 +37,10 @@ namespace ServerAPI.Controllers
 		[HttpPost]
 		public ActionResult RecordEvent([FromBody] MessageDTO encryptedMessage)
 		{
-			_repository.ProcessEventContent(encryptedMessage);
+			var success = _repository.ProcessEventContent(encryptedMessage);
+			if(!success)
+				return BadRequest("Could not record an event");
 			return Ok();
-		}
-		
-		[HttpGet]
-		[Route("user")]
-		public ActionResult<IEnumerable<RegisteredUser>> GetAllRegisteredUsers()
-		{
-			var output = _repository.GetAllRegisteredUsers();
-			return Ok(output);
-		}
-
-		[HttpGet]
-		[Route("user/{id}")]
-		public ActionResult<RegisteredUser> GetRegisteredUser([FromRoute]int id)
-		{
-			var output = _repository.GetRegisteredUser(id);
-			return Ok(output);
 		}
 	}
 }

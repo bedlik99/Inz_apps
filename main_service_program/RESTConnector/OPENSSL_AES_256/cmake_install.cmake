@@ -1,4 +1,4 @@
-# Install script for directory: /home/cerber/Documents/inz_dyp/working_folder_inz/main_service_program/RESTConnector/OPENSSL_AES_256
+# Install script for directory: /home/cerber/Documents/lab_supervision/main_service_program/RESTConnector/OPENSSL_AES_256
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

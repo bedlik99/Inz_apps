@@ -53,10 +53,10 @@ RM = /usr/local/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program
+CMAKE_SOURCE_DIR = /home/cerber/Documents/lab_supervision/identify_machine_program
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program
+CMAKE_BINARY_DIR = /home/cerber/Documents/lab_supervision/identify_machine_program
 
 # Include any dependencies generated for this target.
 include GraphicManagement/CMakeFiles/GraphicManager.dir/depend.make
@@ -72,16 +72,16 @@ include GraphicManagement/CMakeFiles/GraphicManager.dir/flags.make
 GraphicManagement/CMakeFiles/GraphicManager.dir/GraphicManager.cpp.o: GraphicManagement/CMakeFiles/GraphicManager.dir/flags.make
 GraphicManagement/CMakeFiles/GraphicManager.dir/GraphicManager.cpp.o: GraphicManagement/GraphicManager.cpp
 GraphicManagement/CMakeFiles/GraphicManager.dir/GraphicManager.cpp.o: GraphicManagement/CMakeFiles/GraphicManager.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object GraphicManagement/CMakeFiles/GraphicManager.dir/GraphicManager.cpp.o"
-	cd /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program/GraphicManagement && /usr/bin/g++-5 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT GraphicManagement/CMakeFiles/GraphicManager.dir/GraphicManager.cpp.o -MF CMakeFiles/GraphicManager.dir/GraphicManager.cpp.o.d -o CMakeFiles/GraphicManager.dir/GraphicManager.cpp.o -c /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program/GraphicManagement/GraphicManager.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/cerber/Documents/lab_supervision/identify_machine_program/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object GraphicManagement/CMakeFiles/GraphicManager.dir/GraphicManager.cpp.o"
+	cd /home/cerber/Documents/lab_supervision/identify_machine_program/GraphicManagement && /usr/bin/g++-5 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT GraphicManagement/CMakeFiles/GraphicManager.dir/GraphicManager.cpp.o -MF CMakeFiles/GraphicManager.dir/GraphicManager.cpp.o.d -o CMakeFiles/GraphicManager.dir/GraphicManager.cpp.o -c /home/cerber/Documents/lab_supervision/identify_machine_program/GraphicManagement/GraphicManager.cpp
 
 GraphicManagement/CMakeFiles/GraphicManager.dir/GraphicManager.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/GraphicManager.dir/GraphicManager.cpp.i"
-	cd /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program/GraphicManagement && /usr/bin/g++-5 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program/GraphicManagement/GraphicManager.cpp > CMakeFiles/GraphicManager.dir/GraphicManager.cpp.i
+	cd /home/cerber/Documents/lab_supervision/identify_machine_program/GraphicManagement && /usr/bin/g++-5 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/cerber/Documents/lab_supervision/identify_machine_program/GraphicManagement/GraphicManager.cpp > CMakeFiles/GraphicManager.dir/GraphicManager.cpp.i
 
 GraphicManagement/CMakeFiles/GraphicManager.dir/GraphicManager.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/GraphicManager.dir/GraphicManager.cpp.s"
-	cd /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program/GraphicManagement && /usr/bin/g++-5 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program/GraphicManagement/GraphicManager.cpp -o CMakeFiles/GraphicManager.dir/GraphicManager.cpp.s
+	cd /home/cerber/Documents/lab_supervision/identify_machine_program/GraphicManagement && /usr/bin/g++-5 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/cerber/Documents/lab_supervision/identify_machine_program/GraphicManagement/GraphicManager.cpp -o CMakeFiles/GraphicManager.dir/GraphicManager.cpp.s
 
 # Object files for target GraphicManager
 GraphicManager_OBJECTS = \
@@ -93,19 +93,19 @@ GraphicManager_EXTERNAL_OBJECTS =
 GraphicManagement/libGraphicManager.a: GraphicManagement/CMakeFiles/GraphicManager.dir/GraphicManager.cpp.o
 GraphicManagement/libGraphicManager.a: GraphicManagement/CMakeFiles/GraphicManager.dir/build.make
 GraphicManagement/libGraphicManager.a: GraphicManagement/CMakeFiles/GraphicManager.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX static library libGraphicManager.a"
-	cd /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program/GraphicManagement && $(CMAKE_COMMAND) -P CMakeFiles/GraphicManager.dir/cmake_clean_target.cmake
-	cd /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program/GraphicManagement && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/GraphicManager.dir/link.txt --verbose=$(VERBOSE)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/cerber/Documents/lab_supervision/identify_machine_program/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX static library libGraphicManager.a"
+	cd /home/cerber/Documents/lab_supervision/identify_machine_program/GraphicManagement && $(CMAKE_COMMAND) -P CMakeFiles/GraphicManager.dir/cmake_clean_target.cmake
+	cd /home/cerber/Documents/lab_supervision/identify_machine_program/GraphicManagement && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/GraphicManager.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
 GraphicManagement/CMakeFiles/GraphicManager.dir/build: GraphicManagement/libGraphicManager.a
 .PHONY : GraphicManagement/CMakeFiles/GraphicManager.dir/build
 
 GraphicManagement/CMakeFiles/GraphicManager.dir/clean:
-	cd /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program/GraphicManagement && $(CMAKE_COMMAND) -P CMakeFiles/GraphicManager.dir/cmake_clean.cmake
+	cd /home/cerber/Documents/lab_supervision/identify_machine_program/GraphicManagement && $(CMAKE_COMMAND) -P CMakeFiles/GraphicManager.dir/cmake_clean.cmake
 .PHONY : GraphicManagement/CMakeFiles/GraphicManager.dir/clean
 
 GraphicManagement/CMakeFiles/GraphicManager.dir/depend:
-	cd /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program/GraphicManagement /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program/GraphicManagement /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program/GraphicManagement/CMakeFiles/GraphicManager.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/cerber/Documents/lab_supervision/identify_machine_program && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/cerber/Documents/lab_supervision/identify_machine_program /home/cerber/Documents/lab_supervision/identify_machine_program/GraphicManagement /home/cerber/Documents/lab_supervision/identify_machine_program /home/cerber/Documents/lab_supervision/identify_machine_program/GraphicManagement /home/cerber/Documents/lab_supervision/identify_machine_program/GraphicManagement/CMakeFiles/GraphicManager.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : GraphicManagement/CMakeFiles/GraphicManager.dir/depend
 

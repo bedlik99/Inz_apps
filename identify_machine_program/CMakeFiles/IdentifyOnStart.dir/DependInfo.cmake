@@ -8,13 +8,13 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program/identify_main.cpp" "CMakeFiles/IdentifyOnStart.dir/identify_main.cpp.o" "gcc" "CMakeFiles/IdentifyOnStart.dir/identify_main.cpp.o.d"
+  "/home/cerber/Documents/lab_supervision/identify_machine_program/identify_main.cpp" "CMakeFiles/IdentifyOnStart.dir/identify_main.cpp.o" "gcc" "CMakeFiles/IdentifyOnStart.dir/identify_main.cpp.o.d"
   )
 
 # Targets to which this target links.
 set(CMAKE_TARGET_LINKED_INFO_FILES
-  "/home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program/GraphicManagement/CMakeFiles/GraphicManager.dir/DependInfo.cmake"
-  "/home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program/IOConfig/CMakeFiles/IOConfig.dir/DependInfo.cmake"
+  "/home/cerber/Documents/lab_supervision/identify_machine_program/GraphicManagement/CMakeFiles/GraphicManager.dir/DependInfo.cmake"
+  "/home/cerber/Documents/lab_supervision/identify_machine_program/IOConfig/CMakeFiles/IOConfig.dir/DependInfo.cmake"
   )
 
 # Fortran module output directory.

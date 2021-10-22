@@ -1,7 +1,7 @@
 RESTConnector/OPENSSL_AES_256/CMakeFiles/OpenSSLAesEncryptor.dir/OpenSSLAesEncryptor.cpp.o: \
- /home/cerber/Documents/inz_dyp/working_folder_inz/main_service_program/RESTConnector/OPENSSL_AES_256/OpenSSLAesEncryptor.cpp \
+ /home/cerber/Documents/lab_supervision/main_service_program/RESTConnector/OPENSSL_AES_256/OpenSSLAesEncryptor.cpp \
  /usr/include/stdc-predef.h \
- /home/cerber/Documents/inz_dyp/working_folder_inz/main_service_program/RESTConnector/OPENSSL_AES_256/OpenSSLAesEncryptor.h \
+ /home/cerber/Documents/lab_supervision/main_service_program/RESTConnector/OPENSSL_AES_256/OpenSSLAesEncryptor.h \
  /usr/include/c++/9/string \
  /usr/include/x86_64-linux-gnu/c++/9/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/9/bits/os_defines.h \

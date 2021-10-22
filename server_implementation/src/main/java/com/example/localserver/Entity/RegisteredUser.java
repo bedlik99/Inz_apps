@@ -10,7 +10,7 @@ public class RegisteredUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String indexNr;
+    private String email;
     private String uniqueCode;
 
     @OneToMany(mappedBy = "registeredUser")
@@ -18,8 +18,8 @@ public class RegisteredUser {
 
     public RegisteredUser() {}
 
-    public RegisteredUser(String indexNum, String uniqueCode) {
-        this.indexNr = indexNum;
+    public RegisteredUser(String email, String uniqueCode) {
+        this.email = email;
         this.uniqueCode = uniqueCode;
     }
 
@@ -31,12 +31,12 @@ public class RegisteredUser {
         this.id = id;
     }
 
-    public String getIndexNum() {
-        return indexNr;
+    public String getEmail(){
+        return email;
     }
 
-    public void setIndexNum(String indexNum) {
-        this.indexNr = indexNum;
+    public void setEmail(String email){
+        this.email = email;
     }
 
     public String getUniqueCode() {

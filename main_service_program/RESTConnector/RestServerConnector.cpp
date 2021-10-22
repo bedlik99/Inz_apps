@@ -20,9 +20,19 @@ RestServerConnector::~RestServerConnector(){
     }
 }
 
-int RestServerConnector::sendData(std::string credentials, std::string registryContent,bool isRegistration) {
+int RestServerConnector::sendData(std::string email,std::string uniqueCode, std::string registryContent,bool isRegistration) {
     std::string selectedEndpoint = (isRegistration ? registerUserEndpoint : recordEventEndpoint); 
-    return executeRequest(returnEncryptedMessageDTO(credentials,registryContent,isRegistration),serverResponseFile, selectedEndpoint);
+    std::string userDataAsJson;
+    if(isRegistration)
+        userDataAsJson = "{\"uniqueCode\":\""+uniqueCode+"\",\"email\":\""+email+"\"}";
+    else
+        userDataAsJson = "{\"email\":\""+email+"\",\"registryContent\":\""+registryContent+"\"}";
+
+    std::string encryptedValue = openSSLCryptoUtil->encryptAES256WithOpenSSL(userDataAsJson);
+    std::string encryptedMessageString = "{\"value\":\""+encryptedValue+"\"}";
+    json::value json_encrypted_message = json_encrypted_message.parse(encryptedMessageString);
+    
+    return executeRequest(json_encrypted_message,serverResponseFile, selectedEndpoint);
 }
 
 int RestServerConnector::executeRequest(json::value json_par, std::string filePath, std::string endpointName){
@@ -61,21 +71,7 @@ int RestServerConnector::executeRequest(json::value json_par, std::string filePa
         requestTask.wait();
 
     } catch (const std::exception &e){
-        return -1;
+        return 500;
     }
     return returnedHttpCode;
-}
-
-json::value RestServerConnector::returnEncryptedMessageDTO(std::string credentials, std::string registryContent,bool isRegistration){
-    std::string userDataAsJson;
-    if(isRegistration){
-        userDataAsJson = "{\"uniqueCode\":\""+credentials.substr(6,6)+"\",\"indexNr\":\""+credentials.substr(0,6)+"\"}";
-    }else{
-        userDataAsJson = "{\"indexNr\":\""+credentials.substr(0,6)+"\",\"registryContent\":\""+registryContent+"\"}";
-    }
-    std::string encryptedValue = openSSLCryptoUtil->encryptAES256WithOpenSSL(userDataAsJson);
-    std::string encryptedMessageString = "{\"value\":\""+encryptedValue+"\"}";
-    json::value json_encrypted_message = json_encrypted_message.parse(encryptedMessageString);
-
-    return json_encrypted_message;
 }

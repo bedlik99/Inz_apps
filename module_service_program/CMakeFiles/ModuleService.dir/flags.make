@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/cerber/Documents/inz_dyp/working_folder_inz/module_service_program -I/home/cerber/Documents/inz_dyp/working_folder_inz/module_service_program/IOConfig -I/home/cerber/Documents/inz_dyp/working_folder_inz/module_service_program/ModuleManager
+CXX_INCLUDES = -I/home/cerber/Documents/lab_supervision/module_service_program -I/home/cerber/Documents/lab_supervision/module_service_program/IOConfig -I/home/cerber/Documents/lab_supervision/module_service_program/ModuleManager
 
-CXX_FLAGS = -std=gnu++1z
+CXX_FLAGS = -std=gnu++17
 

@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = -DCPPREST_FORCE_HTTP_CLIENT_ASIO -DCPPREST_FORCE_HTTP_LISTENER_ASIO -DCPPREST_NO_SSL_LEAK_SUPPRESS
 
-CXX_INCLUDES = -I/home/cerber/Documents/inz_dyp/working_folder_inz/main_service_program -I/home/cerber/Documents/inz_dyp/working_folder_inz/main_service_program/RESTConnector -I/home/cerber/Documents/inz_dyp/working_folder_inz/main_service_program/RESTConnector/IOConfig -I/home/cerber/Documents/inz_dyp/working_folder_inz/main_service_program/RESTConnector/OPENSSL_AES_256
+CXX_INCLUDES = -I/home/cerber/Documents/lab_supervision/main_service_program -I/home/cerber/Documents/lab_supervision/main_service_program/RESTConnector -I/home/cerber/Documents/lab_supervision/main_service_program/RESTConnector/IOConfig -I/home/cerber/Documents/lab_supervision/main_service_program/RESTConnector/OPENSSL_AES_256
 
 CXX_FLAGS = -std=gnu++17
 

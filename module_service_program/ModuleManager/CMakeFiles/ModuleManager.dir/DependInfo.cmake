@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/cerber/Documents/inz_dyp/working_folder_inz/module_service_program/ModuleManager/ModuleManager.cpp" "ModuleManager/CMakeFiles/ModuleManager.dir/ModuleManager.cpp.o" "gcc" "ModuleManager/CMakeFiles/ModuleManager.dir/ModuleManager.cpp.o.d"
+  "/home/cerber/Documents/lab_supervision/module_service_program/ModuleManager/ModuleManager.cpp" "ModuleManager/CMakeFiles/ModuleManager.dir/ModuleManager.cpp.o" "gcc" "ModuleManager/CMakeFiles/ModuleManager.dir/ModuleManager.cpp.o.d"
   )
 
 # Targets to which this target links.

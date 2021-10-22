@@ -1,12 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using ServerAPI.DTOs;
+using ServerAPI.Entities;
 using ServerAPI.Exceptions;
-using ServerAPI.Models;
 using ServerAPI.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -23,82 +25,85 @@ namespace ServerAPI.Repositories
 			_context = context;
 			_logger = logger;
 		}
-		public string ProcessUserInitData(MessageDTO encryptedMessage)
+
+		public bool ProcessUserInitData(MessageDTO encryptedMessage)
 		{
-			RegisteredUserDTO registeredUser = DecryptRegisterMessage(encryptedMessage.Value);
-			if (registeredUser != null)
+			RegisteredLabUserDTO registeredUser = (RegisteredLabUserDTO)DecryptMessage(encryptedMessage.Value, true);
+
+			if (registeredUser == null)
 			{
-				if (ValidateUserData(registeredUser))
+				throw new NotAcceptableException("ERROR");
+			}
+			var userAfterValidation = ValidateUserData(registeredUser);
+			if (userAfterValidation != null && registeredUser != null)
+			{
+				if (_context.RecordedEventItems
+					.Any(u => u.RegisteredUserId == userAfterValidation.Id
+					&& u.RegistryContent == "Maszyna zostala zarejestrowana"))
 				{
-					RegisteredUser userToSave = new RegisteredUser(registeredUser.IndexNr, registeredUser.UniqueCode);
-					_context.RegisteredUserItems.Add(userToSave);
-					_context.RecordedEventItems.Add(new RecordedEvent("Maszyna zostala zarejestrowana", DateTime.Now, userToSave));
+					_context.RecordedEventItems.Add(new RecordedEvent("Ponowne logowanie na maszyne", DateTime.Now, userAfterValidation));
 					_context.SaveChanges();
-					return EncryptMessage(registeredUser.IndexNr);
 				}
-				return null;
+				else
+				{
+					_context.RecordedEventItems.Add(new RecordedEvent("Maszyna zostala zarejestrowana", DateTime.Now, userAfterValidation));
+					_context.SaveChanges();
+				}
+				return true;
+			}
+			return false;
+		}
+
+		public bool ProcessEventContent(MessageDTO encryptedMessage)
+		{
+			// JA TU POTRZEBUJE TEZ UNIQUE CODE lub labkę. Bez tego nie rozoznie ktory student dodaje logi.
+			RecordedEventDTO recordedEvent = (RecordedEventDTO)DecryptMessage(encryptedMessage.Value, false);
+			if (recordedEvent != null && !string.IsNullOrEmpty(recordedEvent.Email))
+			{
+				RegisteredUser searchedUser = FindStudentByEmail(recordedEvent.Email);
+				if (searchedUser != null)
+				{
+					_context.RecordedEventItems.Add(new RecordedEvent(recordedEvent.RegistryContent, DateTime.Now, searchedUser));
+					_context.SaveChanges();
+					return true;
+				}
+				return false;
+			}
+			return false;
+		}
+
+		private object DecryptMessage(string encryptedMessage, bool isRegistartion)
+		{
+			try
+			{
+				string decryptedMessage = Cryptography.Decrypt(encryptedMessage);
+				decryptedMessage = RemoveCharsFromString(decryptedMessage);
+				if (isRegistartion)
+				{
+					return Newtonsoft.Json.JsonConvert.DeserializeObject<RegisteredLabUserDTO>(decryptedMessage);
+				}
+				else
+				{
+					return Newtonsoft.Json.JsonConvert.DeserializeObject<RecordedEventDTO>(decryptedMessage);
+				}
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e.ToString());
+				Console.WriteLine(e.StackTrace);
 			}
 			return null;
 		}
 
-		public void ProcessEventContent(MessageDTO encryptedMessage)
+		private string RemoveCharsFromString(string str)
 		{
-			RecordedEventDTO recordedEvent = DecryptLogMessage(encryptedMessage.Value);
-			RegisteredUser searchedUser;
-			
-			if(recordedEvent != null)
+			if (str[0] != '{' && str[0] != '[')
 			{
-				searchedUser = GetRegisteredUserIndex(recordedEvent.IndexNr);
-				_context.RecordedEventItems.Add(new RecordedEvent(recordedEvent.RegistryContent,DateTime.Now, searchedUser));
-				_context.SaveChanges();
-			}		
-		}
-
-		private RecordedEventDTO DecryptLogMessage(string encryptedMessage)
-		{
-			RecordedEventDTO recordedEventDTO = null;
-			try
-			{
-				string decryptedMessage = Utility.Cryptography.Decrypt(encryptedMessage);
-				decryptedMessage = RemoveHashtagsFromString(decryptedMessage);
-				recordedEventDTO = Newtonsoft.Json.JsonConvert.DeserializeObject<RecordedEventDTO>(decryptedMessage);
+				string firstASCIIChar = str.Substring(0, 1);
+				int decimalValue = Cryptography.ConvertASCIITo10System(firstASCIIChar);
+				str = str.Substring(decimalValue);
 			}
-			catch (Exception e)
-			{
-				Console.WriteLine(e.StackTrace);
-			}
-			return recordedEventDTO;
-		}
-
-		private string EncryptMessage(string str)
-		{
-			string encryptedResponse = "";
-			str = FillStringWithHashtags(str);
-			try
-			{
-				encryptedResponse = Cryptography.Encrypt(str);
-			}
-			catch(Exception e)
-			{
-				Console.WriteLine(e.StackTrace);
-			}
-			return encryptedResponse;
-		}
-
-		private string FillStringWithHashtags(string str)
-		{
-			if (str.Length == 0)
-				return "";
-
-			long stringNecessarySize = FindMaxRangeOfStringLength(str.Length, 0, 16);
-			StringBuilder strBuilder = new StringBuilder(str);
-			long numberOfNeededHashtags = stringNecessarySize - str.Length;
-
-			for (long i = 0; i < numberOfNeededHashtags; i++)
-			{
-				strBuilder.Insert(0, "#");
-			}
-			return strBuilder.ToString();
+			return str;
 		}
 
 		private long FindMaxRangeOfStringLength(long strLength, int lowRange, int highRange)
@@ -112,75 +117,78 @@ namespace ServerAPI.Repositories
 			return FindMaxRangeOfStringLength(strLength, lowRange, highRange);
 		}
 
-		private bool ValidateUserData(RegisteredUserDTO registeredUser)
+		private RegisteredUser ValidateUserData(RegisteredLabUserDTO registeredUser)
 		{
-			Regex regex = new Regex("[0-9]{6}");
-			return regex.IsMatch(registeredUser.IndexNr) && registeredUser.UniqueCode.Length == 6;
-		}
+			Regex regex = new("[0-9]{8}");
+			var check = regex.IsMatch(registeredUser.Email) && registeredUser.UniqueCode.Length == 8;
 
-		private RegisteredUserDTO DecryptRegisterMessage(string encryptedMessage)
+			if (check)
+			{
+				var userAuthenticated = _context
+				.RegisteredUserItems
+				.Include(u => u.EventRegistries)
+				.Include(l => l.Laboratory)
+				.Include(r => r.Laboratory.LaboratoryRequirements)
+				.SingleOrDefault(u => u.Email == registeredUser.Email && u.UniqueCode == registeredUser.UniqueCode);
+				return userAuthenticated;
+			}
+			return null;
+		}
+		private string EncryptMessage(string str)
 		{
-			RegisteredUserDTO registeredUserDTO = null;
+			string encryptedResponse = "";
+			str = FillStringWithChars(str);
 			try
 			{
-				string decryptedMessage = Cryptography.Decrypt(encryptedMessage);
-				decryptedMessage = RemoveHashtagsFromString(decryptedMessage);
-				registeredUserDTO = Newtonsoft.Json.JsonConvert.DeserializeObject<RegisteredUserDTO>(decryptedMessage);
+				encryptedResponse = Cryptography.Encrypt(str);
 			}
 			catch (Exception e)
 			{
+				Console.WriteLine(e.ToString());
 				Console.WriteLine(e.StackTrace);
 			}
-			return registeredUserDTO;
+			return encryptedResponse;
 		}
 
-		private string RemoveHashtagsFromString(string str)
+		private string FillStringWithChars(string str)
 		{
-			int strLength = str.Length;
-			for (int i = 0; i < strLength; i++)
+			if (str.Length == 0)
+				return "";
+
+			long stringNecessarySize = str.Length;
+
+			if (stringNecessarySize % 16 != 0)
+				stringNecessarySize = FindMaxRangeOfStringLength(str.Length, 0, 16);
+
+			long numberOfNeededChars = stringNecessarySize - str.Length;
+
+			StringBuilder neededChars = new StringBuilder(Cryptography.ConvertASCIITo16System((int)numberOfNeededChars));
+			Random random = new Random();
+
+			for (long i = 0; i < numberOfNeededChars - 1; i++)
 			{
-				if (str[i] != '#')
-				{
-					str = str.Substring(i);
-					break;
-				}
+				int randomCharEmail = (int)Math.Floor(random.NextDouble() * 88);
+				neededChars.Append(Cryptography.GetWritableChars()[randomCharEmail]);
 			}
+
+			if (numberOfNeededChars != 0)
+				str = neededChars + str;
+
 			return str;
 		}
 
-		public IEnumerable<RegisteredUser> GetAllRegisteredUsers()
-		{
-			var users = _context
-				.RegisteredUserItems
-				.Include(u => u.EventRegistries);
-			return users;
-		}
-
-		public RegisteredUser GetRegisteredUserIndex(string indexNum)
+		public RegisteredUser FindStudentByEmail(string email)
 		{
 			//_logger.LogError($"User with id: {id}. GET action invoked");
-
-			var user = _context
-				.RegisteredUserItems
-				.SingleOrDefault(u => u.IndexNum == indexNum);
-			if(user is null)
-			{
-				throw new NotAcceptableException("Not acceptable");
-			}		
-			return user;
-		}
-		public RegisteredUser GetRegisteredUser(int id)
-		{
-			//_logger.LogError($"User with id: {id}. GET action invoked");
-
 			var user = _context
 				.RegisteredUserItems
 				.Include(u => u.EventRegistries)
-				.SingleOrDefault(u => u.Id == id);
-			if(user is null)
+				.SingleOrDefault(u => u.Email == email);
+
+			if (user is null)
 			{
-				throw new NotAcceptableException("Not acceptable");
-			}		
+				throw new NotAcceptableException("No such student with given email address");
+			}
 			return user;
 		}
 	}

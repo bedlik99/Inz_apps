@@ -53,10 +53,10 @@ RM = /usr/local/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program
+CMAKE_SOURCE_DIR = /home/cerber/Documents/lab_supervision/identify_machine_program
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program
+CMAKE_BINARY_DIR = /home/cerber/Documents/lab_supervision/identify_machine_program
 
 # Include any dependencies generated for this target.
 include IOConfig/CMakeFiles/IOConfig.dir/depend.make
@@ -72,16 +72,16 @@ include IOConfig/CMakeFiles/IOConfig.dir/flags.make
 IOConfig/CMakeFiles/IOConfig.dir/IOConfig.cpp.o: IOConfig/CMakeFiles/IOConfig.dir/flags.make
 IOConfig/CMakeFiles/IOConfig.dir/IOConfig.cpp.o: IOConfig/IOConfig.cpp
 IOConfig/CMakeFiles/IOConfig.dir/IOConfig.cpp.o: IOConfig/CMakeFiles/IOConfig.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object IOConfig/CMakeFiles/IOConfig.dir/IOConfig.cpp.o"
-	cd /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program/IOConfig && /usr/bin/g++-5 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT IOConfig/CMakeFiles/IOConfig.dir/IOConfig.cpp.o -MF CMakeFiles/IOConfig.dir/IOConfig.cpp.o.d -o CMakeFiles/IOConfig.dir/IOConfig.cpp.o -c /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program/IOConfig/IOConfig.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/cerber/Documents/lab_supervision/identify_machine_program/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object IOConfig/CMakeFiles/IOConfig.dir/IOConfig.cpp.o"
+	cd /home/cerber/Documents/lab_supervision/identify_machine_program/IOConfig && /usr/bin/g++-5 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT IOConfig/CMakeFiles/IOConfig.dir/IOConfig.cpp.o -MF CMakeFiles/IOConfig.dir/IOConfig.cpp.o.d -o CMakeFiles/IOConfig.dir/IOConfig.cpp.o -c /home/cerber/Documents/lab_supervision/identify_machine_program/IOConfig/IOConfig.cpp
 
 IOConfig/CMakeFiles/IOConfig.dir/IOConfig.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/IOConfig.dir/IOConfig.cpp.i"
-	cd /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program/IOConfig && /usr/bin/g++-5 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program/IOConfig/IOConfig.cpp > CMakeFiles/IOConfig.dir/IOConfig.cpp.i
+	cd /home/cerber/Documents/lab_supervision/identify_machine_program/IOConfig && /usr/bin/g++-5 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/cerber/Documents/lab_supervision/identify_machine_program/IOConfig/IOConfig.cpp > CMakeFiles/IOConfig.dir/IOConfig.cpp.i
 
 IOConfig/CMakeFiles/IOConfig.dir/IOConfig.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/IOConfig.dir/IOConfig.cpp.s"
-	cd /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program/IOConfig && /usr/bin/g++-5 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program/IOConfig/IOConfig.cpp -o CMakeFiles/IOConfig.dir/IOConfig.cpp.s
+	cd /home/cerber/Documents/lab_supervision/identify_machine_program/IOConfig && /usr/bin/g++-5 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/cerber/Documents/lab_supervision/identify_machine_program/IOConfig/IOConfig.cpp -o CMakeFiles/IOConfig.dir/IOConfig.cpp.s
 
 # Object files for target IOConfig
 IOConfig_OBJECTS = \
@@ -93,19 +93,19 @@ IOConfig_EXTERNAL_OBJECTS =
 IOConfig/libIOConfig.a: IOConfig/CMakeFiles/IOConfig.dir/IOConfig.cpp.o
 IOConfig/libIOConfig.a: IOConfig/CMakeFiles/IOConfig.dir/build.make
 IOConfig/libIOConfig.a: IOConfig/CMakeFiles/IOConfig.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX static library libIOConfig.a"
-	cd /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program/IOConfig && $(CMAKE_COMMAND) -P CMakeFiles/IOConfig.dir/cmake_clean_target.cmake
-	cd /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program/IOConfig && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/IOConfig.dir/link.txt --verbose=$(VERBOSE)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/cerber/Documents/lab_supervision/identify_machine_program/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX static library libIOConfig.a"
+	cd /home/cerber/Documents/lab_supervision/identify_machine_program/IOConfig && $(CMAKE_COMMAND) -P CMakeFiles/IOConfig.dir/cmake_clean_target.cmake
+	cd /home/cerber/Documents/lab_supervision/identify_machine_program/IOConfig && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/IOConfig.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
 IOConfig/CMakeFiles/IOConfig.dir/build: IOConfig/libIOConfig.a
 .PHONY : IOConfig/CMakeFiles/IOConfig.dir/build
 
 IOConfig/CMakeFiles/IOConfig.dir/clean:
-	cd /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program/IOConfig && $(CMAKE_COMMAND) -P CMakeFiles/IOConfig.dir/cmake_clean.cmake
+	cd /home/cerber/Documents/lab_supervision/identify_machine_program/IOConfig && $(CMAKE_COMMAND) -P CMakeFiles/IOConfig.dir/cmake_clean.cmake
 .PHONY : IOConfig/CMakeFiles/IOConfig.dir/clean
 
 IOConfig/CMakeFiles/IOConfig.dir/depend:
-	cd /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program/IOConfig /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program/IOConfig /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program/IOConfig/CMakeFiles/IOConfig.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/cerber/Documents/lab_supervision/identify_machine_program && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/cerber/Documents/lab_supervision/identify_machine_program /home/cerber/Documents/lab_supervision/identify_machine_program/IOConfig /home/cerber/Documents/lab_supervision/identify_machine_program /home/cerber/Documents/lab_supervision/identify_machine_program/IOConfig /home/cerber/Documents/lab_supervision/identify_machine_program/IOConfig/CMakeFiles/IOConfig.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : IOConfig/CMakeFiles/IOConfig.dir/depend
 

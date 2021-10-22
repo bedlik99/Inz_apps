@@ -1,4 +1,4 @@
-# Install script for directory: /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program/GraphicManagement
+# Install script for directory: /home/cerber/Documents/lab_supervision/identify_machine_program/GraphicManagement
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

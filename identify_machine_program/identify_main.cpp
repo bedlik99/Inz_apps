@@ -18,19 +18,21 @@ void continueExecutionV();
 int  continueExecutionI();
 void endExecution(int status);
 void refreshDrawedObjects();
-void createRegisterLog(std::string indexInput, std::string codeInput);
+void createRegisterLog(std::string emailInput, std::string codeInput);
 void handleInfoWindow(std::string errorInfo,std::string windowTitle);
+bool is500Error();
 int handleApprovalWindow();
 int init();
 void cleanup();
 
-const static std::string logsFilePath = "/etc/identify_lab_data/logs_dir/main_logs";
-static sf::RenderWindow mainWindow(sf::VideoMode(500, 650), "Registration",sf::Style::Titlebar);
-static sf::String indexInput;
+const static std::string thisProcessName = "IdentifyOnStart";
+const static std::string logsFilePath = "/home/cerber/Documents/lab_supervision/identify_lab_data/logs_dir/main_logs";
+static sf::RenderWindow mainWindow(sf::VideoMode(540, 650), "Registration",sf::Style::Titlebar);
+static sf::String emailInput;
 static sf::String codeInput;  
-static sf::String tmpIndexCursor="_";
+static sf::String tmpEmailCursor="_";
 static sf::String tmpCodeCursor="_";  
-static bool isIndex = true;
+static bool isEmail = true;
 static bool secondHasElapsed = true;
 static GraphicManager* graphicManager = nullptr;
 static IOConfig ioConfig;
@@ -54,86 +56,81 @@ int main() {
     
             switch (event.type){
                 case sf::Event::TextEntered: 
-                     ASCII_DEC_CODE = static_cast<int>(event.key.code);
+                    ASCII_DEC_CODE = static_cast<int>(event.key.code);
  
                         if(ASCII_DEC_CODE == 13){
-                            if(indexInput.getSize()!=6 || codeInput.getSize()!=6){
-                                if(indexInput.getSize()!=6 && codeInput.getSize()!=6){
-                                    handleInfoWindow(graphicManager->getFormatErrorInfo(),"Error");
-                                    indexInput="";
-                                    codeInput="";
-                                    graphicManager->getIndexInputText().setString(indexInput);
-                                    graphicManager->getCodeInputText().setString(codeInput);
-                                    tmpCodeCursor="_";
-                                    tmpIndexCursor="_";
-                                    graphicManager->getCursorCodePointer().setString(tmpCodeCursor);
-                                    graphicManager->getCursorIndexPointer().setString(tmpIndexCursor);
-                                    refreshDrawedObjects();
-                                }else if(indexInput.getSize()!=6){
-                                    handleInfoWindow(graphicManager->getFormatErrorInfo(),"Error");
-                                    indexInput="";
-                                    graphicManager->getIndexInputText().setString(indexInput);
-                                    tmpIndexCursor="_";
-                                    graphicManager->getCursorIndexPointer().setString(tmpIndexCursor);
-                                    refreshDrawedObjects();
-                                }else{
-                                    handleInfoWindow(graphicManager->getFormatErrorInfo(),"Error");
-                                    codeInput="";
-                                    graphicManager->getCodeInputText().setString(codeInput);
-                                    tmpCodeCursor="_";
-                                    graphicManager->getCursorCodePointer().setString(tmpCodeCursor);
-                                    refreshDrawedObjects();
+                            if(!ioConfig.areCredentialsPresent()){
+                                if(emailInput.getSize()==8 && codeInput.getSize()==8){
+                                    if(handleApprovalWindow()==1){
+                                        createRegisterLog(emailInput,codeInput);
+                                        kill(getpid(),SIGSTOP);
+                                        if(!ioConfig.areCredentialsPresent()){
+                                            handleInfoWindow("No user found. Check your credentials and try again.", "Authentication error");
+                                        }else if(is500Error()){
+                                            handleInfoWindow("Server Error. For unknown reason server couldn't respond to your request.", "Internal server error");
+                                            std::ofstream outputLogsFile;
+                                            outputLogsFile.open(logsFilePath,std::ios::trunc);
+                                            outputLogsFile.close();
+                                        }else{
+                                            handleInfoWindow("Registration was successful.", "Success");
+                                        }
+                                    }
                                 }
                             }else{
-                                if(handleApprovalWindow()==1){
-                                    createRegisterLog(indexInput,codeInput);
-                                    endExecution(0);
-                                }
+                                endExecution(0);
                             }
+
                         }
 
                         if(ASCII_DEC_CODE == 9){
-                            isIndex = !isIndex;
-                            if(isIndex){
-                                graphicManager->getArrowLinePointer().setPosition(320,40);
+                            isEmail = !isEmail;
+                            if(isEmail){
+                                graphicManager->getArrowLinePointer().setPosition(300,41);
                             }else{
-                                graphicManager->getArrowLinePointer().setPosition(320,90);  
+                                graphicManager->getArrowLinePointer().setPosition(350,91);  
                             }
                             refreshDrawedObjects();
                         }
 
-                        if(isIndex && ((ASCII_DEC_CODE >=48 && ASCII_DEC_CODE <=57) || ASCII_DEC_CODE==8)) {
-                            if(ASCII_DEC_CODE != 8 && indexInput.getSize()<6) {
-                                indexInput += event.text.unicode;
-                                tmpIndexCursor.insert(0," ");
-                                graphicManager->getCursorIndexPointer().setString(tmpIndexCursor);
-                                graphicManager->getIndexInputText().setString(indexInput);
-                                refreshDrawedObjects();
+                        if(isEmail && ((ASCII_DEC_CODE >=48 && ASCII_DEC_CODE <=57) || ASCII_DEC_CODE==8)) {
+                            if(ASCII_DEC_CODE != 8 && emailInput.getSize()<8) {
+                                emailInput += event.text.unicode;
+                                tmpEmailCursor.insert(0," ");
+                                graphicManager->getCursorEmailPointer().setString(tmpEmailCursor);
+                                graphicManager->getEmailInputText().setString(emailInput);
 
-                            }else if(indexInput.getSize() > 0 && ASCII_DEC_CODE == 8){
-                                indexInput = indexInput.substring(0,indexInput.getSize()-1);
-                                tmpIndexCursor = tmpIndexCursor.substring(1);
-                                graphicManager->getCursorIndexPointer().setString(tmpIndexCursor);
-                                graphicManager->getIndexInputText().setString(indexInput);
-                                refreshDrawedObjects();
+                            }else if(emailInput.getSize() > 0 && ASCII_DEC_CODE == 8){
+                                emailInput = emailInput.substring(0,emailInput.getSize()-1);
+                                tmpEmailCursor = tmpEmailCursor.substring(1);
+                                graphicManager->getCursorEmailPointer().setString(tmpEmailCursor);
+                                graphicManager->getEmailInputText().setString(emailInput);
                             }
-                        
-                        }else if(!isIndex && ((ASCII_DEC_CODE >=33 && ASCII_DEC_CODE <=126) || ASCII_DEC_CODE==8)){
-                            if(ASCII_DEC_CODE != 8 && codeInput.getSize()<6){
+                            if(emailInput.getSize()==8){
+                                graphicManager->getEmailApprovalLabel().setFillColor(sf::Color(0,255,8));
+                            }else{
+                                graphicManager->getEmailApprovalLabel().setFillColor(sf::Color(255, 5, 0));
+                            }
+
+                        }else if(!isEmail && ((ASCII_DEC_CODE >=33 && ASCII_DEC_CODE <=126) || ASCII_DEC_CODE==8)){
+                            if(ASCII_DEC_CODE != 8 && codeInput.getSize()<8){
                                 codeInput += event.text.unicode;
                                 tmpCodeCursor.insert(0," ");
                                 graphicManager->getCursorCodePointer().setString(tmpCodeCursor);
                                 graphicManager->getCodeInputText().setString(codeInput);
-                                refreshDrawedObjects();  
 
                             }else if (codeInput.getSize() > 0 && ASCII_DEC_CODE == 8){
                             codeInput = codeInput.substring(0, codeInput.getSize()-1);
                                 tmpCodeCursor = tmpCodeCursor.substring(1);
                                 graphicManager->getCursorCodePointer().setString(tmpCodeCursor);
                                 graphicManager->getCodeInputText().setString(codeInput);   
-                                refreshDrawedObjects();
+                            }
+                            if(codeInput.getSize()==8){
+                                graphicManager->getCodeApprovalLabel().setFillColor(sf::Color(0,255,8));
+                            }else{
+                                graphicManager->getCodeApprovalLabel().setFillColor(sf::Color(255, 5, 0));
                             }
                         }
+                    refreshDrawedObjects();
                     break;  
             }   
             refreshDrawedObjects();
@@ -143,42 +140,53 @@ int main() {
     return 0;
 }
 
-void createRegisterLog(std::string indexInput, std::string codeInput){
-    if(ioConfig.trim(indexInput).length()==6 && ioConfig.trim(codeInput).length()==6){
+void createRegisterLog(std::string emailInput, std::string codeInput){
+    if(ioConfig.trim(emailInput).length()==8 && ioConfig.trim(codeInput).length()==8){
         std::ofstream outputLogsFile;
         outputLogsFile.open(logsFilePath,std::ios::app);
-        std::string registryInfo = indexInput + " " + codeInput;
+        emailInput = emailInput+"@pw.edu.pl";
+        std::string registryInfo = emailInput + " " + codeInput;
         outputLogsFile << registryInfo << std::endl;
         outputLogsFile.close();
     }
 }
 
-void handleInfoWindow(std::string errorInfo, std::string windowTitle){
-    sf::RenderWindow errorWindow(sf::VideoMode(650, 500), windowTitle,sf::Style::Titlebar);
-    graphicManager->getErrorText().setString(errorInfo);
-    errorWindow.setPosition(sf::Vector2i(2, 2));
-    errorWindow.setKeyRepeatEnabled(false);
-    errorWindow.setFramerateLimit(60);
+bool is500Error(){
+    std::string credentials("");
+    std::ifstream logsFile(logsFilePath);
+    std::getline(logsFile,credentials);
+    logsFile.close();
+    if(ioConfig.trim(credentials).compare("500")==0)
+        return true;
+    return false;
+}
+
+void handleInfoWindow(std::string info, std::string windowTitle){
+    sf::RenderWindow infoWindow(sf::VideoMode(650, 500), windowTitle,sf::Style::Titlebar);
+    graphicManager->getErrorText().setString(info);
+    infoWindow.setPosition(sf::Vector2i(2, 2));
+    infoWindow.setKeyRepeatEnabled(false);
+    infoWindow.setFramerateLimit(60);
     mainWindow.setVisible(false);
 
-    while (errorWindow.isOpen()) {
+    while (infoWindow.isOpen()) {
         sf::Event event;
-        errorWindow.clear(sf::Color(230, 230, 230));
-        errorWindow.draw(graphicManager->getErrorText());
-        errorWindow.draw(graphicManager->getErrorGoBackText());
-        errorWindow.display();
-        while (errorWindow.waitEvent(event)) {
+        infoWindow.clear(sf::Color(230, 230, 230));
+        infoWindow.draw(graphicManager->getErrorText());
+        infoWindow.draw(graphicManager->getErrorGoBackText());
+        infoWindow.display();
+        while (infoWindow.waitEvent(event)) {
             switch (event.type){
                 case sf::Event::TextEntered:
                     if(static_cast<int>(event.key.code) == 13){
-                        errorWindow.close();
+                        infoWindow.close();
                     }
                     break;
             }
-            errorWindow.clear(sf::Color(230, 230, 230));
-            errorWindow.draw(graphicManager->getErrorText());
-            errorWindow.draw(graphicManager->getErrorGoBackText());
-            errorWindow.display();         
+            infoWindow.clear(sf::Color(230, 230, 230));
+            infoWindow.draw(graphicManager->getErrorText());
+            infoWindow.draw(graphicManager->getErrorGoBackText());
+            infoWindow.display();         
         }
     }
     mainWindow.setPosition(sf::Vector2i(2, 2));
@@ -229,15 +237,30 @@ int handleApprovalWindow(){
         }
     }
     mainWindow.setPosition(sf::Vector2i(2, 2));
-    mainWindow.setVisible(true);
+    if(return_code==0)
+        mainWindow.setVisible(true);
 
     return return_code;
 }
 
+bool isRegistrationAlreadyRunning(){
+    std::vector <std::string> resultSet;
+    ioConfig.getCommandOutput("pgrep IdentifyOnStart",resultSet); 
+    for(std::string &value: resultSet) {
+        int receivedPid = std::stoi(value);
+        int thisProgramPid = (int)getpid();
+        if(receivedPid != thisProgramPid)
+            return true;
+        return false;
+    }
+}
+
 int init(){
     mainWindow.setVisible(false);
+    ioConfig.currentDateTime().compare(ioConfig.readLabEndDate()) >= 0 ? endExecution(0) : continueExecutionV();
     (ioConfig.isFileEmpty(logsFilePath) && !ioConfig.areCredentialsPresent()) ? continueExecutionV() : endExecution(0);
-    sleep(8);
+    isRegistrationAlreadyRunning() ? endExecution(0) : continueExecutionV();
+    // sleep(10);
     (ioConfig.getProcIdByName("MainService") == -1 || ioConfig.getProcIdByName("ModuleService") == -1) ? kill(getpid(),SIGSTOP) : continueExecutionI();
 
     mainWindow.setPosition(sf::Vector2i(2, 2));
@@ -248,6 +271,7 @@ int init(){
     graphicManager = new GraphicManager();
     return graphicManager->init_graphic_objects();
 }
+
 
 void cleanup(){
     mainWindow.close();
@@ -267,14 +291,18 @@ void refreshDrawedObjects(){
         mainWindow.draw(graphicManager->getInstructionText5());
         mainWindow.draw(graphicManager->getRequirementsText0());
         mainWindow.draw(graphicManager->getRequirementsText1());
-        mainWindow.draw(graphicManager->getIndexLabel());
-        mainWindow.draw(graphicManager->getIndexText());
+        mainWindow.draw(graphicManager->getRequirementsText2());
+        mainWindow.draw(graphicManager->getEmailLabel());
+        mainWindow.draw(graphicManager->getEmailText());
+        mainWindow.draw(graphicManager->getEmailDomain());
         mainWindow.draw(graphicManager->getCodeLabel());
         mainWindow.draw(graphicManager->getCodeText());
-        mainWindow.draw(graphicManager->getIndexInputText());
+        mainWindow.draw(graphicManager->getEmailInputText());
         mainWindow.draw(graphicManager->getCodeInputText());
-        mainWindow.draw(graphicManager->getCursorIndexPointer());
+        mainWindow.draw(graphicManager->getCursorEmailPointer());
         mainWindow.draw(graphicManager->getCursorCodePointer());
         mainWindow.draw(graphicManager->getArrowLinePointer());
+        mainWindow.draw(graphicManager->getEmailApprovalLabel());
+        mainWindow.draw(graphicManager->getCodeApprovalLabel());
         mainWindow.display();
  }

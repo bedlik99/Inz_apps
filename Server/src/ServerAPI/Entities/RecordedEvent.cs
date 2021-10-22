@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ServerAPI.Models
+namespace ServerAPI.Entities
 {
 	public class RecordedEvent
 	{
@@ -19,9 +19,7 @@ namespace ServerAPI.Models
 		public int Id { get; set; }
 		public string RegistryContent { get; set; }
 		public DateTime DateTime { get; set; }
-
 		public int RegisteredUserId { get; set; }
 		public virtual RegisteredUser RegisteredUser { get; set; }
-
 	}
 }

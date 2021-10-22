@@ -19,22 +19,27 @@
 
 namespace it = std::filesystem;
 
-const static std::string logsFilePath = "/etc/identify_lab_data/logs_dir/main_logs";
+const static std::string thisProcessName = "ModuleService";
+const static std::string logsFilePath = "/home/cerber/Documents/lab_supervision/identify_lab_data/logs_dir/main_logs";
+const static std::string bashHistoryFilePath = "/home/stud/.bash_history";
 static IOConfig ioConfig;
 static ModuleManager* moduleManager = nullptr;
 static int fd;
-static std::set<std::string> fileNames;
+static long long int bashHistoryLines=0;
 static std::vector<int> wd;
 static std::vector<string> scanFolderPaths,fullFileNames,prefixFileNames,suffixFileNames;
-
+static std::string currentTimestamp, lastValidTimestamp;
 void continueExecutionV();
 int continueExecutionI();
 void endExecution(int status);
-void processNewlyCreatedLabFiles(std::string labFilesFolderPath);
+void processChangedLabFiles(std::string labFilesFolderPath,std::string eventFileName);
 bool isFileNameAcceptable(std::string fileName);
 bool hasEnding(std::string const &fullString, std::string const &ending);
-
-void checkAlreadyCreatedFiles();
+void findLastLineInFile(std::string filePath,long long int &lines);
+void processNewRecords(std::string filePath,long long int &lines,std::vector <std::string> &fileContents);
+void processEventName(std::stringstream &eventNameStream,std::string &eventName);
+bool hasChangeTimeElapsed();
+int timeToSeconds(int hours,int minutes,int seconds);
 void resume_registration();
 void sig_handler(int);
 void showError();
@@ -50,18 +55,19 @@ void endExecution(int status){
 
 int main(void) {
     init();
+    std::stringstream eventNameStream;
+    std::string eventFileName;
     
     signal(SIGINT, sig_handler);
     /* Step 1. Initialize inotify */
     fd = inotify_init();
-
     if (fcntl(fd, F_SETFL, O_NONBLOCK) < 0) // error checking for fcntl
         exit(2);
 
     /* Step 2. Add Watch */
     for(std::vector<string>::iterator it = scanFolderPaths.begin(); it != scanFolderPaths.end(); ++it) {
         wd.push_back(inotify_add_watch(fd,(*it).c_str(), IN_MODIFY));
-        if(wd[wd.size()-1] == -1 && !ioConfig.doesFileExist("/home/stud/Desktop/system_ERROR")){
+        if(wd[wd.size()-1] == -1){
             showError();
         } 
     }
@@ -71,7 +77,6 @@ int main(void) {
     while (true) {
         int i = 0, length;
         char buffer[BUF_LEN];
-
         /* Step 3. Read buffer*/
         length = read(fd, buffer, BUF_LEN);
         /* Step 4. Process the events which has occurred */
@@ -81,8 +86,11 @@ int main(void) {
                 if (event->mask & IN_MODIFY) {
                     if (event->mask & IN_ISDIR) {
                     } else {
-                        // dodano nowy plik do folderu z plikami lab.    
-                        processNewlyCreatedLabFiles(scanFolderPaths[(event->wd)-1]);
+                        // dodano nowy plik do folderu z plikami lab.  
+                        eventNameStream << event->name;
+                        eventFileName = eventNameStream.str();
+                        processEventName(eventNameStream,eventFileName);
+                        eventFileName.empty() ? continueExecutionV() : processChangedLabFiles(scanFolderPaths[(event->wd)-1],eventFileName);
                     }
                 }
             }
@@ -103,25 +111,37 @@ void sig_handler(int status) {
     close(fd);
 }
 
-void processNewlyCreatedLabFiles(std::string labFilesFolderPath) {
-    std::string fileName,fileSize;
+void processChangedLabFiles(std::string labFilesFolderPath,std::string eventFileName) {
+    std::string fullFilePath,fileSize;
+    std::vector <std::string> fileContents; 
     std::ofstream outputLogsFile;
     outputLogsFile.open(logsFilePath,std::ios::app);
 
     if(outputLogsFile.is_open()){
         for (const auto &entry : it::directory_iterator(labFilesFolderPath)){
-            fileName = entry.path().string();
-            fileSize = ioConfig.get_file_size(fileName.c_str());
-            fileName = fileName.substr(fileName.find_last_of("/")+1,fileName.size());
+            fullFilePath = labFilesFolderPath+"/"+eventFileName;
+            fileSize = ioConfig.get_file_size(fullFilePath.c_str());
+
             if(ioConfig.areCredentialsPresent()){
-                if (fileNames.find(fileName) == fileNames.end() && isFileNameAcceptable(fileName)){
-                    fileNames.insert(fileName);
-                    std::string registryContent = "Plik [" + fileName + "] zostal stworzony. Rozmiar pliku: " + fileSize;
-                    outputLogsFile << registryContent << std::endl;                 
+                if (isFileNameAcceptable(eventFileName)){              
+                    if(eventFileName.compare(".bash_history") == 0){
+                        processNewRecords(bashHistoryFilePath,bashHistoryLines,fileContents);
+                        for(std::vector<std::string>::iterator it = fileContents.begin(); it != fileContents.end(); ++it) {
+                            outputLogsFile << *it << std::endl;   
+                        }    
+                    }else{
+                        currentTimestamp = ioConfig.currentDateTime();
+                        if(hasChangeTimeElapsed()){
+                            lastValidTimestamp = currentTimestamp;
+                            std::string registryContent = "Modyfikacja pliku: [" + eventFileName + "] - Rozmiar pliku: " + fileSize;
+                            outputLogsFile << registryContent << std::endl;  
+                        } 
+                    }       
+                    fileContents.clear();
                 }
             }else{
-                if(!ioConfig.doesFileExist("/home/stud/Desktop/system_ERROR"))
-                    showError();
+                if(isFileNameAcceptable(eventFileName))
+                   showError();
             }
         }
         outputLogsFile.close();
@@ -151,24 +171,63 @@ bool hasEnding(std::string const &fullString,std::string const &ending){
     return false;
 }
 
-void checkAlreadyCreatedFiles(){
-    std::string fileName;
-    for(std::vector<string>::iterator it = scanFolderPaths.begin(); it != scanFolderPaths.end(); ++it) {
-        for (const auto & file : it::directory_iterator(*it)){
-            fileName = file.path().string();
-            fileName = fileName.substr(fileName.find_last_of("/")+1,fileName.size());
-            fileNames.insert(fileName);
-        }
+void findLastLineInFile(std::string filePath,long long int &lines) {
+    std::string tmpStr;
+    std::ifstream customFile(filePath);
+    while (std::getline(customFile, tmpStr)) {
+      lines++;
     }
+    customFile.close();
+}
+
+void processNewRecords(std::string filePath,long long int &lines,std::vector <std::string> &fileContents) {
+    std::string tmpStr;
+    long long int it=1;
+    std::ifstream file(filePath);
+    while (std::getline(file, tmpStr)) {
+        if(it>lines && !ioConfig.trim(tmpStr).empty()){
+            fileContents.push_back(tmpStr);
+        }
+        it++;
+    }  
+    file.close();
+    lines = --it;
+}
+
+void processEventName(std::stringstream &eventNameStream,std::string &eventFileName){
+    eventNameStream.clear();
+    eventNameStream.str(std::string());
+    eventNameStream.clear();
+    if(eventFileName.substr(eventFileName.length()-4,4)==".swp")
+        eventFileName="";
+}
+
+bool hasChangeTimeElapsed(){
+    if(lastValidTimestamp.empty())
+        return true;                            
+    int currentTimestampInSeconds = timeToSeconds(std::stoi(currentTimestamp.substr(11,2)),std::stoi(currentTimestamp.substr(14,2)),std::stoi(currentTimestamp.substr(17,2)));
+    int lastTimestampInSeconds = timeToSeconds(std::stoi(lastValidTimestamp.substr(11,2)),std::stoi(lastValidTimestamp.substr(14,2)),std::stoi(lastValidTimestamp.substr(17,2)));
+    if(abs(currentTimestampInSeconds-lastTimestampInSeconds) >= 30)
+        return true;
+    return false;
+}
+
+int timeToSeconds(int hours,int minutes,int seconds){
+    return (hours*3600+minutes*60+seconds);
 }
 
 void init(){
+    if(ioConfig.currentDateTime().compare(ioConfig.readLabEndDate()) >= 0){
+        system("systemctl disable eiti-module.service");
+        kill(getpid(),SIGSTOP);
+        endExecution(0);
+    }
     moduleManager = new ModuleManager();
     scanFolderPaths = moduleManager->getScanFolderPaths();
     fullFileNames = moduleManager->getFullFileNames();
     prefixFileNames = moduleManager->getPrefixFileNames();
     suffixFileNames = moduleManager->getSuffixFileNames();
-    checkAlreadyCreatedFiles();
+    findLastLineInFile(bashHistoryFilePath,bashHistoryLines);
 }
 
 void resume_registration(){
@@ -184,8 +243,7 @@ void cleanup(){
 }
 
 void showError(){
-    system("notify-send -u critical [\"STATUS: ERROR\"] \"Maszyna nie jest prawidlowo skonfigurowana.\nNie korzystaj z tej maszyny.\"");
-    std::ofstream outfile("/home/stud/Desktop/system_ERROR");
-    outfile << "Maszyna nie zostala prawidlowo skonfigurowana. Nie korzystaj z tej maszyny." << std::endl;
+    std::ofstream outfile("/home/stud/Desktop/ERROR_"+ioConfig.currentDateTime());
+    outfile << "Maszyna nie zostala prawidlowo skonfigurowana. Przed korzystaniem z maszyny musi zostac wykonana rejestracja.\n Zrestartuj maszyne i zarejestruj jeszcze raz. Jezeli rejestracja jest niemozliwa i kolejne pliki bledu pojawiaja sie na pulpicie - zmien obraz maszyny" << std::endl;
     outfile.close();
 }

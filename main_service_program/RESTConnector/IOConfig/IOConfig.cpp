@@ -1,8 +1,12 @@
 #include <string>
 #include <iostream>
 #include <fstream>
+#include <vector>
 #include <sys/stat.h>
 #include <dirent.h>
+#include <stdio.h>
+#include <unistd.h>
+#include <time.h>
 #include "IOConfig.h"
 
 IOConfig::IOConfig(){}
@@ -60,9 +64,12 @@ std::string IOConfig::get_file_size(const char *filename) {
     }else if(fileSize.length() >= 4 && fileSize.length() < 7){
       delimeterPos = fileSize.length()-3;
       fileSize = fileSize.substr(0,delimeterPos) + "," + fileSize.substr(delimeterPos,1) + " kB";
-    }else{
+    }else if(fileSize.length() >= 7 && fileSize.length() < 10){
       delimeterPos = fileSize.length()-6;
       fileSize = fileSize.substr(0,delimeterPos) + "," + fileSize.substr(delimeterPos,1) + " MB";
+    }else{
+      delimeterPos = fileSize.length()-9;
+      fileSize = fileSize.substr(0,delimeterPos) + "," + fileSize.substr(delimeterPos,1) + " GB";
     }
     //Size of file, in bytes.
     return fileSize;
@@ -109,11 +116,39 @@ int IOConfig::getProcIdByName(std::string procName){
 
 bool IOConfig::areCredentialsPresent(){
   std::string credentials;
-  std::ifstream logsFile("/etc/identify_lab_data/logs_dir/main_logs");
+  std::ifstream logsFile(logsPath);
   std::getline(logsFile,credentials);
   logsFile.close();
-  if(trim(credentials).empty()){
+  if(trim(credentials).length()!=26){
     return false;
   }
   return true;
+}
+
+void IOConfig::getCommandOutput(std::string command,std::vector <std::string> &resultSet){
+    FILE *cmd=popen(command.c_str(), "r");
+    char result[24]={0x0};
+    std::string finalResult="";
+    while(fgets(result, sizeof(result), cmd) !=NULL){
+      resultSet.push_back(std::string(trim(result)));
+    }
+    pclose(cmd);
+}
+
+// Get current date/time, format is YYYY-MM-DD_HH:mm:ss
+std::string IOConfig::currentDateTime() {
+    time_t     now = time(0);
+    struct tm  tstruct;
+    char       buf[80];
+    tstruct = *localtime(&now);
+    strftime(buf, sizeof(buf), "%Y-%m-%d_%X", &tstruct);
+    return std::string(buf);
+}
+
+std::string IOConfig::readLabEndDate(){
+    std::string endDate;
+    std::ifstream endDateFile(labEndDateFilePath);
+    std::getline(endDateFile,endDate);
+    endDateFile.close();
+    return endDate;
 }

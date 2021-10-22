@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/g++-5
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program -I/home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program/GraphicManagement -I/home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program/IOConfig
+CXX_INCLUDES = -I/home/cerber/Documents/lab_supervision/identify_machine_program -I/home/cerber/Documents/lab_supervision/identify_machine_program/GraphicManagement -I/home/cerber/Documents/lab_supervision/identify_machine_program/IOConfig
 
 CXX_FLAGS = -std=gnu++17
 

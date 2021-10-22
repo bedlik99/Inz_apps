@@ -7,23 +7,22 @@ namespace ServerAPI.DTOs
 {
 	public class RecordedEventDTO
 	{
-        public RecordedEventDTO() { }
-        public RecordedEventDTO(string indexNr, string registryContent) {
-			IndexNr = indexNr;
+		public RecordedEventDTO() { }
+		public RecordedEventDTO(string email, string registryContent)
+		{
+			Email = email;
 			RegistryContent = registryContent;
 		}
-        public string IndexNr { get; set; }
-        public string RegistryContent { get; set; }
-
+		public string Email { get; set; }
+		public string RegistryContent { get; set; }
 
 		public override string ToString()
 		{
-            return "{" + "indexNr='" + IndexNr + '\'' +
-                    ", registryContent='" + RegistryContent + '\'' +
-                    '}';
-        }
-    }
+			return "{" + "email='" + Email + '\'' +
+					", registryContent='" + RegistryContent + '\'' +
+					'}';
+		}
+	}
 }
 
 
-  

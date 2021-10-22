@@ -1,4 +1,4 @@
-# Install script for directory: /home/cerber/Documents/inz_dyp/working_folder_inz/main_service_program/RESTConnector
+# Install script for directory: /home/cerber/Documents/lab_supervision/main_service_program/RESTConnector
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -44,8 +44,8 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/cerber/Documents/inz_dyp/working_folder_inz/main_service_program/RESTConnector/IOConfig/cmake_install.cmake")
-  include("/home/cerber/Documents/inz_dyp/working_folder_inz/main_service_program/RESTConnector/OPENSSL_AES_256/cmake_install.cmake")
+  include("/home/cerber/Documents/lab_supervision/main_service_program/RESTConnector/IOConfig/cmake_install.cmake")
+  include("/home/cerber/Documents/lab_supervision/main_service_program/RESTConnector/OPENSSL_AES_256/cmake_install.cmake")
 
 endif()
 

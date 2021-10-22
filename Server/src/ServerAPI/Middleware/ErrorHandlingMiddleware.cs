@@ -22,18 +22,31 @@ namespace ServerAPI.Middleware
 			{
 				await next.Invoke(context);
 			}
-			catch(NotAcceptableException notAcceptableException)
+			catch (BadRequestException badRequestException)
 			{
-				//An example of custom Exception Handler in use
+				context.Response.StatusCode = 400;
+				await context.Response.WriteAsync(badRequestException.Message);
+			}
+			catch (NotFoundException notFoundException)
+			{
+				context.Response.StatusCode = 404;
+				await context.Response.WriteAsync(notFoundException.Message);
+			}
+			catch (NotAuthorizedException notAuthorizedException)
+			{
+				context.Response.StatusCode = 401;
+				await context.Response.WriteAsync(notAuthorizedException.Message);
+			}
+			catch (NotAcceptableException notAcceptableException)
+			{
 				context.Response.StatusCode = 404;
 				await context.Response.WriteAsync(notAcceptableException.Message);
 			}
-			catch(Exception e)
+			catch (Exception e)
 			{
 				_logger.LogError(e, e.Message);
-
 				context.Response.StatusCode = 500;
-				await context.Response.WriteAsync("An exception has happened on the server.");
+				await context.Response.WriteAsync("An exception has occured on the server.");
 			}
 		}
 	}

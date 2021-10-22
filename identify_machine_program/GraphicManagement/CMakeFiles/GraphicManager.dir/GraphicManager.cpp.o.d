@@ -1,5 +1,5 @@
 GraphicManagement/CMakeFiles/GraphicManager.dir/GraphicManager.cpp.o: \
- /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program/GraphicManagement/GraphicManager.cpp \
+ /home/cerber/Documents/lab_supervision/identify_machine_program/GraphicManagement/GraphicManager.cpp \
  /usr/include/stdc-predef.h /usr/include/SFML/Graphics.hpp \
  /usr/include/SFML/Window.hpp /usr/include/SFML/System.hpp \
  /usr/include/SFML/Config.hpp /usr/include/SFML/System/Clock.hpp \
@@ -214,4 +214,4 @@ GraphicManagement/CMakeFiles/GraphicManager.dir/GraphicManager.cpp.o: \
  /usr/include/SFML/Graphics/Sprite.hpp \
  /usr/include/SFML/Graphics/Text.hpp \
  /usr/include/SFML/Graphics/VertexBuffer.hpp \
- /home/cerber/Documents/inz_dyp/working_folder_inz/identify_machine_program/GraphicManagement/GraphicManager.h
+ /home/cerber/Documents/lab_supervision/identify_machine_program/GraphicManagement/GraphicManager.h
