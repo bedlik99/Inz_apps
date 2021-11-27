@@ -13,8 +13,9 @@ import java.util.Base64;
 
 public abstract class CryptoUtil {
 
-    private static final byte[] byteArrayKey = {109, 90, 113, 52, 116, 55, 119, 33, 122, 37, 67, 42, 70, 45, 74, 64, 78, 99, 82, 102, 85, 106, 88, 110, 50, 114, 53, 117, 56, 120, 47, 65};
-    private static final IvParameterSpec iv = new IvParameterSpec(new byte[]{'4', 'q', 'U', 'T', 'M', 'L', 'k', 'E', '1', '5', 'P', 'X', 'g', '6', 'B', 'm'});
+    private static final byte[] byteArrayKey = {(byte) 219,113,24,(byte)135,39,29,126,(byte)237,62,41,40,80,13,(byte)196,(byte)236,(byte)161,67,(byte)200,70,(byte)232,(byte)196,
+                                                (byte)148,(byte)143,13,(byte)128,99,(byte)251,43,(byte)176,0,(byte)198,38};
+    private static final IvParameterSpec iv = new IvParameterSpec(new byte[]{91,(byte)158,(byte)142,6,25,84,(byte)195,85,107,12,(byte)209,105,(byte)219,(byte)211,(byte)177,89});
     private static final SecretKeySpec key = new SecretKeySpec(byteArrayKey, "AES");
     private static final String algorithm = "AES/CBC/NoPadding";
     private static final String writable_chars = "P_3Auw|g!4EHS1.#W0<+oR?OIZ'9k*6=hCUGtTbQN(f;7/%lr8>LzD2$sy5p@Mq,acBdveKV)nm~ij`Y:&JXF^x-";

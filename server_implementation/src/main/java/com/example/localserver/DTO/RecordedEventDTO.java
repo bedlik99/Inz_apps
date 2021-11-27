@@ -2,22 +2,22 @@ package com.example.localserver.DTO;
 
 public class RecordedEventDTO {
 
-    private String mail;
+    private String email;
     private String registryContent;
 
     public RecordedEventDTO(){}
 
-    public RecordedEventDTO(String mail, String registryContent) {
-        this.mail = mail;
+    public RecordedEventDTO(String email, String registryContent) {
+        this.email = email;
         this.registryContent = registryContent;
     }
 
-    public String getMail() {
-        return mail;
+    public String getEmail() {
+        return email;
     }
 
-    public void setMail(String mail) {
-        this.mail = mail;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getRegistryContent() {
@@ -30,7 +30,7 @@ public class RecordedEventDTO {
 
     @Override
     public String toString() {
-        return "{" + "mail='" + mail + '\'' +
+        return "{" + "email='" + email + '\'' +
                 ", registryContent='" + registryContent + '\'' +
                 '}';
     }

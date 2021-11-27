@@ -57,25 +57,26 @@ public class EitiLabUserService {
                 (RegisteredLabUserDTO) decryptMessage(encryptedMessage.getValue(),true);
         if (registeredUser != null) {
             if (validateUserData(registeredUser)) {
-                RegisteredUser userToSave = new RegisteredUser(registeredUser.getMail(), registeredUser.getUniqueCode());
+                RegisteredUser userToSave = new RegisteredUser(registeredUser.getEmail(), registeredUser.getUniqueCode());
                 eitiLabUserRepository.save(userToSave);
                 recordedEventRepository.save(new RecordedEvent("Maszyna zostala zarejestrowana", LocalDateTime.now(), userToSave));
                 return ResponseEntity.status(HttpStatus.OK).body("");
             }
-            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("");
         }
-        return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("");
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("");
     }
 
     public void processEventContent(MessageDTO encryptedMessage) {
         RecordedEventDTO recordedEvent =
                 (RecordedEventDTO) decryptMessage(encryptedMessage.getValue(),false);
         RegisteredUser searchedUser=null;
-        if (recordedEvent != null && !recordedEvent.getMail().isEmpty()) {
-            searchedUser = eitiLabUserRepository.findStudentByEmail(recordedEvent.getMail());
-            if(searchedUser != null)
+        if (recordedEvent != null && !recordedEvent.getEmail().isEmpty()) {
+            searchedUser = eitiLabUserRepository.findStudentByEmail(recordedEvent.getEmail());
+            if(searchedUser != null){
                 recordedEventRepository.save(new RecordedEvent(
                         recordedEvent.getRegistryContent(), LocalDateTime.now(), searchedUser));
+            }
         }
     }
 
@@ -107,7 +108,7 @@ public class EitiLabUserService {
     }
 
     private boolean validateUserData(RegisteredLabUserDTO registeredLabUserDTO) {
-        return registeredLabUserDTO.getMail().matches("[0-9]{8}@pw.edu.pl") &&
+        return registeredLabUserDTO.getEmail().matches("[0-9]{8}@pw.edu.pl") &&
                 registeredLabUserDTO.getUniqueCode().length() == 8;
     }
 

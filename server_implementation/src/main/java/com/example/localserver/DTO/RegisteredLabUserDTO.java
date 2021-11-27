@@ -3,13 +3,13 @@ package com.example.localserver.DTO;
 public class RegisteredLabUserDTO {
 
     private String uniqueCode;
-    private String mail;
+    private String email;
 
     public RegisteredLabUserDTO(){}
 
-    public RegisteredLabUserDTO(String uniqueCode, String indexNum) {
+    public RegisteredLabUserDTO(String uniqueCode, String email) {
         this.uniqueCode = uniqueCode;
-        this.mail = indexNum;
+        this.email = email;
     }
 
     public String getUniqueCode() {
@@ -20,17 +20,17 @@ public class RegisteredLabUserDTO {
         this.uniqueCode = uniqueCode;
     }
 
-    public String getMail() {
-        return mail;
+    public String getEmail() {
+        return email;
     }
 
-    public void setMail(String mail) {
-        this.mail = mail;
+    public void setEmail(String mail) {
+        this.email = mail;
     }
 
     @Override
     public String toString() {
         return "{" + "uniqueCode='" + uniqueCode + '\'' +
-                ",mail='" + mail + '\'' + '}';
+                ",email='" + email + '\'' + '}';
     }
 }
