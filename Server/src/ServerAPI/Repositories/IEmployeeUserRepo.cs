@@ -20,13 +20,14 @@ namespace ServerAPI.Repositories
 		IEnumerable<RecordedEventDTO> GetUserRegistries(string emailAddress);
 		bool DeleteRegisteredUser(string emailAddress);
 		IEnumerable<Employee> GetAllRegisteredEmployees();
-		IEnumerable<RegisteredUser> UploadFileService(IFormFile fileUpload,string lab,string owner);
+		IEnumerable<RegisteredUser> UploadFileService(IFormFile fileUpload,string labName,string owner);
 		IEnumerable<RegisteredLabUserDTO> InsertUsersIntoDataBase(IEnumerable<RegisteredUser> uploadResult);
-		bool UploadLabRequirements(IFormFile fileUpload,string lab);
+		bool UploadLabRequirements(IFormFile fileUpload,string labName);
 		
 		// TBD
-		bool RemoveLaboratoryAndUsersData();
+		bool DeleteLaboratoryAndUsersData(string labName);
 		StringBuilder GenerateResults(string labName);
-		
+		IEnumerable<LaboratoryRequirement> GetLabRequirements(string labName);
+
 	}
 }

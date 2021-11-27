@@ -91,6 +91,14 @@ sf::Text& GraphicManager::getCodeInputText(){
     return codeInputText;
 }
 
+sf::Text& GraphicManager::getEmailToConfirm(){
+    return emailToConfirm;
+}
+
+sf::Text& GraphicManager::getCodeToConfirm(){
+    return codeToConfirm;
+}
+
 sf::Text& GraphicManager::getCursorEmailPointer(){
     return cursorEmailPointer;
 }
@@ -147,16 +155,16 @@ int GraphicManager::init_graphic_objects(){
     errorText.setPosition(5,20);
     errorText.setFillColor(sf::Color(0,0,0));
 
-    errorGoBackText.setPosition(120,400);
+    errorGoBackText.setPosition(200,400);
     errorGoBackText.setFillColor(sf::Color(0,0,0));
 
-    confirmationText.setPosition(70,80);
+    confirmationText.setPosition(70,130);
     confirmationText.setFillColor(sf::Color(0,0,0));
 
-    confirmInputText.setPosition(289,80);
+    confirmInputText.setPosition(289,130);
     confirmInputText.setFillColor(sf::Color(0,0,0));
 
-    confirmEnterText.setPosition(110,140);
+    confirmEnterText.setPosition(110,250);
     confirmEnterText.setFillColor(sf::Color(0,0,0));
 
     //emailLabel - Obramowanie etykiety do emaila
@@ -189,14 +197,20 @@ int GraphicManager::init_graphic_objects(){
     codeInputText.setPosition(165,90);
     codeInputText.setLineSpacing(-1);
 
+    codeToConfirm.setFillColor(sf::Color(0, 0, 0));
+    codeToConfirm.setPosition(20,40);
+
+    emailToConfirm.setFillColor(sf::Color(0, 0, 0));
+    emailToConfirm.setPosition(20,10);
+
     //cursorEmailPointer - kursor do nr emailu
     cursorEmailPointer.setFillColor(sf::Color(0,0,0));
-    cursorEmailPointer.setPosition(70,40);
+    cursorEmailPointer.setPosition(70,42);
     cursorEmailPointer.setLetterSpacing(2.8);
 
     //cursorCodePointer - kursor do unikatowego kodu
-    cursorCodePointer.setFillColor(sf::Color(0,0,0));
-    cursorCodePointer.setPosition(165,90);
+    cursorCodePointer.setFillColor(sf::Color(255,255,255));
+    cursorCodePointer.setPosition(165,92);
     cursorCodePointer.setLetterSpacing(2.8);
 
     arrowLinePointer.setFillColor(sf::Color(0,0,0));

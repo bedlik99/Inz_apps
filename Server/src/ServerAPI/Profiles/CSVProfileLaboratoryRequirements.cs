@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ServerAPI.Profiles
 {
-	public class CSVProfileLaboratoryRequirements : DefaultClassMap<LaboratoryRequirements>
+	public class CSVProfileLaboratoryRequirements : DefaultClassMap<LaboratoryRequirement>
 	{
 		public CSVProfileLaboratoryRequirements()
 		{

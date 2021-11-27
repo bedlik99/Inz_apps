@@ -119,7 +119,7 @@ bool IOConfig::areCredentialsPresent(){
   std::ifstream logsFile(logsPath);
   std::getline(logsFile,credentials);
   logsFile.close();
-  if(trim(credentials).length()!=26){
+  if(trim(credentials).empty()){
     return false;
   }
   return true;
@@ -143,12 +143,4 @@ std::string IOConfig::currentDateTime() {
     tstruct = *localtime(&now);
     strftime(buf, sizeof(buf), "%Y-%m-%d_%X", &tstruct);
     return std::string(buf);
-}
-
-std::string IOConfig::readLabEndDate(){
-    std::string endDate;
-    std::ifstream endDateFile(labEndDateFilePath);
-    std::getline(endDateFile,endDate);
-    endDateFile.close();
-    return endDate;
 }

@@ -14,7 +14,9 @@ namespace ServerAPI.Repositories
 		public DbSet<Employee> EmployeeItems { get; set; }
 		public DbSet<Role> RoleItems { get; set; }
 		public DbSet<Laboratory> LaboratoryItems { get; set; }
-		public DbSet<LaboratoryRequirements> LaboratoryRequirementsItems { get; set; }
+
+		//TBC TO LaboratoryRequirementItems
+		public DbSet<LaboratoryRequirement> LaboratoryRequirementsItems { get; set; }
 
 		public ServerDBContext(DbContextOptions<ServerDBContext> options) : base(options)
 		{

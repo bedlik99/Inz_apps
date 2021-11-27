@@ -127,7 +127,7 @@ void processChangedLabFiles(std::string labFilesFolderPath,std::string eventFile
                     if(eventFileName.compare(".bash_history") == 0){
                         processNewRecords(bashHistoryFilePath,bashHistoryLines,fileContents);
                         for(std::vector<std::string>::iterator it = fileContents.begin(); it != fileContents.end(); ++it) {
-                            outputLogsFile << *it << std::endl;   
+                            outputLogsFile << "bash_command>" << *it << std::endl;   
                         }    
                     }else{
                         currentTimestamp = ioConfig.currentDateTime();
@@ -140,8 +140,9 @@ void processChangedLabFiles(std::string labFilesFolderPath,std::string eventFile
                     fileContents.clear();
                 }
             }else{
-                if(isFileNameAcceptable(eventFileName))
-                   showError();
+                if(isFileNameAcceptable(eventFileName)){
+                    showError();
+                }
             }
         }
         outputLogsFile.close();
@@ -198,17 +199,18 @@ void processEventName(std::stringstream &eventNameStream,std::string &eventFileN
     eventNameStream.clear();
     eventNameStream.str(std::string());
     eventNameStream.clear();
-    if(eventFileName.substr(eventFileName.length()-4,4)==".swp")
-        eventFileName="";
+    eventFileName = (eventFileName.substr(eventFileName.length()-4,4)==".swp") ? "" : eventFileName;
 }
 
 bool hasChangeTimeElapsed(){
-    if(lastValidTimestamp.empty())
-        return true;                            
+    if(lastValidTimestamp.empty()){
+        return true;  
+    }                          
     int currentTimestampInSeconds = timeToSeconds(std::stoi(currentTimestamp.substr(11,2)),std::stoi(currentTimestamp.substr(14,2)),std::stoi(currentTimestamp.substr(17,2)));
     int lastTimestampInSeconds = timeToSeconds(std::stoi(lastValidTimestamp.substr(11,2)),std::stoi(lastValidTimestamp.substr(14,2)),std::stoi(lastValidTimestamp.substr(17,2)));
-    if(abs(currentTimestampInSeconds-lastTimestampInSeconds) >= 30)
+    if(abs(currentTimestampInSeconds-lastTimestampInSeconds) >= 25){
         return true;
+    }
     return false;
 }
 
@@ -217,11 +219,6 @@ int timeToSeconds(int hours,int minutes,int seconds){
 }
 
 void init(){
-    if(ioConfig.currentDateTime().compare(ioConfig.readLabEndDate()) >= 0){
-        system("systemctl disable eiti-module.service");
-        kill(getpid(),SIGSTOP);
-        endExecution(0);
-    }
     moduleManager = new ModuleManager();
     scanFolderPaths = moduleManager->getScanFolderPaths();
     fullFileNames = moduleManager->getFullFileNames();

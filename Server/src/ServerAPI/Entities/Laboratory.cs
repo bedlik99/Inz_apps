@@ -17,6 +17,6 @@ namespace ServerAPI.Entities
 		public int Id { get; set; }
 		public string LabName { get; set; }
 		public string LabOrganizer { get; set; }
-		public HashSet<LaboratoryRequirements> LaboratoryRequirements { get; set; }
+		public HashSet<LaboratoryRequirement> LaboratoryRequirements { get; set; }
 	}
 }

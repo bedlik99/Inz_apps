@@ -59,9 +59,9 @@ namespace ServerAPI.Controllers
 		[HttpGet]
 		[AllowAnonymous]
 		[Route("users/lab")]
-		public ActionResult<RegisteredUser> GetUsersByLab([FromQuery] string lab)
+		public ActionResult<RegisteredUser> GetUsersByLab([FromQuery] string labName)
 		{
-			var output = _employeeUserRepo.GetUsersByLab(lab);
+			var output = _employeeUserRepo.GetUsersByLab(labName);
 			if (output == null)
 				return BadRequest();
 			return Ok(output);
@@ -126,6 +126,7 @@ namespace ServerAPI.Controllers
 			}
 			return Ok(_emailService.SendEmail(set));
 		}
+
 		[HttpPost]
 		[AllowAnonymous]
 		[Route("requirements")]
@@ -142,6 +143,17 @@ namespace ServerAPI.Controllers
 
 		[HttpGet]
 		[AllowAnonymous]
+		[Route("requirements")]
+		public ActionResult<IEnumerable<LaboratoryRequirement>> GetLabRequirements([FromQuery] string labName)
+		{
+			var result = _employeeUserRepo.GetLabRequirements(labName);
+			if (result == null)
+				return BadRequest();
+			return Ok(result);
+		}
+
+		[HttpGet]
+		[AllowAnonymous]
 		[Route("results")]
 		public ActionResult GenerateResults([FromQuery] string labName)
 		{
@@ -149,6 +161,18 @@ namespace ServerAPI.Controllers
 			if (builder == null)
 				return BadRequest();
 			return File(Encoding.UTF8.GetBytes(builder.ToString()),"text/csv",$"{labName}_Results.csv");;
+		}
+
+		//TBC
+		[HttpDelete]
+		[AllowAnonymous]
+		[Route("delete/lab")]
+		public ActionResult DeleteLaboratoryAndUsersData([FromQuery] string labName)
+		{
+			var result = _employeeUserRepo.DeleteRegisteredUser(labName);
+			if (!result)
+				return BadRequest();
+			return Ok();
 		}
 	}
 }

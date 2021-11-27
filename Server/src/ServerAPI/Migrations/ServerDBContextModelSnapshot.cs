@@ -65,7 +65,7 @@ namespace ServerAPI.Migrations
                     b.ToTable("LaboratoryItems");
                 });
 
-            modelBuilder.Entity("ServerAPI.Entities.LaboratoryRequirements", b =>
+            modelBuilder.Entity("ServerAPI.Entities.LaboratoryRequirement", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -81,9 +81,14 @@ namespace ServerAPI.Migrations
                     b.Property<int?>("LaboratoryId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("RegisteredUserId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("LaboratoryId");
+
+                    b.HasIndex("RegisteredUserId");
 
                     b.ToTable("LaboratoryRequirementsItems");
                 });
@@ -172,11 +177,15 @@ namespace ServerAPI.Migrations
                     b.Navigation("Role");
                 });
 
-            modelBuilder.Entity("ServerAPI.Entities.LaboratoryRequirements", b =>
+            modelBuilder.Entity("ServerAPI.Entities.LaboratoryRequirement", b =>
                 {
                     b.HasOne("ServerAPI.Entities.Laboratory", "Laboratory")
                         .WithMany("LaboratoryRequirements")
                         .HasForeignKey("LaboratoryId");
+
+                    b.HasOne("ServerAPI.Entities.RegisteredUser", null)
+                        .WithMany("RequirementsCompleted")
+                        .HasForeignKey("RegisteredUserId");
 
                     b.Navigation("Laboratory");
                 });
@@ -209,6 +218,8 @@ namespace ServerAPI.Migrations
             modelBuilder.Entity("ServerAPI.Entities.RegisteredUser", b =>
                 {
                     b.Navigation("EventRegistries");
+
+                    b.Navigation("RequirementsCompleted");
                 });
 #pragma warning restore 612, 618
         }

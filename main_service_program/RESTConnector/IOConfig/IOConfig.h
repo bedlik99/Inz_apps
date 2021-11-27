@@ -19,7 +19,6 @@ public:
     int getProcIdByName(std::string procName);
     bool areCredentialsPresent();
     std::string currentDateTime();
-    std::string readLabEndDate();
     void getCommandOutput(std::string command,std::vector <std::string> &resultSet);
     
 };

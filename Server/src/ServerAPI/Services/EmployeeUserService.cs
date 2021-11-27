@@ -114,11 +114,14 @@ namespace ServerAPI.Services
 
 		public IEnumerable<RegisteredUser> GetAllRegisteredUsers()
 		{
+
+			//TBC CZY ZASTOSOWAĆ TU DTO
 			var users = _context
 				.RegisteredUserItems
 				.Include(u => u.EventRegistries)
 				.Include(l => l.Laboratory)
 				.Include(r => r.Laboratory.LaboratoryRequirements)
+				//.AsSplitQuery()
 				.ToList();
 			if (users == null)
 				return null;
@@ -131,8 +134,8 @@ namespace ServerAPI.Services
 				.RegisteredUserItems
 				.Include(u => u.EventRegistries)
 				.Include(l => l.Laboratory)
-				.Include(r=>r.Laboratory.LaboratoryRequirements)
-				.Where(l => l.Laboratory.LabName == labName)		
+				.Include(r => r.Laboratory.LaboratoryRequirements)
+				.Where(l => l.Laboratory.LabName == labName)
 				.ToList();
 			if (users == null)
 				return null;
@@ -161,7 +164,7 @@ namespace ServerAPI.Services
 				return null;
 			return employees;
 		}
-		public IEnumerable<RegisteredUser> UploadFileService(IFormFile fileUpload, string lab,string owner)
+		public IEnumerable<RegisteredUser> UploadFileService(IFormFile fileUpload, string lab, string owner)
 		{
 			using (var stream = fileUpload.OpenReadStream())
 			{
@@ -172,15 +175,15 @@ namespace ServerAPI.Services
 					var users = reader.GetRecords<RegisteredUser>().ToList();
 					if (!_context.LaboratoryItems.Any(x => x.LabName == lab))
 					{
-						_context.LaboratoryItems.Add(new Laboratory { LabName = lab, LabOrganizer = owner, LaboratoryRequirements = new HashSet<LaboratoryRequirements>() { }});
+						_context.LaboratoryItems.Add(new Laboratory { LabName = lab, LabOrganizer = owner, LaboratoryRequirements = new HashSet<LaboratoryRequirement>() { } });
 						_context.SaveChanges();
 					}
 					foreach (var user in users)
-					{	
+					{
 						user.Laboratory = _context.LaboratoryItems.SingleOrDefault(l => l.LabName == lab);
 					}
 					return users;
-				}	
+				}
 			}
 		}
 		public IEnumerable<RegisteredLabUserDTO> InsertUsersIntoDataBase(IEnumerable<RegisteredUser> uploadResult)
@@ -189,7 +192,7 @@ namespace ServerAPI.Services
 			foreach (var user in uploadResult)
 			{
 				user.UniqueCode = Cryptography.GenerateUniqueCode();
-				user.UniqueCode = CheckUniquenessOfCode(user);		
+				user.UniqueCode = CheckUniquenessOfCode(user);
 				if (user != null)
 				{
 					if (_context.RegisteredUserItems.Any(x => x.Email == user.Email && x.Laboratory.LabName == user.Laboratory.LabName))
@@ -199,7 +202,7 @@ namespace ServerAPI.Services
 					_context.RegisteredUserItems.Add(user);
 					_context.RecordedEventItems.Add(new RecordedEvent("Uzytkownik zarejestrowany", DateTime.Now, user));
 					_context.SaveChanges();
-					set.Add(new RegisteredLabUserDTO(user.UniqueCode,user.Email));		 
+					set.Add(new RegisteredLabUserDTO(user.UniqueCode, user.Email));
 				}
 			}
 			return set;
@@ -221,7 +224,7 @@ namespace ServerAPI.Services
 				{
 					var reader = new CsvReader(streamReader, System.Globalization.CultureInfo.CurrentCulture);
 					reader.Context.RegisterClassMap<CSVProfileLaboratoryRequirements>();
-					var requirements = reader.GetRecords<LaboratoryRequirements>().ToList();
+					var requirements = reader.GetRecords<LaboratoryRequirement>().ToList();
 					if (!_context.LaboratoryItems.Any(x => x.LabName == lab))
 					{
 						//***************************
@@ -231,29 +234,68 @@ namespace ServerAPI.Services
 					var laboratory = _context.LaboratoryItems.SingleOrDefault(x => x.LabName == lab);
 					foreach (var requirement in requirements)
 					{
-						if (!_context.LaboratoryRequirementsItems.Any(x=>x.Content == requirement.Content))
+						if (!_context.LaboratoryRequirementsItems.Any(x => x.Content == requirement.Content))
 						{
-							_context.LaboratoryRequirementsItems.Add(new LaboratoryRequirements(requirement.Content, requirement.ExpirationDate, laboratory));
+							_context.LaboratoryRequirementsItems.Add(new LaboratoryRequirement(requirement.Content, requirement.ExpirationDate, laboratory));
 
 							_context.SaveChanges();
 							anyChanges = true;
 						}
 					}
 					return anyChanges;
-				}	
+				}
 			}
 		}
 
 		public StringBuilder GenerateResults(string labName)
 		{
 			var builder = new StringBuilder();
-			builder.AppendLine("Id,Name,Surrname");
+			builder.AppendLine("Name;Surname;Email;LabName;NoWarning");
+			var dataBaseResult = _context
+				.RegisteredUserItems
+				.Where(x => x.Laboratory.LabName == labName)
+				.Select(x => new RegisteredUser
+				{
+					Name = x.Name,
+					Surname = x.Surname,
+					Email = x.Email,
+					Laboratory = x.Laboratory,
+					NoWarning = x.NoWarning
+					
+				});
+			foreach (var user in dataBaseResult)
+			{
+				builder.AppendLine($"{user.Name};{user.Surname};{user.Email};{user.Laboratory.LabName};{user.NoWarning}");
+			}			
 			return builder;
 		}
 
-		public bool RemoveLaboratoryAndUsersData()
+		public bool DeleteLaboratoryAndUsersData(string labName)
 		{
-			throw new NotImplementedException();
+			var listToRemove = GetUsersByLab(labName);
+
+			var lab = _context.LaboratoryItems.SingleOrDefault(x => x.LabName == labName);
+			if (lab != null)
+			{
+				foreach (var user in listToRemove)
+				{
+					_context.RegisteredUserItems.Remove(user);
+					_context.SaveChanges();
+				}
+				_context.LaboratoryItems.Remove(lab);
+				_context.SaveChanges();
+				return true;
+			}
+			return false;
+		}
+
+		public IEnumerable<LaboratoryRequirement> GetLabRequirements(string labName)
+		{
+			var labRequirements = _context
+				.LaboratoryRequirementsItems
+				.Where(l=>l.Laboratory.LabName == labName)
+				.ToList();
+			return labRequirements;
 		}
 	}
 }

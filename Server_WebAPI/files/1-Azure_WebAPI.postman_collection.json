@@ -1,0 +1,567 @@
+{
+	"info": {
+		"_postman_id": "38c5e63d-a8d5-4798-87d0-0894f897abc1",
+		"name": "1-Azure_WebAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Employees",
+			"item": [
+				{
+					"name": "GetAllEmployees",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://eitiserverwebapi.azurewebsites.net/employees",
+							"protocol": "https",
+							"host": [
+								"eitiserverwebapi",
+								"azurewebsites",
+								"net"
+							],
+							"path": [
+								"employees"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LoginEmployee",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"eitilove1\",\r\n  \"password\": \"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:5001/login",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "RegisterEmployee",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"eitilove1\",\r\n  \"password\": \"password\",\r\n  \"confirmedPassword\": \"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:5001/register",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteEmployee",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:5001/user/?index=300500",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"user",
+								""
+							],
+							"query": [
+								{
+									"key": "index",
+									"value": "300500"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "GetData",
+			"item": [
+				{
+					"name": "Get User",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjIiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiVGVzdEhhc2hpbmciLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJFbXBsb3llZSIsImV4cCI6MTYzMzQ2MzE4MCwiaXNzIjoiaHR0cHM6Ly9pdGVtYXBpLmNvbSIsImF1ZCI6Imh0dHBzOi8vaXRlbWFwaS5jb20ifQ.WsAYvXbFqmsllTZ7Cp3FX527Fi1cOhylgljL4ZOMNAw",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "https://eitiserverwebapi.azurewebsites.net/user?mail=01143845@pw.edu.pl&labName=2021Z_PKC_ONOS",
+							"protocol": "https",
+							"host": [
+								"eitiserverwebapi",
+								"azurewebsites",
+								"net"
+							],
+							"path": [
+								"user"
+							],
+							"query": [
+								{
+									"key": "mail",
+									"value": "01143845@pw.edu.pl"
+								},
+								{
+									"key": "labName",
+									"value": "2021Z_PKC_ONOS"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Registries",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjIiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiVGVzdEhhc2hpbmciLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJFbXBsb3llZSIsImV4cCI6MTYzMzQ2MzE4MCwiaXNzIjoiaHR0cHM6Ly9pdGVtYXBpLmNvbSIsImF1ZCI6Imh0dHBzOi8vaXRlbWFwaS5jb20ifQ.WsAYvXbFqmsllTZ7Cp3FX527Fi1cOhylgljL4ZOMNAw",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "https://eitiserverwebapi.azurewebsites.net/user/registries?mail=01143845@pw.edu.pl&labName=2021Z_PKC_ONOS",
+							"protocol": "https",
+							"host": [
+								"eitiserverwebapi",
+								"azurewebsites",
+								"net"
+							],
+							"path": [
+								"user",
+								"registries"
+							],
+							"query": [
+								{
+									"key": "mail",
+									"value": "01143845@pw.edu.pl"
+								},
+								{
+									"key": "labName",
+									"value": "2021Z_PKC_ONOS"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetUsersByLab",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjIiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiVGVzdEhhc2hpbmciLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJFbXBsb3llZSIsImV4cCI6MTYzMzQ2MzE4MCwiaXNzIjoiaHR0cHM6Ly9pdGVtYXBpLmNvbSIsImF1ZCI6Imh0dHBzOi8vaXRlbWFwaS5jb20ifQ.WsAYvXbFqmsllTZ7Cp3FX527Fi1cOhylgljL4ZOMNAw",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "https://eitiserverwebapi.azurewebsites.net/users/lab?labName=2021Z_PKC_ONOS",
+							"protocol": "https",
+							"host": [
+								"eitiserverwebapi",
+								"azurewebsites",
+								"net"
+							],
+							"path": [
+								"users",
+								"lab"
+							],
+							"query": [
+								{
+									"key": "labName",
+									"value": "2021Z_PKC_ONOS"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetLabRequirements",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://eitiserverwebapi.azurewebsites.net/requirements?labName=2021Z_PKC_ONOS",
+							"protocol": "https",
+							"host": [
+								"eitiserverwebapi",
+								"azurewebsites",
+								"net"
+							],
+							"path": [
+								"requirements"
+							],
+							"query": [
+								{
+									"key": "labName",
+									"value": "2021Z_PKC_ONOS"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllUsers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://eitiserverwebapi.azurewebsites.net/users",
+							"protocol": "https",
+							"host": [
+								"eitiserverwebapi",
+								"azurewebsites",
+								"net"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Operations",
+			"item": [
+				{
+					"name": "GenerateResults",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://eitiserverwebapi.azurewebsites.net/results?labName=2021Z_PKC_ONOS",
+							"protocol": "https",
+							"host": [
+								"eitiserverwebapi",
+								"azurewebsites",
+								"net"
+							],
+							"path": [
+								"results"
+							],
+							"query": [
+								{
+									"key": "labName",
+									"value": "2021Z_PKC_ONOS"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GenerateResult",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://eitiserverwebapi.azurewebsites.net/results?labName=2021Z_PKC_ONOS&email=01143845@pw.edu.pl",
+							"protocol": "https",
+							"host": [
+								"eitiserverwebapi",
+								"azurewebsites",
+								"net"
+							],
+							"path": [
+								"results"
+							],
+							"query": [
+								{
+									"key": "labName",
+									"value": "2021Z_PKC_ONOS"
+								},
+								{
+									"key": "email",
+									"value": "01143845@pw.edu.pl"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SendEmail",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"emailToId\": \"testingforwebdev@gmail.com\",\r\n  \"emailToName\": \"Testing\",\r\n  \"emailSubject\": \"Witam\",\r\n  \"emailBody\": \"Witam studenta\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://eitiserverwebapi.azurewebsites.net/email",
+							"protocol": "https",
+							"host": [
+								"eitiserverwebapi",
+								"azurewebsites",
+								"net"
+							],
+							"path": [
+								"email"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UploadFile",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "fileUpload",
+									"type": "file",
+									"src": "/C:/Users/01143845/Desktop/pdi_21l/Server_WebAPI/files/2021Z_PKC_ONOS.csv"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://eitiserverwebapi.azurewebsites.net/upload?Owner=Mateusz Żotkiewicz",
+							"protocol": "https",
+							"host": [
+								"eitiserverwebapi",
+								"azurewebsites",
+								"net"
+							],
+							"path": [
+								"upload"
+							],
+							"query": [
+								{
+									"key": "Owner",
+									"value": "Mateusz Żotkiewicz"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UploadRequirements",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "fileUpload",
+									"type": "file",
+									"src": "/C:/Users/01143845/Desktop/pdi_21l/Server_WebAPI/files/2021Z_PKC_ONOS_Requirements.csv"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://eitiserverwebapi.azurewebsites.net/requirements",
+							"protocol": "https",
+							"host": [
+								"eitiserverwebapi",
+								"azurewebsites",
+								"net"
+							],
+							"path": [
+								"requirements"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteLabAndConnectedData",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://eitiserverwebapi.azurewebsites.net/delete/lab?labName=2021Z_PKC_ONOS",
+							"protocol": "https",
+							"host": [
+								"eitiserverwebapi",
+								"azurewebsites",
+								"net"
+							],
+							"path": [
+								"delete",
+								"lab"
+							],
+							"query": [
+								{
+									"key": "labName",
+									"value": "2021Z_PKC_ONOS"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "UserLabSimulation",
+			"item": [
+				{
+					"name": "RegisterUser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"value\" : \"e3Zwg7M106Jy+jEwNni4uMGZbp6wuznFwVV53/HkLpxtSciExtOSJPsVN+Z029Li1LiGaGETGTygYzITYxohVg==\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://eitiserverwebapi.azurewebsites.net/api/registerUser",
+							"protocol": "https",
+							"host": [
+								"eitiserverwebapi",
+								"azurewebsites",
+								"net"
+							],
+							"path": [
+								"api",
+								"registerUser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "RecordEvent",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   // \"value\": \"bLIIOIE+XOrVs9tkeulwZacpnMdLTR0XEfdALYE7Xmlh1S85r1jf72h+DLUAoYOo86FQlv76SlXEPktLvBMJ6jdV0o02ULSSazfLK6CjwjY=\"\r\n   \"value\": \"JOaZDzROWICAopNJeFwviP2seqE3K+bAkV8estBGd0DtgCfrVElkQKZ3SS4Wfskq\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://eitiserverwebapi.azurewebsites.net/api/recordEvent",
+							"protocol": "https",
+							"host": [
+								"eitiserverwebapi",
+								"azurewebsites",
+								"net"
+							],
+							"path": [
+								"api",
+								"recordEvent"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "RecordEventCommand",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   // \"value\": \"bLIIOIE+XOrVs9tkeulwZacpnMdLTR0XEfdALYE7Xmlh1S85r1jf72h+DLUAoYOo86FQlv76SlXEPktLvBMJ6jdV0o02ULSSazfLK6CjwjY=\"\r\n   \"value\": \"JOaZDzROWICAopNJeFwviEgAtNxEp1+doKe9HaJLRi9DwTrtBfUctIeBgQz0X2jKuAx28OOw8rxnNM69I8zUdQiFYL0dHkC1efb0KPvbLdy2Dwbs+lx+3PmnGFCRlYgZ\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://eitiserverwebapi.azurewebsites.net/api/recordEvent",
+							"protocol": "https",
+							"host": [
+								"eitiserverwebapi",
+								"azurewebsites",
+								"net"
+							],
+							"path": [
+								"api",
+								"recordEvent"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

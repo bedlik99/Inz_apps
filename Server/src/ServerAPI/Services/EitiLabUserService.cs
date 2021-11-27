@@ -59,17 +59,42 @@ namespace ServerAPI.Repositories
 			// JA TU POTRZEBUJE TEZ UNIQUE CODE lub labkę. Bez tego nie rozoznie ktory student dodaje logi.
 			RecordedEventDTO recordedEvent = (RecordedEventDTO)DecryptMessage(encryptedMessage.Value, false);
 			if (recordedEvent != null && !string.IsNullOrEmpty(recordedEvent.Email))
-			{
+			{	
+				var optionalRequirement = GetRequirement(recordedEvent);
 				RegisteredUser searchedUser = FindStudentByEmail(recordedEvent.Email);
 				if (searchedUser != null)
-				{
+				{ 
 					_context.RecordedEventItems.Add(new RecordedEvent(recordedEvent.RegistryContent, DateTime.Now, searchedUser));
+					if(optionalRequirement!=null)
+					{
+						AddCompletedRequirement(searchedUser,optionalRequirement);
+					}
 					_context.SaveChanges();
 					return true;
 				}
 				return false;
 			}
 			return false;
+		}
+
+		private void AddCompletedRequirement(RegisteredUser searchedUser, string optionalRequirement)
+		{
+			//TBC
+			searchedUser.RequirementsCompleted.Add(new LaboratoryRequirement
+			{
+				ExpirationDate = DateTime.UtcNow,
+				Content = optionalRequirement,
+				Laboratory = searchedUser.Laboratory,
+			});
+			_context.RegisteredUserItems.Update(searchedUser);
+			_context.SaveChanges();
+		}
+
+		private string GetRequirement(RecordedEventDTO recordedEvent)
+		{
+			if (recordedEvent.RegistryContent.Substring(0, 13) == "bash_command>")
+				return recordedEvent.RegistryContent.Substring(13);
+			return null;
 		}
 
 		private object DecryptMessage(string encryptedMessage, bool isRegistartion)
@@ -183,6 +208,8 @@ namespace ServerAPI.Repositories
 			var user = _context
 				.RegisteredUserItems
 				.Include(u => u.EventRegistries)
+				.Include(l=>l.Laboratory)
+				.Include(r=>r.RequirementsCompleted)
 				.SingleOrDefault(u => u.Email == email);
 
 			if (user is null)

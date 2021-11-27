@@ -30,6 +30,7 @@ void processNewLogRecords();
 void findLastLineInLogFile();
 void readCredentials(std::string &email,std::string &uniqueCode);
 void clearCredentials(int httpReturnCode);
+void encryptLogCredentials();
 void resume_registration();
 void init();
 void cleanup();
@@ -111,13 +112,13 @@ void findLastLineInLogFile() {
 void processNewLogRecords() {
     std::string tmpStr(""),email(""),uniqueCode("");
     long long int it=1;
-    int httpReturnCode=0;
+    int registerHttpReturnCode=0;
     std::ifstream logsFile(logsFilePath);
     while (std::getline(logsFile, tmpStr)) {
         if(it>lastLogLineNumber && !ioConfig.trim(tmpStr).empty()){
             readCredentials(email,uniqueCode);
             if(isRegistration && !ioConfig.trim(email).empty() && !ioConfig.trim(uniqueCode).empty()){
-                httpReturnCode = restServerConnector->sendData(email,uniqueCode,tmpStr,isRegistration);
+                registerHttpReturnCode = restServerConnector->sendData(email,uniqueCode,tmpStr,isRegistration);
                 std::string command = "ps -q "+std::to_string(ioConfig.getProcIdByName("IdentifyOnStart"))+" -o state --no-headers";
                 std::string commandValue;
                 while(true){
@@ -129,34 +130,43 @@ void processNewLogRecords() {
                             break;
                         }
                     }
-                    if(commandValue.compare("T")==0)
+                    if(commandValue.compare("T")==0){
                         break;
+                    }
                     sleep(1);
                 }
-                switch (httpReturnCode){
+                switch (registerHttpReturnCode){
                     case 200:
                         isRegistration = false;
+                        encryptLogCredentials();
                         kill(ioConfig.getProcIdByName("IdentifyOnStart"),SIGCONT);
                         break;
+
                     case 401:
-                        clearCredentials(httpReturnCode);
+                        clearCredentials(registerHttpReturnCode);
                         it--;
                         kill(ioConfig.getProcIdByName("IdentifyOnStart"),SIGCONT);
                         break;
+
                     default:
                         //problemy z serwerem (np. wylaczony)
-                        clearCredentials(httpReturnCode);
+                        clearCredentials(registerHttpReturnCode);
                         it--;
                         kill(ioConfig.getProcIdByName("IdentifyOnStart"),SIGCONT);
                         break;
                 }
-            }else if(ioConfig.trim(email).length()==18 && ioConfig.trim(uniqueCode).length()==8){
-                httpReturnCode = restServerConnector->sendData(email,uniqueCode,tmpStr,isRegistration);
+            }else if(ioConfig.trim(email).length()==18 && ioConfig.trim(uniqueCode).length()==8){              
+                restServerConnector->sendData(email,uniqueCode,tmpStr,isRegistration);
             }
         }
-        if(!ioConfig.trim(tmpStr).empty())
-            if(ioConfig.trim(tmpStr).compare("500")!=0 || lastLogLineNumber!=0)
+        if(!ioConfig.trim(tmpStr).empty()){
+            if(ioConfig.trim(tmpStr).compare("500")!=0 || lastLogLineNumber!=0){
                 it++;
+                if(registerHttpReturnCode!=0){
+                    break;
+                }
+            }
+        }
     }  
     logsFile.close();
     lastLogLineNumber = --it;
@@ -164,33 +174,47 @@ void processNewLogRecords() {
 
 void readCredentials(std::string &email,std::string &uniqueCode){
     std::string credentials("");
-    std::ifstream encIndexFile(logsFilePath);
-    std::getline(encIndexFile,credentials);
-    encIndexFile.close();
+    std::ifstream logsFile(logsFilePath);
+    std::getline(logsFile,credentials);
+    logsFile.close();
+    if(!isRegistration){
+        credentials = restServerConnector->getOpenSSLCryptoUtil().decryptAES256WithOpenSSL(credentials);
+    }
     if(ioConfig.trim(credentials).length()==26){
         email = credentials.substr(0,18);
         uniqueCode = credentials.substr(19,8);
     }else if(ioConfig.trim(credentials).compare("500")!=0){
         showError();
-    }
+    }  
 }
 
 void clearCredentials(int httpReturnCode){
     std::ofstream outputLogsFile;
     outputLogsFile.open(logsFilePath,std::ios::trunc);
-    if(httpReturnCode!=401)
+    if(httpReturnCode!=401){
         outputLogsFile << "500";
+    }
+    outputLogsFile.close();
+}
+
+void encryptLogCredentials(){
+    std::string credentials(""),encryptedCredentials("");
+    std::ifstream logsFile(logsFilePath);
+    std::ofstream outputLogsFile;
+    std::getline(logsFile,credentials);
+    logsFile.close();
+    encryptedCredentials = restServerConnector->getOpenSSLCryptoUtil().encryptAES256WithOpenSSL(credentials);
+    outputLogsFile.open(logsFilePath,std::ios::trunc);
+    outputLogsFile << encryptedCredentials << std::endl;
     outputLogsFile.close();
 }
 
 void init(){
-    if(ioConfig.currentDateTime().compare(ioConfig.readLabEndDate()) >= 0){
-        system("systemctl disable eiti-main.service");
-        kill(getpid(),SIGSTOP);
-        endExecution(0);
-    }
     restServerConnector = new RestServerConnector();
     findLastLineInLogFile();
+    std::string testEncKey = "";
+    testEncKey = restServerConnector->getOpenSSLCryptoUtil().encryptAES256WithOpenSSL("01143823@pw.edu.pl juh#^x");
+    std::cout << std::endl << testEncKey << std::endl;
 }
 
 void showError(){

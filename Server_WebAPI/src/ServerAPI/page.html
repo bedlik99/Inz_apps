@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="lib/jquery/jquery.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var ulStudents = $('#ulStud');
+
+            $('#btn').click(function () {
+                $.ajax({
+                    type: 'GET',
+					url: 'users',
+                    dataType: 'json',
+                    success: function (data) {
+                        ulStudents.empty();
+                        $.each(data, function (indexNum, val) {
+							var student = val.indexNum;
+                            ulStudents.append('<li>' + student + '</li>')
+                        });
+                    }
+                });
+            });
+
+            $('#btnClr').click(function () {
+                ulStudents.empty();
+                alert('Clicked!');
+            });
+        });
+    </script>
+</head>
+<body>
+    <input id="btn" type="button" value="Get All Studs"/>
+    <input id="btnClr" type="button" value="Clear"/>
+    <ul id="ulStud"></ul>
+</body>
+</html>

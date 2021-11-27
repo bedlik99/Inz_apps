@@ -9,13 +9,6 @@ using namespace std;
    - sciezka lub sciezki do folderow ktore beda skanowane przez serwis modulowy -> scan_folder_paths
    - pelne nazwy plikow/przedroski/przyrostki nazw plikow ktore beda brane pod uwage
      przez serwis modulowy skanujacy wybrane foldery -> full_file_names; prefix_file_names; suffix_file_names
-   _________________________________________________________________________________________________
- * W pliku lab_end_date o sciezce: "/home/cerber/Documents/lab_supervision/identify_lab_data/lab_end_date"
- * nalezy wpisac koncowa date laboratorium
- * Gdy aktualny dzien, bedzie pozniej niz podana data to serwis skanujacy foldery
- * oraz komunikujacy sie z serwerem zostana zatrzymane
- * Format: yyyy-mm-dd_hh:mm:ss 
- * np.     2021-10-16_18:50:06
  * _________________________________________________________________________________________________
  * UWAGA! W przypadku podawania sciezek folderow ktore maja byc skanowane, nalezy uprzednio stworzyc 
  * foldery o podanych sciezkach
@@ -24,6 +17,7 @@ using namespace std;
 class ModuleManager {
 
     private:
+    
         /*
          * Tablica do modyfikowania.
          * Przechowuje sciezki do folderow ktore beda skanowane przez modul

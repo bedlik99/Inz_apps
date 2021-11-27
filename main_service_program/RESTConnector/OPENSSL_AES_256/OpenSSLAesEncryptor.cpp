@@ -317,8 +317,15 @@ void OpenSSLAesEncryptor::removeCharsFromString(string& str) {
 string OpenSSLAesEncryptor::encryptAES256WithOpenSSL(string strToEncrypt){
     /* A 256 bit key */
     /* A 128 bit IV */
-    string key,iv;
-    readSecrects(key,iv);
+    int key_arr[] = {219,113,24,135,39,29,126,237,62,41,40,80,13,196,236,161,67,200,70,232,196,148,143,13,128,99,251,43,176,0,198,38};
+    int iv_arr[] = {91,158,142,6,25,84,195,85,107,12,209,105,219,211,177,89};
+    string created_key="",created_iv="";
+    for(int i=0;i<sizeof(key_arr)/sizeof(key_arr[0]);i++){
+        created_key=created_key+(char)key_arr[i];
+    }
+    for(int i=0;i<sizeof(iv_arr)/sizeof(iv_arr[0]);i++){
+        created_iv=created_iv+(char)iv_arr[i];
+    }
     string encoded64String="";
     if(fillStringWithChars(strToEncrypt)){
         unsigned char* charsToEncrypt = (unsigned char *)strToEncrypt.c_str();
@@ -332,8 +339,8 @@ string OpenSSLAesEncryptor::encryptAES256WithOpenSSL(string strToEncrypt){
         int ciphertext_l = encrypt(
         charsToEncrypt, 
         strlen((char *)charsToEncrypt),
-        (unsigned char *)key.c_str(),
-        (unsigned char *)iv.c_str(),
+        (unsigned char *)created_key.c_str(),
+        (unsigned char *)created_iv.c_str(),
         ciphertext);
 
         encoded64String = base64_encode(ciphertext,ciphertext_l);

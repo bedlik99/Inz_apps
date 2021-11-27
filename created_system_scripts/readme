@@ -3,3 +3,8 @@
 3. /etc/profile.d/init-machine.sh - Plik bashowy, uruchamiający podczas każdego logowania plik binarny IdentifyOnStart. (graficzny formularz) 
 4. /home/cerber/Documents/lab_supervision/identify_lab_data - folder z plikami konfiguracyjnymi: klucz do szyfrowania,logi, odpowiedzi serwera*. 
 5. /stud/.bashrc - Zostaly dodane linijki aby output z terminala zostal natychmiastowo zapisywany do pliku z historia logow
+6. Generacja klucza i initialization wektora
+cerber@U-1604:~$ openssl enc -aes-256-cbc -k mZq4t7wz%C*F-J@NcRfUjXn2r5u8x/A -P -pbkdf2
+salt=866862BFAD2974FF
+key=DB711887271D7EED3E2928500DC4ECA143C846E8C4948F0D8063FC2BB000C626
+iv =5B9E8E061954C3556B0CD169DBD3B159

@@ -27,6 +27,8 @@ namespace ServerAPI.Entities
 		public string UniqueCode { get; set; }
 		public bool NoWarning { get; set; }
 		public virtual HashSet<RecordedEvent> EventRegistries { get; set; }
-		public virtual Laboratory  Laboratory {get;set;}
+		public virtual Laboratory Laboratory {get;set;}
+		//TBC
+		public virtual HashSet<LaboratoryRequirement> RequirementsCompleted { get; set; }
 	}
 }

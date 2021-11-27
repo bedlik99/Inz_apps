@@ -32,8 +32,8 @@ namespace CryptologyTesting
 		{
 			var fileOperator = new FileOperations(@"D:\", "plik.txt");
 			//Polskie znaki?
-			string stringToWorkWith = "{\"email\":\"01143845@pw.edu.pl\",\"uniqueCode\":\"%L`u/hT>\"}";
-			//string stringToWorkWith = "{\"email\":\"jakub.wolny.stud@pw.edu.pl\",\"registryContent\":\"Ukonczono zadanie\"}";
+			//string stringToWorkWith = "{\"email\":\"01143845@pw.edu.pl\",\"uniqueCode\":\"%L`u/hT>\"}";
+			string stringToWorkWith = "{\"email\":\"01143845@pw.edu.pl\",\"registryContent\":\"bash_command>sudo python onos_lab.py\"}";
 			Console.WriteLine(stringToWorkWith);
 			stringToWorkWith = Operations.FillStringWithChars(stringToWorkWith);
 			Console.WriteLine(stringToWorkWith);

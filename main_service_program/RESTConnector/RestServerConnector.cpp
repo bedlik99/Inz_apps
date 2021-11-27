@@ -13,6 +13,7 @@ using namespace concurrency::streams; // Asynchronous streams
 RestServerConnector::RestServerConnector(){
     openSSLCryptoUtil = new OpenSSLAesEncryptor();
 }
+
 RestServerConnector::~RestServerConnector(){
     if(openSSLCryptoUtil != nullptr){
         delete openSSLCryptoUtil;
@@ -20,14 +21,18 @@ RestServerConnector::~RestServerConnector(){
     }
 }
 
+OpenSSLAesEncryptor& RestServerConnector::getOpenSSLCryptoUtil(){
+    return *openSSLCryptoUtil;
+}
+
 int RestServerConnector::sendData(std::string email,std::string uniqueCode, std::string registryContent,bool isRegistration) {
     std::string selectedEndpoint = (isRegistration ? registerUserEndpoint : recordEventEndpoint); 
     std::string userDataAsJson;
-    if(isRegistration)
+    if(isRegistration){
         userDataAsJson = "{\"uniqueCode\":\""+uniqueCode+"\",\"email\":\""+email+"\"}";
-    else
-        userDataAsJson = "{\"email\":\""+email+"\",\"registryContent\":\""+registryContent+"\"}";
-
+    }else{
+        userDataAsJson = "{\"uniqueCode\":\""+uniqueCode+"\",\"registryContent\":\""+registryContent+"\"}";
+    }
     std::string encryptedValue = openSSLCryptoUtil->encryptAES256WithOpenSSL(userDataAsJson);
     std::string encryptedMessageString = "{\"value\":\""+encryptedValue+"\"}";
     json::value json_encrypted_message = json_encrypted_message.parse(encryptedMessageString);

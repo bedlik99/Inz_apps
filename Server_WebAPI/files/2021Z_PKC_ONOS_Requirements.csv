@@ -1,0 +1,4 @@
+﻿Requirement
+sudo /opt/onos/bin/onos-service start
+sudo python onos_lab.py
+ssh -p 8101 karaf@127.0.0.1

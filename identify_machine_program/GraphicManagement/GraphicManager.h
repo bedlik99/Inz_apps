@@ -22,9 +22,9 @@ private:
     sf::Text emailInputText = sf::Text("", font, 20);
     sf::Text emailDomain = sf::Text("@pw.edu.pl",font,20);
     sf::Text errorText = sf::Text("",calibriFont,20);
-    sf::Text errorGoBackText = sf::Text("Go back to registration (ENTER)",font,26);
+    sf::Text errorGoBackText = sf::Text("Continue (ENTER)",font,26);
     sf::Text confirmationText = sf::Text("Are you sure? (y/n): [   ]",calibriFont,25);
-    sf::Text confirmEnterText = sf::Text("Confirm (Enter)",calibriFont,25);
+    sf::Text confirmEnterText = sf::Text("Confirm (Enter)",calibriFont,30);
     sf::Text confirmInputText = sf::Text("", calibriFont, 25);
     sf::RectangleShape codeLabel = sf::RectangleShape(sf::Vector2f(330, 30));
     sf::Text codeText = sf::Text("Code/Password: ", font, 20);
@@ -34,6 +34,8 @@ private:
     sf::Text arrowLinePointer = sf::Text("<",font,20);
     sf::RectangleShape emailApprovalLabel = sf::RectangleShape(sf::Vector2f(30, 30));
     sf::RectangleShape codeApprovalLabel = sf::RectangleShape(sf::Vector2f(30, 30));
+    sf::Text emailToConfirm = sf::Text("", font, 20);
+    sf::Text codeToConfirm = sf::Text("",font,20);
 public:
     GraphicManager();
     int init_graphic_objects();
@@ -50,6 +52,8 @@ public:
     sf::Text& getRequirementsText2();
     sf::Text& getEmailText();
     sf::Text& getEmailInputText();
+    sf::Text& getEmailToConfirm();
+    sf::Text& getCodeToConfirm();
     sf::Text& getErrorText();
     sf::Text& getErrorGoBackText();
     sf::Text& getConfirmationText();
