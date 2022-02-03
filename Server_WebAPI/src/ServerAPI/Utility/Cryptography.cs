@@ -12,8 +12,6 @@ namespace ServerAPI.Utility
 {
 	public class Cryptography
 	{
-		// TO BE UNDERSTOOD WHY _cryptographySettings is no usable.
-
 		private readonly CryptographySettings _cryptographySettings;
 		public Cryptography(CryptographySettings cryptographySettings)
 		{
@@ -91,7 +89,8 @@ namespace ServerAPI.Utility
 			}
 			catch (CryptographicException e)
 			{
-				Console.WriteLine("A Cryptographic error occurred: {0}", e.Message);
+				Console.WriteLine("A Cryptographic error " +
+					"occurred: {0}", e.Message);
 				return null;
 			}
 			catch (UnauthorizedAccessException e)
@@ -129,12 +128,11 @@ namespace ServerAPI.Utility
 		}
 		public static string GenerateUniqueCode()
 		{
-			//TBC - Better rand func
 			StringBuilder uniqueCode = new StringBuilder();
 			Random random = new Random();
 			for (int i = 0; i < 8; i++)
 			{
-				int randomCharEmail = (int)Math.Floor(random.NextDouble() * 88);
+				int randomCharEmail = (int)Math.Floor(random.NextDouble() * writable_chars.Length);
 				uniqueCode.Append(GetWritableChars()[randomCharEmail]);
 			}
 			return uniqueCode.ToString();

@@ -8,6 +8,7 @@ import com.example.localserver.Entity.RegisteredUser;
 import com.example.localserver.Repositories.EitiLabUserRepository;
 import com.example.localserver.Repositories.RecordedEventRepository;
 import com.example.localserver.Util.CryptoUtil;
+import com.example.localserver.exceptions.CustomMessageNotAcceptableException;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -40,7 +41,7 @@ public class EitiLabUserService {
 
     public List<RecordedEventDTO> findStudentRegistries(String email){
         List<RecordedEventDTO> recordedLogsList = new ArrayList<>();
-        RegisteredUser searchedUser = eitiLabUserRepository.findStudentByEmail(email);
+        RegisteredUser searchedUser = eitiLabUserRepository.findRegisteredUserByEmail(email);
         if(email != null && searchedUser != null){
             if(email.trim().length() == 18){
                 Set<RecordedEvent> recordedEvents = searchedUser.getEventRegistries();
@@ -71,12 +72,18 @@ public class EitiLabUserService {
         RecordedEventDTO recordedEvent =
                 (RecordedEventDTO) decryptMessage(encryptedMessage.getValue(),false);
         RegisteredUser searchedUser=null;
-        if (recordedEvent != null && !recordedEvent.getEmail().isEmpty()) {
-            searchedUser = eitiLabUserRepository.findStudentByEmail(recordedEvent.getEmail());
+        if (recordedEvent != null) {
+            if(recordedEvent.getUniqueCode().trim().length()==8){
+                searchedUser = eitiLabUserRepository.findRegisteredUserByUniqueCode(recordedEvent.getUniqueCode());
+            }else{
+                throw new CustomMessageNotAcceptableException("EventContent - UniqueCode format not acceptable");
+            }
             if(searchedUser != null){
                 recordedEventRepository.save(new RecordedEvent(
                         recordedEvent.getRegistryContent(), LocalDateTime.now(), searchedUser));
             }
+        }else{
+            throw new CustomMessageNotAcceptableException("EventContent - recordedEvent is null");
         }
     }
 

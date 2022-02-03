@@ -1,0 +1,40 @@
+﻿@page "/registeredUser"
+@using ServerAPIUI.Client.Models
+@inject HttpClient Http
+
+
+	@if (users == null)
+	{
+		<p><em>Loading...</em></p>
+	}
+	else
+	{
+		<h3>RegisteredUser</h3>
+		<div class="card" style="width: 18rem;">
+			<div class="card-body">
+				@foreach (var usr in users)
+				{
+					<tr>			
+						<h5 class="card-title">@usr.Email</h5>
+						<p class="card-text">@usr.UniqueCode</p>
+					</tr>
+				}
+			</div>
+		</div>
+	}
+
+
+@code {
+	private List<RegisteredLabUserDTO> users;
+	protected override async Task OnInitializedAsync()
+	{
+		users = new List<RegisteredLabUserDTO>()
+		{
+			new RegisteredLabUserDTO() {Email = "01145843@pw.edu.pl", UniqueCode = "12345678"},
+			new RegisteredLabUserDTO() {Email = "01147843@pw.edu.pl", UniqueCode = "ABSaF678"},
+			new RegisteredLabUserDTO() {Email = "01146843@pw.edu.pl", UniqueCode = "OP3456Y8"}
+		};
+		//registeredUser = await Http.GetFromJsonAsync<RegisteredUserVm>("https://localhost:44384/api/registeredUser/1");
+	}
+
+}

@@ -13,5 +13,6 @@ namespace ServerAPI.Repositories
 		bool ProcessEventContent(MessageDTO encryptedMessage);
 		//POST Method - Register User
 		bool ProcessUserInitData(MessageDTO encryptedMessage);
+		RegisteredUser FindStudentByUniqueCode(string uniqueCode);
 	}
 }

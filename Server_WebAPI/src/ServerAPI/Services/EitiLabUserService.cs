@@ -20,6 +20,10 @@ namespace ServerAPI.Repositories
 		private readonly ServerDBContext _context;
 		private readonly ILogger<EitiLabUserService> _logger;
 
+		public EitiLabUserService(ServerDBContext context)
+		{
+			_context = context;	
+		}
 		public EitiLabUserService(ServerDBContext context, ILogger<EitiLabUserService> logger)
 		{
 			_context = context;
@@ -80,7 +84,7 @@ namespace ServerAPI.Repositories
 			return false;
 		}
 
-		private void CheckIfCompletedRequirements(RegisteredUser searchedUser)
+		public void CheckIfCompletedRequirements(RegisteredUser searchedUser)
 		{
 			var areRequirementsDone = searchedUser
 				.Laboratory
@@ -97,7 +101,7 @@ namespace ServerAPI.Repositories
 			}
 		}
 
-		private void AddExecutedCommand(RegisteredUser searchedUser, string executedCommand)
+		public void AddExecutedCommand(RegisteredUser searchedUser, string executedCommand)
 		{
 			if (searchedUser.ExecutedCommands is null)
 			{
@@ -112,14 +116,14 @@ namespace ServerAPI.Repositories
 			}
 		}
 
-		private string GetExecutedCommand(RecordedEventDTO recordedEvent)
+		public string GetExecutedCommand(RecordedEventDTO recordedEvent)
 		{
 			if (recordedEvent.RegistryContent.Length > 12 && recordedEvent.RegistryContent.Substring(0, 13) == "bash_command>")
 				return recordedEvent.RegistryContent.Substring(13);
 			return null;
 		}
 
-		private object DecryptMessage(string encryptedMessage, bool isRegistartion)
+		public object DecryptMessage(string encryptedMessage, bool isRegistartion)
 		{
 			try
 			{
@@ -142,7 +146,7 @@ namespace ServerAPI.Repositories
 			return null;
 		}
 
-		private string RemoveCharsFromString(string str)
+		public string RemoveCharsFromString(string str)
 		{
 			if (str[0] != '{' && str[0] != '[')
 			{
@@ -153,7 +157,7 @@ namespace ServerAPI.Repositories
 			return str;
 		}
 
-		private long FindMaxRangeOfStringLength(long strLength, int lowRange, int highRange)
+		public long FindMaxRangeOfStringLength(long strLength, int lowRange, int highRange)
 		{
 			if (strLength >= lowRange && strLength < highRange)
 			{
@@ -164,7 +168,7 @@ namespace ServerAPI.Repositories
 			return FindMaxRangeOfStringLength(strLength, lowRange, highRange);
 		}
 
-		private RegisteredUser ValidateUserData(RegisteredLabUserDTO registeredUser)
+		public RegisteredUser ValidateUserData(RegisteredLabUserDTO registeredUser)
 		{
 			Regex regex = new("[0-9]{8}");
 			var check = regex.IsMatch(registeredUser.Email) && registeredUser.UniqueCode.Length == 8;

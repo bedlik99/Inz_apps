@@ -35,7 +35,6 @@ namespace ServerAPI.Services
 					_dBContext.SaveChanges();
 				}
 				
-				//TBC
 				if (!_dBContext.RoleItems.Any())
 				{
 					var roles = GetRoles();
@@ -57,8 +56,7 @@ namespace ServerAPI.Services
 					{
 						new LaboratoryRequirement()
 						{
-							Content = "",
-							ExpirationDate = DateTime.UtcNow.AddDays(14)
+							Content = ""
 						}
 					}
 				},

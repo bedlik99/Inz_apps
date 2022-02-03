@@ -26,6 +26,11 @@ namespace ServerAPI.Controllers
 			_emailService = emailRepo;
 		}
 
+		/// <summary>
+		/// Rejestracja użytkownika w systemie.
+		/// </summary>
+		/// <param name="registeredEmployeeDto"></param>
+		/// <returns></returns>
 		[HttpPost]
 		[AllowAnonymous]
 		[Route("/register")]
@@ -35,6 +40,11 @@ namespace ServerAPI.Controllers
 			return Ok();
 		}
 
+		/// <summary>
+		/// Logowanie się użytkownika w systemie.
+		/// </summary>
+		/// <param name="loginDto"></param>
+		/// <returns></returns>
 		[HttpPost]
 		[AllowAnonymous]
 		[Route("/login")]
@@ -45,6 +55,10 @@ namespace ServerAPI.Controllers
 		}
 
 		//************************ CRUD OPERATIONS ************************
+		/// <summary>
+		/// Zwraca z systemu wszystkich zarejestrowanych użytkowników.
+		/// </summary>
+		/// <returns></returns>
 		[HttpGet]
 		[AllowAnonymous]
 		[Route("users")]
@@ -55,11 +69,15 @@ namespace ServerAPI.Controllers
 				return NotFound();
 			return Ok(output);
 		}
-
+		/// <summary>
+		/// Zwraca z systemu liste użytkowników zarejestrowanych na konkretne laboratorium.
+		/// </summary>
+		/// <param name="labName"></param>
+		/// <returns></returns>
 		[HttpGet]
 		[AllowAnonymous]
 		[Route("users/lab")]
-		public ActionResult<RegisteredUser> GetUsersByLab([FromQuery] string labName)
+		public ActionResult<IEnumerable<RegisteredUser>> GetUsersByLab([FromQuery] string labName)
 		{
 			var output = _employeeUserRepo.GetUsersByLab(labName);
 			if (output == null)
@@ -67,6 +85,12 @@ namespace ServerAPI.Controllers
 			return Ok(output);
 		}
 
+		/// <summary>
+		/// Zwraca z systemu użytkownika zarejestrowanego na konkretne laboratorium.
+		/// </summary>
+		/// <param name="mail"></param>
+		/// <param name="labName"></param>
+		/// <returns></returns>
 		[HttpGet]
 		[AllowAnonymous]
 		[Route("user")]
@@ -78,6 +102,12 @@ namespace ServerAPI.Controllers
 			return Ok(output);
 		}
 
+		/// <summary>
+		/// Zwraca z systemu logi użytkownika zarejestrowanego na konkretne laboratorium.
+		/// </summary>
+		/// <param name="mail"></param>
+		/// <param name="labName"></param>
+		/// <returns></returns>
 		[HttpGet]
 		[AllowAnonymous]
 		[Route("user/registries")]
@@ -89,6 +119,12 @@ namespace ServerAPI.Controllers
 			return Ok(output);
 		}
 
+		/// <summary>
+		/// Usuwa z systemu użytkownika zarejestrowanego na konkretne laboratorium.
+		/// </summary>
+		/// <param name="mail"></param>
+		/// <param name="labName"></param>
+		/// <returns></returns>
 		[HttpDelete]
 		[AllowAnonymous]
 		[Route("user")]
@@ -101,6 +137,10 @@ namespace ServerAPI.Controllers
 			return Ok();
 		}
 
+		/// <summary>
+		/// Zwraca listę wszystkich użytkowników w systemie.
+		/// </summary>
+		/// <returns></returns>
 		[HttpGet]
 		[AllowAnonymous]
 		[Route("employees")]
@@ -112,10 +152,39 @@ namespace ServerAPI.Controllers
 			return Ok(output);
 		}
 
+		/// <summary>
+		/// Testowy import pliku w formacie .csv zawierającego listę użytkowników wykonujących laboratorium - lokalnie.
+		/// </summary>
+		/// <param name="fileUpload"></param>
+		/// <param name="owner"></param>
+		/// <returns></returns>
+		[HttpPost]
+		[AllowAnonymous]
+		[Route("uploadTest")]
+		public ActionResult Upload([FromForm] IFormFile fileUpload, [FromQuery] string owner)
+		{
+			var labName = string.Join("_", fileUpload.FileName.Split("_").Take(3));
+			var uploadResult = _employeeUserRepo.UploadFileService(fileUpload, labName, owner);
+			var set = _employeeUserRepo.InsertUsersIntoDataBase(uploadResult);
+			if (!set.Any())
+			{
+				return BadRequest("No user added.");
+			}
+			return Ok();
+
+		}
+
+		/// <summary>
+		/// Import pliku w formacie .csv zawierającego listę użytkowników wykonujących laboratorium.
+		/// </summary>
+		/// <param name="fileUpload"></param>
+		/// <param name="owner"></param>
+		/// <returns></returns>
+
 		[HttpPost]
 		[AllowAnonymous]
 		[Route("upload")]
-		public ActionResult UploadStudnetFile([FromForm] IFormFile fileUpload, [FromQuery] string owner) //[FromForm] FileForm fileForm
+		public ActionResult UploadStudentFile([FromForm] IFormFile fileUpload, [FromQuery] string owner)
 		{
 			var labName = fileUpload.FileName.Split(".")[0];
 			var uploadResult = _employeeUserRepo.UploadFileService(fileUpload, labName, owner);
@@ -125,23 +194,33 @@ namespace ServerAPI.Controllers
 				return BadRequest("No user added.");
 			}
 			return Ok(_emailService.SendEmail(set,labName));
-
 		}
 
+		/// <summary>
+		/// Import pliku w formacie .csv zawierającego listę założeń laboratoryjnych do spełnienia.
+		/// </summary>
+		/// <param name="fileUpload"></param>
+		/// <returns></returns>
 		[HttpPost]
 		[AllowAnonymous]
 		[Route("requirements")]
 		public ActionResult UploadLabRequirements([FromForm] IFormFile fileUpload)
 		{
 			var labName = string.Join("_", fileUpload.FileName.Split("_").Take(3));
-			var uploadResult = _employeeUserRepo.UploadLabRequirements(fileUpload, labName);
+			var uploadResult = _employeeUserRepo.UploadLabRequirements(fileUpload, labName); 
 			if (!uploadResult)
 			{
-				return BadRequest("Dodawanie wymagań nie powiodło się. Sprawdź poprawność zapytania lub pliku.");
+				return BadRequest("Dodawanie wymagań nie powiodło się. " +
+					"Sprawdź poprawność zapytania lub pliku.");
 			}
 			return Ok();
 		}
-		
+
+		/// <summary>
+		/// Zwrócenie listy założeń dotyczących wskazanego laboratorium.
+		/// </summary>
+		/// <param name="labName"></param>
+		/// <returns></returns>
 		[HttpGet]
 		[AllowAnonymous]
 		[Route("requirements")]
@@ -153,6 +232,11 @@ namespace ServerAPI.Controllers
 			return Ok(result);
 		}
 
+		/// <summary>
+		/// Zwrócenie pliku z wynikiami w formacie .csv z konkretnego laboratorium.
+		/// </summary>
+		/// <param name="labName"></param>
+		/// <returns></returns>
 		[HttpGet]
 		[AllowAnonymous]
 		[Route("results")]
@@ -161,9 +245,15 @@ namespace ServerAPI.Controllers
 			var builder = _employeeUserRepo.GenerateResults(labName);
 			if (builder == null)
 				return BadRequest();
-			return File(Encoding.UTF8.GetBytes(builder.ToString()), "text/csv", $"{labName}_Results.csv"); ;
+			return File(Encoding.UTF8.GetBytes(builder.ToString()), "text/csv", $"{labName}_Results.csv");
 		}
 
+		/// <summary>
+		/// Zwrócenie pliku z wynikami w formacie .csv dotyczącego konkretnego studenta z konkretnego laboratorium.
+		/// </summary>
+		/// <param name="labName"></param>
+		/// <param name="email"></param>
+		/// <returns></returns>
 		[HttpGet]
 		[AllowAnonymous]
 		[Route("result")]
@@ -175,6 +265,11 @@ namespace ServerAPI.Controllers
 			return File(Encoding.UTF8.GetBytes(builder.ToString()), "text/csv", $"{labName}_{email}_Results.csv"); ;
 		}
 
+		/// <summary>
+		/// Usunięcie w pełni podanego w query zapytania laboratorium.
+		/// </summary>
+		/// <param name="labName"></param>
+		/// <returns></returns>
 		[HttpDelete]
 		[AllowAnonymous]
 		[Route("delete/lab")]
@@ -185,5 +280,6 @@ namespace ServerAPI.Controllers
 				return BadRequest();
 			return Ok();
 		}
+
 	}
 }

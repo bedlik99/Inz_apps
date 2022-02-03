@@ -30,7 +30,61 @@ static inline bool is_base64(unsigned char c);
 
 using namespace std;
 
-OpenSSLAesEncryptor::OpenSSLAesEncryptor(){}
+OpenSSLAesEncryptor::OpenSSLAesEncryptor(){
+    reverseXOR(k0);
+    reverseXOR(k1);
+    reverseXOR(k2);
+    reverseXOR(k3);
+    reverseXOR(k4);
+    reverseXOR(k5);
+    reverseXOR(k6);
+    reverseXOR(k7);
+    reverseXOR(k8);
+    reverseXOR(k9);
+    reverseXOR(k10);
+    reverseXOR(k11);
+    reverseXOR(k12);
+    reverseXOR(k13);
+    reverseXOR(k14);
+    reverseXOR(k15);
+    reverseXOR(k16);
+    reverseXOR(k17);
+    reverseXOR(k18);
+    reverseXOR(k19);
+    reverseXOR(k20);
+    reverseXOR(k21);
+    reverseXOR(k22);
+    reverseXOR(k23);
+    reverseXOR(k24);
+    reverseXOR(k25);
+    reverseXOR(k26);
+    reverseXOR(k27);
+    reverseXOR(k28);
+    reverseXOR(k29);
+    reverseXOR(k30);
+    reverseXOR(k31);
+
+    reverseXOR(iv0);
+    reverseXOR(iv1);
+    reverseXOR(iv2);
+    reverseXOR(iv3);
+    reverseXOR(iv4);
+    reverseXOR(iv5);
+    reverseXOR(iv6);
+    reverseXOR(iv7);
+    reverseXOR(iv8);
+    reverseXOR(iv9);
+    reverseXOR(iv10);
+    reverseXOR(iv11);
+    reverseXOR(iv12);
+    reverseXOR(iv13);
+    reverseXOR(iv14);
+    reverseXOR(iv15);
+}
+
+void OpenSSLAesEncryptor::reverseXOR(int &input){
+    input = ((input^xor_c)^xor_b)^xor_a;
+}
 
 static inline bool is_base64(unsigned char c) {
     return (isalnum(c) || (c == '+') || (c == '/'));
@@ -218,14 +272,12 @@ int OpenSSLAesEncryptor::decrypt(unsigned char *ciphertext, int ciphertext_len, 
 }
 
 bool OpenSSLAesEncryptor::fillStringWithChars(string& str) {
-    if (str.length() == 0)
+    if (str.length() == 0){
         return false;
-
-    long stringNecessarySize=str.length();
-
-    if(str.length() % 16 != 0)
-        stringNecessarySize = findMaxRangeOfStringLength(str.length(), 0, 16);
-    
+    }else if(str.length() % 16 == 0){
+        return true;
+    }
+    long stringNecessarySize = findMaxRangeOfStringLength(str.length(), 0, 16);
     long numberOfNeededChars = stringNecessarySize - str.length();
     string neededChars = convert_ASCII_To16System(numberOfNeededChars);
 
@@ -233,10 +285,8 @@ bool OpenSSLAesEncryptor::fillStringWithChars(string& str) {
         int randomCharIndex = rand() % 88;
         neededChars = neededChars + writable_chars[randomCharIndex];
     }
-
-    if(numberOfNeededChars!=0)
-        str = neededChars + str;
-
+    
+    str = numberOfNeededChars!=0 ? (neededChars + str) : str;
     return true;
 }
 
@@ -317,15 +367,8 @@ void OpenSSLAesEncryptor::removeCharsFromString(string& str) {
 string OpenSSLAesEncryptor::encryptAES256WithOpenSSL(string strToEncrypt){
     /* A 256 bit key */
     /* A 128 bit IV */
-    int key_arr[] = {219,113,24,135,39,29,126,237,62,41,40,80,13,196,236,161,67,200,70,232,196,148,143,13,128,99,251,43,176,0,198,38};
-    int iv_arr[] = {91,158,142,6,25,84,195,85,107,12,209,105,219,211,177,89};
     string created_key="",created_iv="";
-    for(int i=0;i<sizeof(key_arr)/sizeof(key_arr[0]);i++){
-        created_key=created_key+(char)key_arr[i];
-    }
-    for(int i=0;i<sizeof(iv_arr)/sizeof(iv_arr[0]);i++){
-        created_iv=created_iv+(char)iv_arr[i];
-    }
+    createSecrets(created_key,created_iv);
     string encoded64String="";
     if(fillStringWithChars(strToEncrypt)){
         unsigned char* charsToEncrypt = (unsigned char *)strToEncrypt.c_str();
@@ -351,8 +394,9 @@ string OpenSSLAesEncryptor::encryptAES256WithOpenSSL(string strToEncrypt){
 string OpenSSLAesEncryptor::decryptAES256WithOpenSSL(string encoded64StrToDecrypt){
     /* A 256 bit key */
     /* A 128 bit IV */
-    string key,iv,decryptedStringToReturn;
-    readSecrects(key,iv);
+    string decryptedStringToReturn;
+    string created_key="",created_iv="";
+    createSecrets(created_key,created_iv);
 
     /* Buffer for the decrypted text */
     unsigned char decryptedtext[bufferLength];
@@ -366,8 +410,8 @@ string OpenSSLAesEncryptor::decryptAES256WithOpenSSL(string encoded64StrToDecryp
     int decryptedtext_l = decrypt(
     (unsigned char*)decoded64String.c_str(),
     decoded64String.length(),
-    (unsigned char *)key.c_str(),
-    (unsigned char *)iv.c_str(),
+    (unsigned char *)created_key.c_str(),
+    (unsigned char *)created_iv.c_str(),
     decryptedtext);
 
     /* Add a NULL terminator. We are expecting printable text */
@@ -379,23 +423,16 @@ string OpenSSLAesEncryptor::decryptAES256WithOpenSSL(string encoded64StrToDecryp
     return decryptedStringToReturn;
 }
 
-void OpenSSLAesEncryptor::readSecrects(string& key, string& iv){
-    string tmpStr;
-    int it=0;
-    ifstream secretFile(secretPath);
-    while (getline(secretFile, tmpStr)) {
-        switch (it) {
-            case 0:
-                key = tmpStr;
-                break;
-            case 1:
-                iv = tmpStr;
-                break;        
-            default:
-                break;
-        }
-        it++;
-        if(it==2) break;
-    }   
-    secretFile.close();
+void OpenSSLAesEncryptor::createSecrets(string& key, string& iv){
+
+    key=string(1,(char)k0)+string(1,(char)k1)+string(1,(char)k2)+string(1,(char)k3)+string(1,(char)k4)+string(1,(char)k5)+string(1,(char)k6)
+    +string(1,(char)k7)+string(1,(char)k8)+string(1,(char)k9)+string(1,(char)k10)+string(1,(char)k11)+string(1,(char)k12)+string(1,(char)k13)
+    +string(1,(char)k14)+string(1,(char)k15)+string(1,(char)k16)+string(1,(char)k17)+string(1,(char)k18)+string(1,(char)k19)+string(1,(char)k20)
+    +string(1,(char)k21)+string(1,(char)k22)+string(1,(char)k23)+string(1,(char)k24)+string(1,(char)k25)+string(1,(char)k26)+string(1,(char)k27)
+    +string(1,(char)k28)+string(1,(char)k29)+string(1,(char)k30)+string(1,(char)k31);
+
+    iv=string(1,(char)iv0)+string(1,(char)iv1)+string(1,(char)iv2)+string(1,(char)iv3)+string(1,(char)iv4)+string(1,(char)iv5)+string(1,(char)iv6)
+    +string(1,(char)iv7)+string(1,(char)iv8)+string(1,(char)iv9)+string(1,(char)iv10)+string(1,(char)iv11)+string(1,(char)iv12)+string(1,(char)iv13)
+    +string(1,(char)iv14)+string(1,(char)iv15);
+
 }

@@ -54,17 +54,13 @@ namespace CryptographyTesting
 
 
 			long numberOfNeededChars = stringNecessarySize - str.Length;
-			//Cos sie tu nie zgadza bo jak np. numberOfNeededChars = 5 to doda 5 kolejnych czyli łacznie 6 bedzie.
-			///
-			/// TO BE CHECKED
-			///
 
 			StringBuilder neededChars = new StringBuilder(Cryptography.ConvertASCIITo16System((int)numberOfNeededChars));
 			Random random = new Random();
 
 			for (long i = 0; i < numberOfNeededChars-1; i++)
 			{
-				int randomCharIndex = (int)Math.Floor(random.NextDouble() * 88);
+				int randomCharIndex = (int)Math.Floor(random.NextDouble() * 86);
 				neededChars.Append(Cryptography.GetWritableChars()[randomCharIndex]);
 			}
 			if (numberOfNeededChars != 0)

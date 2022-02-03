@@ -6,5 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface EitiLabUserRepository extends JpaRepository<RegisteredUser, Long> {
-        RegisteredUser findStudentByEmail(String indexNum);
+        RegisteredUser findRegisteredUserByEmail(String email);
+        RegisteredUser findRegisteredUserByUniqueCode(String uniqueCode);
 }

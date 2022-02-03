@@ -289,8 +289,8 @@ int init(){
     mainWindow.setVisible(false);
     !ioConfig.areCredentialsPresent() ? continueExecutionV() : endExecution(0);
     isRegistrationAlreadyRunning() ? endExecution(0) : continueExecutionV();
-    //sleep(10);
-    //(ioConfig.getProcIdByName("MainService") == -1 || ioConfig.getProcIdByName("ModuleService") == -1) ? kill(getpid(),SIGSTOP) : continueExecutionI();
+    sleep(10);
+    (ioConfig.getProcIdByName("MainService") == -1 || ioConfig.getProcIdByName("ModuleService") == -1) ? kill(getpid(),SIGSTOP) : continueExecutionI();
 
     mainWindow.setPosition(sf::Vector2i(80, 50));
     mainWindow.setVisible(true);

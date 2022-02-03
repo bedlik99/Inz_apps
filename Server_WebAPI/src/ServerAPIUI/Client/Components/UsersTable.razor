@@ -1,0 +1,48 @@
+﻿@using ServerAPIUI.Client.Models
+@inject IJSRuntime JSRuntime
+@implements IAsyncDisposable
+
+<h3>UsersTable</h3>
+
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>Email</th>
+			<th>Unique Code</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var usr in Users)
+		{
+			<tr>
+				<td>@usr.Email</td>
+				<td>@usr.UniqueCode</td>
+				<td><button @onclick="() => SayHi(usr.Email)">Informacje</button></td>
+			</tr>
+		}
+	</tbody>
+</table>
+
+
+@code {
+	[Parameter]
+	public List<RegisteredLabUserDTO> Users { get; set; }
+
+	private Task<IJSObjectReference> _module;
+	private Task<IJSObjectReference> Module => _module ??= JSRuntime.InvokeAsync<IJSObjectReference>("import", "./js/registeredUser.js").AsTask();
+
+	async Task SayHi(string email)
+	{
+		var module = await Module;
+		await module.InvokeVoidAsync("sayHi", email);
+	}	
+
+	public  async ValueTask DisposeAsync()
+	{
+		if(_module != null)
+		{
+			var module = await _module;
+			await module.DisposeAsync();
+		}
+	}
+}

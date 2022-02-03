@@ -1,0 +1,22 @@
+﻿@page "/registeredUsers"
+@using ServerAPIUI.Client.Models
+@using ServerAPIUI.Client.Components
+<h1>Registered Users list</h1>
+
+<UsersTable Users="@users"></UsersTable>
+<a href="registerUser">Dodaj uzytkownika</a>
+
+
+@code {
+	private List<RegisteredLabUserDTO> users;
+
+	protected override async Task OnInitializedAsync()
+	{
+		users = new List<RegisteredLabUserDTO>()
+		{
+			new RegisteredLabUserDTO() {Email = "01145843@pw.edu.pl", UniqueCode = "12345678"},
+			new RegisteredLabUserDTO() {Email = "01147843@pw.edu.pl", UniqueCode = "ABSaF678"},
+			new RegisteredLabUserDTO() {Email = "01146843@pw.edu.pl", UniqueCode = "OP3456Y8"}
+		};
+	}
+}

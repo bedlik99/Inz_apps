@@ -26,24 +26,48 @@ namespace ServerAPI.Repositories
 			modelBuilder.Entity<Laboratory>()
 				.Property(i => i.LabName)
 				.IsRequired()
-				.HasMaxLength(25);
+				.HasMaxLength(35);
 
 			modelBuilder.Entity<Laboratory>()
 				.Property(i => i.LabOrganizer)
-				.IsRequired();
+				.IsRequired()
+				.HasMaxLength(50);
 
 			modelBuilder.Entity<Employee>()
 				.Property(i => i.Username)
 				.IsRequired()
 				.HasMaxLength(25);
+			
+			modelBuilder.Entity<Employee>()
+				.Property(i => i.Password)
+				.IsRequired()
+				.HasMaxLength(25);
 
 			modelBuilder.Entity<RegisteredUser>()
 				.Property(i => i.Email)
-				.IsRequired();
+				.IsRequired()
+				.HasMaxLength(25);
 
 			modelBuilder.Entity<RegisteredUser>()
 				.Property(i => i.UniqueCode)
-				.IsRequired();
+				.IsRequired()
+				.HasMaxLength(8);
+
+			modelBuilder.Entity<Role>()
+				.Property(i => i.RoleName)
+				.HasMaxLength(25);
+
+			modelBuilder.Entity<ExecutedCommand>()
+				.Property(i => i.Content)
+				.HasMaxLength(255);
+
+			modelBuilder.Entity<LaboratoryRequirement>()
+				.Property(i => i.Content)
+				.HasMaxLength(255);
+
+			modelBuilder.Entity<RecordedEvent>()
+				.Property(i => i.RegistryContent)
+				.HasMaxLength(255);
 		}
 	}
 }

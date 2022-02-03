@@ -27,9 +27,11 @@ namespace ServerAPI.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Password")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
 
-                    b.Property<int?>("RoleId")
+                    b.Property<int>("RoleId")
                         .HasColumnType("int");
 
                     b.Property<string>("Username")
@@ -76,12 +78,13 @@ namespace ServerAPI.Migrations
 
                     b.Property<string>("LabName")
                         .IsRequired()
-                        .HasMaxLength(25)
-                        .HasColumnType("nvarchar(25)");
+                        .HasMaxLength(35)
+                        .HasColumnType("nvarchar(35)");
 
                     b.Property<string>("LabOrganizer")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
@@ -97,9 +100,6 @@ namespace ServerAPI.Migrations
 
                     b.Property<string>("Content")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("ExpirationDate")
-                        .HasColumnType("datetime2");
 
                     b.Property<int>("LaboratoryId")
                         .HasColumnType("int");
@@ -146,9 +146,10 @@ namespace ServerAPI.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
 
-                    b.Property<int?>("LaboratoryId")
+                    b.Property<int>("LaboratoryId")
                         .HasColumnType("int");
 
                     b.Property<bool>("NoWarning")
@@ -156,7 +157,8 @@ namespace ServerAPI.Migrations
 
                     b.Property<string>("UniqueCode")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(8)
+                        .HasColumnType("nvarchar(8)");
 
                     b.HasKey("Id");
 
@@ -173,7 +175,8 @@ namespace ServerAPI.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("RoleName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
 
                     b.HasKey("Id");
 
@@ -184,7 +187,9 @@ namespace ServerAPI.Migrations
                 {
                     b.HasOne("ServerAPI.Entities.Role", "Role")
                         .WithMany()
-                        .HasForeignKey("RoleId");
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Role");
                 });
@@ -226,7 +231,9 @@ namespace ServerAPI.Migrations
                 {
                     b.HasOne("ServerAPI.Entities.Laboratory", "Laboratory")
                         .WithMany()
-                        .HasForeignKey("LaboratoryId");
+                        .HasForeignKey("LaboratoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Laboratory");
                 });

@@ -1,0 +1,47 @@
+﻿@page "/registerUser"
+@using ServerAPIUI.Client.Models
+@using System.Text.Json
+@inject IJSRuntime JSRuntime
+
+<h3>RegisteredUserForm</h3>
+
+<EditForm EditContext="@editContext" OnValidSubmit="HandleValidSubmit" @onreset="HandleReset">
+  <DataAnnotationsValidator/>
+	<div class="form-row">
+		<div class="form-group col">
+			<label> Email </label>
+			<InputText @bind-Value="model.Email" class="form-control" />
+			<ValidationMessage For="@(() => model.Email)"/>
+		</div>
+		<div class="form-group col">
+			<label> UniqueCode </label>
+			<InputText @bind-Value="model.UniqueCode" class="form-control" />
+			<ValidationMessage For="@(() => model.UniqueCode)"/>
+		</div>
+	</div>
+	
+	<button type="submit" class="btn btn-primary">Submit</button>
+	<button type="reset" class="btn btn-warning">Clear</button>
+</EditForm>
+
+@code {
+	private EditContext editContext;
+	private UsersForm model = new UsersForm();
+
+	protected override void OnInitialized()
+	{
+		editContext = new EditContext(model);
+	}
+
+	private void HandleValidSubmit()
+	{
+		var modelJson = JsonSerializer.Serialize(model, new JsonSerializerOptions {WriteIndented = true});
+		JSRuntime.InvokeVoidAsync("alert", $"SUCCESS! \n \n {modelJson}");
+	}
+
+	private void HandleReset()
+	{
+		model = new UsersForm();
+		editContext = new EditContext(model);
+	}
+}

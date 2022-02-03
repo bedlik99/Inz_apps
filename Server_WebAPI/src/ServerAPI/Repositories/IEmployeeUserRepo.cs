@@ -23,7 +23,7 @@ namespace ServerAPI.Repositories
 		IEnumerable<RegisteredUser> UploadFileService(IFormFile fileUpload,string labName,string owner);
 		IEnumerable<RegisteredLabUserDTO> InsertUsersIntoDataBase(IEnumerable<RegisteredUser> uploadResult);
 		bool UploadLabRequirements(IFormFile fileUpload,string labName);
-		
+		string CheckUniquenessOfCode(RegisteredUser user);
 		bool DeleteLaboratoryAndUsersData(string labName);
 		StringBuilder GenerateResults(string labName);
 		StringBuilder GenerateResult(string labName, string email);

@@ -36,7 +36,6 @@ int RestServerConnector::sendData(std::string email,std::string uniqueCode, std:
     std::string encryptedValue = openSSLCryptoUtil->encryptAES256WithOpenSSL(userDataAsJson);
     std::string encryptedMessageString = "{\"value\":\""+encryptedValue+"\"}";
     json::value json_encrypted_message = json_encrypted_message.parse(encryptedMessageString);
-    
     return executeRequest(json_encrypted_message,serverResponseFile, selectedEndpoint);
 }
 

@@ -8,9 +8,7 @@ using System.Threading.Tasks;
 
 namespace ServerAPI.Controllers
 {
-	//Setting up a routing
 	[Route("api/")]
-	//This provides: Routing, Automatic HTTP 400 Errors, Details
 	[ApiController]
 	public class LabUserController : ControllerBase
 	{
@@ -20,11 +18,18 @@ namespace ServerAPI.Controllers
 			_repository = repository;
 		}
 
+		/// <summary>
+		/// Endpoint rejestracji użytkownika przyjmujący zaszyfrowaną wartość z maszny klienckiej.
+		/// </summary>
+		/// <param name="encryptedMessage"></param>
+		/// <returns></returns>
 		[Route("registerUser")]
 		[HttpPost]
-		public ActionResult<string> RegisterUser([FromBody] MessageDTO encryptedMessage)
+		public ActionResult RegisterUser([FromBody] 
+			MessageDTO 	encryptedMessage)
 		{
-			var result = _repository.ProcessUserInitData(encryptedMessage);
+			var result = _repository.
+				ProcessUserInitData(encryptedMessage);
 			if (!result)
 			{
 				return Unauthorized();
@@ -32,11 +37,18 @@ namespace ServerAPI.Controllers
 			return Ok();
 		}
 
+		/// <summary>
+		/// Endpoint przyjmujący zaszyfrowaną wartość z maszny klienckiej, w której znajduje się opis wykonanej operacji na maszynie klienckiej.
+		/// </summary>
+		/// <param name="encryptedMessage"></param>
+		/// <returns></returns>
 		[Route("recordEvent")]
 		[HttpPost]
-		public ActionResult<string> RecordEvent([FromBody] MessageDTO encryptedMessage)
+		public ActionResult RecordEvent([FromBody] 
+			MessageDTO 	encryptedMessage)
 		{
-			var success = _repository.ProcessEventContent(encryptedMessage);
+			var success = _repository.
+				ProcessEventContent(encryptedMessage);
 			if (!success)
 				return BadRequest();
 			return Ok();

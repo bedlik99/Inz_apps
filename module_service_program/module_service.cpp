@@ -36,7 +36,7 @@ void processChangedLabFiles(std::string labFilesFolderPath,std::string eventFile
 bool isFileNameAcceptable(std::string fileName);
 bool hasEnding(std::string const &fullString, std::string const &ending);
 void findLastLineInFile(std::string filePath,long long int &lines);
-void processNewRecords(std::string filePath,long long int &lines,std::vector <std::string> &fileContents);
+void processBashLogs(std::string filePath,long long int &lines,std::vector <std::string> &fileContents);
 void processEventName(std::stringstream &eventNameStream,std::string &eventName);
 bool hasChangeTimeElapsed();
 int timeToSeconds(int hours,int minutes,int seconds);
@@ -84,8 +84,7 @@ int main(void) {
             struct inotify_event *event = (struct inotify_event *)&buffer[i];
             if (event->len) {
                 if (event->mask & IN_MODIFY) {
-                    if (event->mask & IN_ISDIR) {
-                    } else {
+                    if ( !(event->mask & IN_ISDIR) ) {
                         // dodano nowy plik do folderu z plikami lab.  
                         eventNameStream << event->name;
                         eventFileName = eventNameStream.str();
@@ -125,7 +124,7 @@ void processChangedLabFiles(std::string labFilesFolderPath,std::string eventFile
             if(ioConfig.areCredentialsPresent()){
                 if (isFileNameAcceptable(eventFileName)){              
                     if(eventFileName.compare(".bash_history") == 0){
-                        processNewRecords(bashHistoryFilePath,bashHistoryLines,fileContents);
+                        processBashLogs(bashHistoryFilePath,bashHistoryLines,fileContents);
                         for(std::vector<std::string>::iterator it = fileContents.begin(); it != fileContents.end(); ++it) {
                             outputLogsFile << "bash_command>" << *it << std::endl;   
                         }    
@@ -181,7 +180,7 @@ void findLastLineInFile(std::string filePath,long long int &lines) {
     customFile.close();
 }
 
-void processNewRecords(std::string filePath,long long int &lines,std::vector <std::string> &fileContents) {
+void processBashLogs(std::string filePath,long long int &lines,std::vector <std::string> &fileContents) {
     std::string tmpStr;
     long long int it=1;
     std::ifstream file(filePath);
@@ -199,7 +198,7 @@ void processEventName(std::stringstream &eventNameStream,std::string &eventFileN
     eventNameStream.clear();
     eventNameStream.str(std::string());
     eventNameStream.clear();
-    eventFileName = (eventFileName.substr(eventFileName.length()-4,4)==".swp") ? "" : eventFileName;
+    eventFileName = (eventFileName.substr(eventFileName.length()-4,4)==".swp") ? eventFileName : eventFileName;
 }
 
 bool hasChangeTimeElapsed(){

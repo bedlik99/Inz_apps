@@ -16,7 +16,7 @@ namespace ServerAPI.DTOs.Validators
 
 			RuleFor(x => x.Password)
 				.NotEmpty()
-				.MinimumLength(6);
+				.MinimumLength(8);
 
 			RuleFor(x => x.ConfirmedPassword)
 				.Equal(y => y.Password);

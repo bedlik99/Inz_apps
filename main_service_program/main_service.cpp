@@ -4,6 +4,7 @@
 #include <iostream>
 #include <time.h>
 #include <sys/inotify.h>    
+#include <thread>
 #include <dirent.h>
 #include "RESTConnector/IOConfig/IOConfig.h"
 #include "RESTConnector/RestServerConnector.h"
@@ -30,11 +31,12 @@ void processNewLogRecords();
 void findLastLineInLogFile();
 void readCredentials(std::string &email,std::string &uniqueCode);
 void clearCredentials(int httpReturnCode);
-void encryptLogCredentials();
+void encryptAndSaveCredentials();
 void resume_registration();
 void init();
 void cleanup();
 void showError();
+void processHttpTask(std::string email, std::string uniqueCode, std::string tmpStr, bool isRegistration);
 
 void continueExecutionV(){}
 int continueExecutionI(){return 0;}
@@ -51,8 +53,8 @@ int main(void) {
     /* Step 1. Initialize inotify */
     fd = inotify_init();
 
-    if (fcntl(fd, F_SETFL, O_NONBLOCK) < 0) // error checking for fcntl
-        exit(2);
+    // if (fcntl(fd, F_SETFL, O_NONBLOCK) < 0) // error checking for fcntl
+    //     exit(2);
 
     /* Step 2. Add Watch */
     wd1 = inotify_add_watch(fd, logsFolderPath.c_str(), IN_MODIFY);
@@ -75,8 +77,7 @@ int main(void) {
 
             if (event->len) {
                 if (event->mask & IN_MODIFY) {
-                    if (event->mask & IN_ISDIR) {
-                    } else {
+                    if ( !(event->mask & IN_ISDIR) ) {
                         if(wd1 == event->wd){
                             // zmodyfikowano plik z logami
                             processNewLogRecords();                    
@@ -86,7 +87,6 @@ int main(void) {
             }
             i += EVENT_SIZE + event->len;
         }
-        sleep(2);
     }
     cleanup();
     sig_handler(-1);
@@ -112,13 +112,13 @@ void findLastLineInLogFile() {
 void processNewLogRecords() {
     std::string tmpStr(""),email(""),uniqueCode("");
     long long int it=1;
-    int registerHttpReturnCode=0;
+    int httpReturnCode=0;
     std::ifstream logsFile(logsFilePath);
     while (std::getline(logsFile, tmpStr)) {
         if(it>lastLogLineNumber && !ioConfig.trim(tmpStr).empty()){
             readCredentials(email,uniqueCode);
             if(isRegistration && !ioConfig.trim(email).empty() && !ioConfig.trim(uniqueCode).empty()){
-                registerHttpReturnCode = restServerConnector->sendData(email,uniqueCode,tmpStr,isRegistration);
+                httpReturnCode = restServerConnector->sendData(email,uniqueCode,tmpStr,isRegistration);
                 std::string command = "ps -q "+std::to_string(ioConfig.getProcIdByName("IdentifyOnStart"))+" -o state --no-headers";
                 std::string commandValue;
                 while(true){
@@ -135,34 +135,35 @@ void processNewLogRecords() {
                     }
                     sleep(1);
                 }
-                switch (registerHttpReturnCode){
+                switch (httpReturnCode){
                     case 200:
                         isRegistration = false;
-                        encryptLogCredentials();
+                        encryptAndSaveCredentials();
                         kill(ioConfig.getProcIdByName("IdentifyOnStart"),SIGCONT);
                         break;
 
                     case 401:
-                        clearCredentials(registerHttpReturnCode);
+                        clearCredentials(httpReturnCode);
                         it--;
                         kill(ioConfig.getProcIdByName("IdentifyOnStart"),SIGCONT);
                         break;
 
                     default:
                         //problemy z serwerem (np. wylaczony)
-                        clearCredentials(registerHttpReturnCode);
+                        clearCredentials(httpReturnCode);
                         it--;
                         kill(ioConfig.getProcIdByName("IdentifyOnStart"),SIGCONT);
                         break;
                 }
             }else if(ioConfig.trim(email).length()==18 && ioConfig.trim(uniqueCode).length()==8){              
+                //std::thread(processHttpTask,email,uniqueCode,tmpStr,isRegistration);
                 restServerConnector->sendData(email,uniqueCode,tmpStr,isRegistration);
             }
         }
         if(!ioConfig.trim(tmpStr).empty()){
             if(ioConfig.trim(tmpStr).compare("500")!=0 || lastLogLineNumber!=0){
                 it++;
-                if(registerHttpReturnCode!=0){
+                if(httpReturnCode!=0){
                     break;
                 }
             }
@@ -170,6 +171,10 @@ void processNewLogRecords() {
     }  
     logsFile.close();
     lastLogLineNumber = --it;
+}
+
+void processHttpTask(std::string email, std::string uniqueCode, std::string tmpStr, bool isRegistration){
+    restServerConnector->sendData(email,uniqueCode,tmpStr,isRegistration);
 }
 
 void readCredentials(std::string &email,std::string &uniqueCode){
@@ -197,7 +202,7 @@ void clearCredentials(int httpReturnCode){
     outputLogsFile.close();
 }
 
-void encryptLogCredentials(){
+void encryptAndSaveCredentials(){
     std::string credentials(""),encryptedCredentials("");
     std::ifstream logsFile(logsFilePath);
     std::ofstream outputLogsFile;
@@ -212,9 +217,6 @@ void encryptLogCredentials(){
 void init(){
     restServerConnector = new RestServerConnector();
     findLastLineInLogFile();
-    std::string testEncKey = "";
-    testEncKey = restServerConnector->getOpenSSLCryptoUtil().encryptAES256WithOpenSSL("01143823@pw.edu.pl juh#^x");
-    std::cout << std::endl << testEncKey << std::endl;
 }
 
 void showError(){

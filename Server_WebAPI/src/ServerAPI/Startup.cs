@@ -12,6 +12,7 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using ServerAPI.DTOs;
 using ServerAPI.DTOs.Validators;
 using ServerAPI.Entities;
@@ -48,9 +49,9 @@ namespace ServerAPI
 			Configuration.GetSection("Authentication").Bind(authenticationSettings);
 			services.AddSingleton(authenticationSettings);
 
-			var cryptogrpahySettings = new CryptographySettings();
-			Configuration.GetSection("Cryptography").Bind(cryptogrpahySettings);
-			services.AddSingleton(cryptogrpahySettings);
+			var cryptographySettings = new CryptographySettings();
+			Configuration.GetSection("Cryptography").Bind(cryptographySettings);
+			services.AddSingleton(cryptographySettings);
 
 			var emailSettings = new EmailSettings();
 			Configuration.GetSection("Email").Bind(emailSettings);
@@ -76,7 +77,7 @@ namespace ServerAPI
 
 			services.AddAuthorization();
 
-			//services are objects that provide funcionality to other parts of the application. Registration of dependencies happens
+			//services are objects that provide funcionality to other parts of the application. Registration of dependencies happens here.
 			services.AddControllers().AddFluentValidation();
 
 			//Registration of dependency (used as Constructor DI)
@@ -93,39 +94,52 @@ namespace ServerAPI
 			//Adding example service as catching Errors
 			services.AddScoped<ErrorHandlingMiddleware>();
 
-			//Adding hashing service to project (TBD)
-			//(TBC) ASP.NET Core Identity Version 3: PBKDF2 with HMAC-SHA256, 128-bit salt, 256-bit subkey, 10000 iterations
+			//Adding hashing service to project
+			//ASP.NET Core Identity Version 3: PBKDF2 with HMAC-SHA256, 128-bit salt, 256-bit subkey, 10000 iterations
 			services.AddScoped<IPasswordHasher<Employee>, PasswordHasher<Employee>>();
 
 			//Adding validator to the project
 			//Checks value before processing it
 			services.AddScoped<IValidator<RegisteredEmployeeDto>, RegisteredEmployeeDTOValidator>();
 
-			//Adding swagger to the project
-			services.AddSwaggerGen();
+            //Adding swagger to the project
+            services.AddSwaggerGen(config =>
+            {
+				config.SwaggerDoc("v1", new OpenApiInfo
+				{
+					Title = "WebAPI Server PW",
+					Version = "v1",
+					Description = "Web application created for WUT " +
+					"engineering thesis purposes. API is handling " +
+					"requests in system for assessing the independence " +
+					"of students' performance of laboratory exercises.",
+					Contact = new OpenApiContact
+					{
+						Name = "Administrator PW",
+						Email = "pw.edu.pl",
+					}
+				});
+				var filePath = Path.Combine(System.AppContext.BaseDirectory, "ServerAPI.xml");
+				config.IncludeXmlComments(filePath);
+			});
 
 			//Function fixing JSON issues
 			services.AddControllersWithViews()
 					.AddNewtonsoftJson(options =>
 					options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
-			//CORS settings (TBD)
+			//CORS settings
 			services.AddCors(options =>
-			{
-				options.AddDefaultPolicy(
-					builder =>
-					{
-						builder.WithOrigins("https://localhost:44388")
-						.AllowAnyHeader()
-						.AllowAnyMethod();
-					});
-			});
+				options.AddPolicy(name: "AllowSpecificOrigins",
+					builder => builder.AllowAnyOrigin()
+			));
 		}
 
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env, DataBaseSeeder seeder)
 		{
 			//Seeding DB with data if empty
 			//seeder.Seed();
+
 			//Middlewares
 			if (env.IsDevelopment())
 			{
@@ -134,12 +148,13 @@ namespace ServerAPI
 			app.UseAuthentication();
 			app.UseMiddleware<ErrorHandlingMiddleware>();
 
-			//******************** TESTING for HTML **************
+			//******************** TESTING for HTML - adding static files **************
 			app.UseFileServer(new FileServerOptions
 			{
 				FileProvider = new PhysicalFileProvider(
 				Path.Combine(Directory.GetCurrentDirectory())),
 			});
+
 			app.UseSwagger();
 			app.UseSwaggerUI(c =>
 			{
